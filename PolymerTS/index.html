@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+   <title>TypeScript HTML App</title>
+
+   <link rel="import" href="bower_components/polymer/polymer.html">
+
+   <link rel="stylesheet" href="app.css" type="text/css" />
+   <script src="myapp.js"></script>
+
+   <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+   <link rel="import" href="components/my-element.html">
+</head>
+
+<body>
+   <h1>TypeScript HTML App</h1>
+   <div id="content"></div>
+   <my-element>aaa</my-element>
+
+   <script>
+   window.addEventListener('WebComponentsReady', function (e) {
+      RegisterAll();
+   });
+   </script>
+
+
+</body>
+</html>
