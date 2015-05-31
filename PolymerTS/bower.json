@@ -1,0 +1,19 @@
+{
+  "name": "PolymerTS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/nippur72/PolymerTS",
+  "authors": [
+    "Antonino Porcino <nino.porcino@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.0.0"
+  }
+}

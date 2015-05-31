@@ -1,8 +1,8 @@
 ﻿
 @tag("my-element")
-class MyElement
+class MyElement implements PolymerElement
 {
-   @property({type: String, value: "44"})
+   @property({type: String, value: "1024"})
    test: string;   
 
    @listener("tap")

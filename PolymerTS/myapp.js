@@ -1,4 +1,4 @@
-// Type definitions for polymer v0.9
+// Type definitions for polymer v1.0
 // Project: https://github.com/polymer
 // Definitions by: Antonino Porcino <https://github.com/nippur72>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
@@ -44,17 +44,9 @@ function RegisterClass(element) {
 /// <reference path="polymer.ts"/>
 function RegisterAll() {
     Register(MyElement);
+    Register(MyTimer);
 }
-/*
-window.onload = () => {
-    var el = document.getElementById('content');
-    var greeter = new Greeter(el);
-    greeter.start();
-    
-    // register a new element called proto-element
-};
-*/
-if (typeof __decorate !== "function") __decorate = function (decorators, target, key, desc) {
+var __decorate = this.__decorate || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
     switch (arguments.length) {
         case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
@@ -69,7 +61,7 @@ var MyElement = (function () {
         alert("Thank you for tapping");
     };
     __decorate([
-        property({ type: String, value: "44" })
+        property({ type: String, value: "1024" })
     ], MyElement.prototype, "test");
     Object.defineProperty(MyElement.prototype, "regularTap",
         __decorate([
@@ -79,5 +71,26 @@ var MyElement = (function () {
         tag("my-element")
     ], MyElement);
     return MyElement;
+})();
+var MyTimer = (function () {
+    function MyTimer() {
+    }
+    MyTimer.prototype.ready = function () {
+        var _this = this;
+        this.count = this.start;
+        this.timerHandle = setInterval(function () {
+            _this.count++;
+        }, 1000);
+    };
+    MyTimer.prototype.detatched = function () {
+        clearInterval(this.timerHandle);
+    };
+    __decorate([
+        property({ type: Number, value: 0 })
+    ], MyTimer.prototype, "start");
+    MyTimer = __decorate([
+        tag("my-timer")
+    ], MyTimer);
+    return MyTimer;
 })();
 //# sourceMappingURL=myapp.js.map

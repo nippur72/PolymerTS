@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
@@ -16,6 +16,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.css" />
@@ -35,12 +36,14 @@
     <Content Include="bower_components\webcomponentsjs\webcomponents-lite.min.js" />
     <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
     <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="elements\my-timer.html" />
     <Content Include="index.html" />
-    <Content Include="components\my-element.html" />
+    <Content Include="elements\my-element.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="components\my-element.ts" />
+    <TypeScriptCompile Include="elements\my-timer.ts" />
+    <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="polymer.ts" />
     <TypeScriptCompile Include="app.ts" />
   </ItemGroup>

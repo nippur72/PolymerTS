@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
    <meta charset="utf-8" />
-   <title>TypeScript HTML App</title>
+   <title>Polymer with TypeScript example</title>
 
    <link rel="import" href="bower_components/polymer/polymer.html">
 
@@ -11,20 +11,26 @@
    <script src="myapp.js"></script>
 
    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-   <link rel="import" href="components/my-element.html">
+   
+   <link rel="import" href="elements/my-element.html">
+   <link rel="import" href="elements/my-timer.html">
 </head>
 
 <body>
-   <h1>TypeScript HTML App</h1>
+   <h1>Polymer with TypeScript example</h1>
    <div id="content"></div>
+
+   <hr />
    <my-element>aaa</my-element>
+
+   <hr />
+   <my-timer start="42"></my-timer>
+   <hr />
 
    <script>
    window.addEventListener('WebComponentsReady', function (e) {
       RegisterAll();
    });
    </script>
-
-
 </body>
 </html>
