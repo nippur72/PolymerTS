@@ -144,12 +144,27 @@ function behavior(behaviorObject: Object) {
 	}
 }
 
+function observe(propertiesList: string) {
+   if (propertiesList.indexOf(",") > 0) {
+      // observing multiple properties
+      return (target: PolymerElement, observerFuncName: string) => {
+         target.observers = target.observers || [];
+         target.observers.push(observerFuncName + "(" + propertiesList + ")");
+      }
+   }
+   else {
+      // observing single property
+      return (target: PolymerElement, observerName: string) => {
+         target.properties = target.properties || {};
+         target.properties[propertiesList] = target.properties[propertiesList] || {};
+         target.properties[propertiesList].observer = observerName;
+      }
+   }
+}
+
+/*
 // Observer decorator
-function observer(observerName: string) {
-	return (target: PolymerElement) => {
-		target.observers = target.observers || [];
-		target.observers.push(observerName);
-	}
+function observer(observerList: string) {
 }
 
 // ObserverFor decorator
@@ -160,7 +175,7 @@ function observerFor(propertyName: string) {
       target.properties[propertyName].observer = observerName;
    }
 }
-
+*/
 // element registration functions
 
 function createElement(element: Function): void {

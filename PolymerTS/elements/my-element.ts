@@ -3,7 +3,10 @@
 class MyElement implements PolymerElement
 {
    @property({ type: String, value: "1024" /*, observer: "testChanged" */})
-   test: string;   
+   test: string; 
+     
+   @property({ type: String, value: "2048" /*, observer: "testChanged" */ })
+   test1: string;   
    
    /*
    @listener("tap")
@@ -17,12 +20,17 @@ class MyElement implements PolymerElement
    {    
       this.test = this.test + "x";
    }
-
-   //@observer("testChanged(test)")
-   @observerFor("test")
+  
+   @observe("test")
    testChanged(newValue,oldValue)
    {
       console.log(`test has changed from ${oldValue} to ${newValue}`);
+   }
+
+   @observe("test,test1")
+   test_and_test1_Changed(newTest, newTest1)
+   {
+      console.log(`test=${newTest}, test1=${newTest1}`);
    }
 
    /*
