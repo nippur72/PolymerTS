@@ -46,6 +46,7 @@
     <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="polymer.ts" />
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower_components\polymer\bower.json" />

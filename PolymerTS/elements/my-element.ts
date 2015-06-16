@@ -1,6 +1,6 @@
 ﻿
 @component("my-element")
-class MyElement implements PolymerElement
+class MyElement extends base implements PolymerElement
 {
    @property({ type: String, value: "1024" /*, observer: "testChanged" */})
    test: string; 
@@ -18,7 +18,7 @@ class MyElement implements PolymerElement
 
    handleClick()
    {    
-      this.test = this.test + "x";
+      this.test = this.test + "x";  
    }
   
    @observe("test")

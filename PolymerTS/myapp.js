@@ -109,20 +109,6 @@ function observe(propertiesList) {
         };
     }
 }
-/*
-// Observer decorator
-function observer(observerList: string) {
-}
-
-// ObserverFor decorator
-function observerFor(propertyName: string) {
-   return (target: PolymerElement, observerName: string) => {
-      target.properties = target.properties || {};
-      target.properties[propertyName] = target.properties[propertyName] || {};
-      target.properties[propertyName].observer = observerName;
-   }
-}
-*/
 // element registration functions
 function createElement(element) {
     Polymer(element.prototype);
@@ -130,11 +116,12 @@ function createElement(element) {
 function createClass(element) {
     Polymer.Class(element.prototype);
 }
-/// <reference path="polymer.ts"/>
-function RegisterAll() {
-    createElement(MyElement);
-    createElement(MyTimer);
-}
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var __decorate = this.__decorate || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
     switch (arguments.length) {
@@ -143,8 +130,10 @@ var __decorate = this.__decorate || function (decorators, target, key, desc) {
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var MyElement = (function () {
+var MyElement = (function (_super) {
+    __extends(MyElement, _super);
     function MyElement() {
+        _super.apply(this, arguments);
     }
     /*
     @listener("tap")
@@ -180,7 +169,7 @@ var MyElement = (function () {
         component("my-element")
     ], MyElement);
     return MyElement;
-})();
+})(base);
 var MyTimer = (function () {
     function MyTimer() {
     }
@@ -202,4 +191,13 @@ var MyTimer = (function () {
     ], MyTimer);
     return MyTimer;
 })();
+/// <reference path="polymer.ts"/>
+function RegisterAll() {
+    createElement(MyElement);
+    createElement(MyTimer);
+}
+/// <reference path="polymer.ts" />
+/// <reference path="elements/my-element.ts" />
+/// <reference path="elements/my-timer.ts" />
+/// <reference path="app.ts" />
 //# sourceMappingURL=myapp.js.map
