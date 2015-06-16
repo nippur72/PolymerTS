@@ -152,6 +152,15 @@ function observer(observerName: string) {
 	}
 }
 
+// ObserverFor decorator
+function observerFor(propertyName: string) {
+   return (target: PolymerElement, observerName: string) => {
+      target.properties = target.properties || {};
+      target.properties[propertyName] = target.properties[propertyName] || {};
+      target.properties[propertyName].observer = observerName;
+   }
+}
+
 // element registration functions
 
 function createElement(element: Function): void {
