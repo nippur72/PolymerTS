@@ -187,13 +187,43 @@ function listener(eventName: string) {
 	}
 }
 
+
 // Behavior decorator
-function behavior(behaviorObject: Object) {
-	return (target: PolymerElement) => {
+function behavior(behaviorObject: any): any {
+   return (target: any) => {
+      if (typeof (target) === "function") {
+         // decorator applied externally, target is the class object
+         target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+         target.prototype["behaviors"].push(behaviorObject.prototype);
+      }
+      else {
+         // decorator applied internally, target is class.prototype
+         target.behaviors = target.behaviors || [];
+         target.behaviors.push(behaviorObject.prototype);
+      }
+   }
+}
+
+
+/*
+// Behavior decorator
+function behavior(behaviorObject: Function) {   
+   return (target: PolymerElement) => {
+      console.log(typeof target);
 		target.behaviors = target.behaviors || [];
-		target.behaviors.push(behaviorObject);
+		target.behaviors.push(behaviorObject.prototype);
 	}
 }
+
+
+function behavior2(behaviorObject: Function) {   
+   return function (target: Function) {
+      console.log(typeof target);
+      target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+      target.prototype["behaviors"].push(behaviorObject.prototype);
+   }
+}
+*/
 
 function observe(propertiesList: string) {
    if (propertiesList.indexOf(",") > 0) {

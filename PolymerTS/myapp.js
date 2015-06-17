@@ -88,10 +88,37 @@ function listener(eventName) {
 // Behavior decorator
 function behavior(behaviorObject) {
     return function (target) {
-        target.behaviors = target.behaviors || [];
-        target.behaviors.push(behaviorObject);
+        if (typeof (target) === "function") {
+            // decorator applied externally, target is the class object
+            target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+            target.prototype["behaviors"].push(behaviorObject.prototype);
+        }
+        else {
+            // decorator applied internally, target is class.prototype
+            target.behaviors = target.behaviors || [];
+            target.behaviors.push(behaviorObject.prototype);
+        }
     };
 }
+/*
+// Behavior decorator
+function behavior(behaviorObject: Function) {
+   return (target: PolymerElement) => {
+      console.log(typeof target);
+        target.behaviors = target.behaviors || [];
+        target.behaviors.push(behaviorObject.prototype);
+    }
+}
+
+
+function behavior2(behaviorObject: Function) {
+   return function (target: Function) {
+      console.log(typeof target);
+      target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+      target.prototype["behaviors"].push(behaviorObject.prototype);
+   }
+}
+*/
 function observe(propertiesList) {
     if (propertiesList.indexOf(",") > 0) {
         // observing multiple properties
@@ -130,11 +157,29 @@ var __decorate = this.__decorate || function (decorators, target, key, desc) {
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
+var MyBehaviour = (function (_super) {
+    __extends(MyBehaviour, _super);
+    function MyBehaviour() {
+        _super.apply(this, arguments);
+    }
+    MyBehaviour.prototype.onBehave = function () {
+        console.log("behave trigger");
+    };
+    Object.defineProperty(MyBehaviour.prototype, "onBehave",
+        __decorate([
+            listener("behave")
+        ], MyBehaviour.prototype, "onBehave", Object.getOwnPropertyDescriptor(MyBehaviour.prototype, "onBehave")));
+    MyBehaviour = __decorate([
+        component("my-behaviour")
+    ], MyBehaviour);
+    return MyBehaviour;
+})(base);
 var MyElement = (function (_super) {
     __extends(MyElement, _super);
     function MyElement() {
         _super.apply(this, arguments);
     }
+    //@behavior(MyBehaviour)
     /*
     @listener("tap")
     regularTap(e)
@@ -142,8 +187,10 @@ var MyElement = (function (_super) {
        alert("Thank you for tapping");
     }
     */
+    //@behavior(MyBehaviour.prototype)
     MyElement.prototype.handleClick = function () {
         this.test = this.test + "x";
+        this.fire("behave");
     };
     MyElement.prototype.testChanged = function (newValue, oldValue) {
         console.log("test has changed from " + oldValue + " to " + newValue);
@@ -166,7 +213,8 @@ var MyElement = (function (_super) {
             observe("test,test1")
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
     MyElement = __decorate([
-        component("my-element")
+        component("my-element"),
+        behavior(MyBehaviour)
     ], MyElement);
     return MyElement;
 })(base);
