@@ -15,12 +15,28 @@ To run the very small example contained in the repo, clone it and install Polyme
 
 Then open in Visual Studio and run the project.
 
-When writing Polymer elements you can use @decorators (similarly to PolymerDart).
+# Supported features
 
-Example of a counter element:
+- Decorators
+   - `@component(name)` sets component's name (equivalent to `is:` in PolymerJS)
+   - `@extend(name)` extends a native tag (equivalent to `extends:` in PolymerJS)
+   - `@hostAttributes(attrs)` sets host attributes (equivalent to `hostAttributes:` in PolymerJS)
+   - `@property(defs)` sets a property (equivalent to `properties:` in PolymerJS)
+   - `@observe(defs)` sets an observer function on single or multiple properties (equivalent to `observers:` in PolymerJS)
+   - `@listener(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
+   - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
+- Registration functions
+   - `createElement(className)` register in Polymer and create the element
+   - `createClass(className)` register in Polymer without creating the element
+
+# Examples
+
+When writing Polymer elements you can use @decorators.
+
+### A timer-based counter element
 ```TypeScript
-@tag("my-timer")
-class MyTimer implements PolymerElement
+@component("my-timer")
+class MyTimer extends base implements PolymerElement
 {
    @property({ type: Number, value: 0 })
    public start: number;   
@@ -36,6 +52,19 @@ class MyTimer implements PolymerElement
       }, 1000);      
    }
 
+   @observe("count")
+   countChanged(newValue, oldValue) {
+      if(newValue==100000) {
+         console.log("too much time spent doing nothing!");
+         this.fire("reset-counters");
+	  }
+   }
+
+   @listener("reset-counters")
+   resetCounter() {
+      this.count = 0;
+   }
+
    detatched() {
       clearInterval(this.timerHandle);
    }
@@ -43,7 +72,7 @@ class MyTimer implements PolymerElement
 ```
 
 ```HTML
-<link rel="import" href="bower_components/polymer/polymer.html">
+<!-- link to polymer.html is not needed as element registration is done outside of HTML definition -->
 
 <dom-module id="my-timer">
    <template>
@@ -56,6 +85,41 @@ class MyTimer implements PolymerElement
 To register the element:
 
 ```TypeScript
-Register(MyTimer);   // no .prototype
+createElement(MyTimer);   // no .prototype
+```
+To use the element
+```HTML
+<my-timer start="42"></my-timer>
+```
+
+### Using behaviours
+
+First you create your custom behaviour in a separate class, and the you "import" it with the `@behaviour` decorator. You can put the decorator close the `class` keyword or within the class itself. 
+
+```TypeScript
+class MyBehaviour extends base implements PolymerElement
+{
+   @listener("something_has_happened")
+   onBehave() {
+      console.log("something_has_happened triggered");
+   }
+}
+```
+```TypeScript
+@component("my-element")
+@behavior(MyBehaviour)
+class MyElement extends base implements PolymerElement
+{
+  // ...
+}
+```
+or
+```TypeScript
+@component("my-element")
+class MyElement extends base implements PolymerElement
+{
+	@behavior(MyBehaviour)  
+	// ...
+}
 ```
 
