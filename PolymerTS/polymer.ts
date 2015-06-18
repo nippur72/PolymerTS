@@ -172,10 +172,11 @@ function property(ob: propDefinition) {
 }
 
 // computed decorator
-function computed() {
+function computed(ob?: propDefinition) {
    return (target: PolymerElement, computedFuncName: string) => {
       target.properties = target.properties || {};
-      var propOb = target.properties[computedFuncName] || {};
+      //var propOb = target.properties[computedFuncName] || {};
+      var propOb = ob || {};
       var getterName = "get_computed_" + computedFuncName;
       var funcText: string = target[computedFuncName].toString();
       var start = funcText.indexOf("(");

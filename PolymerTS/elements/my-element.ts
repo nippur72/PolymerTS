@@ -68,7 +68,7 @@ class MyElement extends base implements PolymerElement
    }
    */
 
-   @computed()
+   @computed({ type: String })
    fullname(test) {
       return "Douglas Adams [" + test + "]";    
    }

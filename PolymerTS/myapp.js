@@ -119,10 +119,11 @@ function property(ob) {
     };
 }
 // computed decorator
-function computed() {
+function computed(ob) {
     return function (target, computedFuncName) {
         target.properties = target.properties || {};
-        var propOb = target.properties[computedFuncName] || {};
+        //var propOb = target.properties[computedFuncName] || {};
+        var propOb = ob || {};
         var getterName = "get_computed_" + computedFuncName;
         var funcText = target[computedFuncName].toString();
         var start = funcText.indexOf("(");
@@ -271,7 +272,7 @@ var MyElement = (function (_super) {
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
     Object.defineProperty(MyElement.prototype, "fullname",
         __decorate([
-            computed()
+            computed({ type: String })
         ], MyElement.prototype, "fullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "fullname")));
     MyElement = __decorate([
         component("my-element"),
