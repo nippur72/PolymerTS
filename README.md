@@ -1,19 +1,19 @@
 # PolymerTS
 
-This repo allows you to use Polymer v1.0 from TypeScript.
+Write Polymer 1.0 elements as TypeScript @decorated classes! 
 
-I have NOT published it on [DefinitelyTyped](https://github.com/borisyankov/DefinitelyTyped) yet.
+Note: this repo is not yet published on [DefinitelyTyped](https://github.com/borisyankov/DefinitelyTyped).
 
-To use it, just get the file `polymer.ts` and include in your TypeScript project.
+To use PolymerTS, just get the file `polymer.ts` and include in your TypeScript project.
 
-If you find bugs or want to improve it, just send a pull request.
-
-To run the very small example contained in the repo, clone it and install Polymer:
+To run the very small example contained in this repo, clone it and install Polymer:
 
 - manually: extract .zip file into `bower_components` folder
 - or more easily via bower: `bower update`
 
 Then open in Visual Studio and run the project.
+
+If you find bugs or want to improve it, just send a pull request.
 
 # Supported features
 
@@ -30,9 +30,14 @@ Then open in Visual Studio and run the project.
    - `createElement(className)` register in Polymer and create the element
    - `createClass(className)` register in Polymer without creating the element
 
-# Examples
+# How to write elements
 
-When writing Polymer elements you can use @decorators.
+- write elements as TypeScript classes
+- extend the `base` element 
+- implement the `PolymerElement` interface
+- use @decorators as needed 
+
+# Examples
 
 ### A timer-based counter element
 ```TypeScript
