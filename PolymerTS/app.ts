@@ -2,8 +2,8 @@
 
 function RegisterAll()
 {
-   Register(MyElement);
-   Register(MyTimer);
+   createElement(MyElement);
+   createElement(MyTimer);
 }
 
 

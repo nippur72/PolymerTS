@@ -1,5 +1,5 @@
 ﻿
-@tag("my-timer")
+@component("my-timer")
 class MyTimer implements PolymerElement
 {
    @property({ type: Number, value: 0 })
@@ -20,4 +20,6 @@ class MyTimer implements PolymerElement
       clearInterval(this.timerHandle);
    }
 }
+
+
  
