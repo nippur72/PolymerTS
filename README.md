@@ -23,6 +23,7 @@ Then open in Visual Studio and run the project.
    - `@hostAttributes(attrs)` sets host attributes (equivalent to `hostAttributes:` in PolymerJS)
    - `@property(defs)` sets a property (equivalent to `properties:` in PolymerJS)
    - `@observe(defs)` sets an observer function on single or multiple properties (equivalent to `observers:` in PolymerJS)
+   - `@computed()` defines a computed property
    - `@listener(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
    - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
 - Registration functions
@@ -123,3 +124,27 @@ class MyElement extends base implements PolymerElement
 }
 ```
 
+### Using computed properties
+
+There are several (almost equivalent) ways of defining a computed property:
+
+```TypeScript
+// classic way
+@property({name: "fullname", computed: "computeFullName(first,last)"});
+fullname: string;
+computeFullName(f,l) { 
+   return f+" "+l; 
+}
+
+// by decorating a function
+@property({computed: "first,last"});
+fullname(f,l) {
+   return f+" "+l; 
+}
+
+// by using @computed, name and parameters extracted from the function
+@computed
+fullname(first,last) {
+   return first+" "+last; 
+}
+```
