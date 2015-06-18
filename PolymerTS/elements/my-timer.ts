@@ -20,4 +20,6 @@ class MyTimer implements PolymerElement
       clearInterval(this.timerHandle);
    }
 }
+
+
  

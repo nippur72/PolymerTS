@@ -53,13 +53,13 @@ var base = (function () {
     base.prototype.updateStyles = function () { };
     return base;
 })();
-// tag decorator
+// component decorator
 function component(tagname) {
     return function (target) {
         target.prototype["is"] = tagname;
     };
 }
-// extends decorator
+// extend decorator
 function extend(tagname) {
     return function (target) {
         target.prototype["extends"] = tagname;
@@ -85,7 +85,7 @@ function listener(eventName) {
         target.listeners[eventName] = propertyKey;
     };
 }
-// Behavior decorator
+// behavior decorator
 function behavior(behaviorObject) {
     return function (target) {
         if (typeof (target) === "function") {
@@ -100,25 +100,7 @@ function behavior(behaviorObject) {
         }
     };
 }
-/*
-// Behavior decorator
-function behavior(behaviorObject: Function) {
-   return (target: PolymerElement) => {
-      console.log(typeof target);
-        target.behaviors = target.behaviors || [];
-        target.behaviors.push(behaviorObject.prototype);
-    }
-}
-
-
-function behavior2(behaviorObject: Function) {
-   return function (target: Function) {
-      console.log(typeof target);
-      target.prototype["behaviors"] = target.prototype["behaviors"] || [];
-      target.prototype["behaviors"].push(behaviorObject.prototype);
-   }
-}
-*/
+// observe decorator
 function observe(propertiesList) {
     if (propertiesList.indexOf(",") > 0) {
         // observing multiple properties
@@ -169,9 +151,6 @@ var MyBehaviour = (function (_super) {
         __decorate([
             listener("behave")
         ], MyBehaviour.prototype, "onBehave", Object.getOwnPropertyDescriptor(MyBehaviour.prototype, "onBehave")));
-    MyBehaviour = __decorate([
-        component("my-behaviour")
-    ], MyBehaviour);
     return MyBehaviour;
 })(base);
 var MyElement = (function (_super) {

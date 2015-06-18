@@ -1,5 +1,5 @@
-﻿@component("my-behaviour")
-class MyBehaviour extends base implements PolymerElement {
+﻿class MyBehaviour extends base implements PolymerElement
+{
    @listener("behave")
    onBehave() {
       console.log("behave trigger");
