@@ -122,7 +122,7 @@ interface propDefinition {
 }
 
 /*
-// property decorator
+// property decorator (simple version)
 function property(ob: propDefinition) {
 	return (target: PolymerElement, propertyKey: string) => {
 		target.properties = target.properties || {};
@@ -131,7 +131,8 @@ function property(ob: propDefinition) {
 }
 */
 
-// property decorator
+/*
+// property decorator, computed properties via "name:"
 function property(ob: propDefinition) {
    return (target: PolymerElement, propertyKey: string) => {
       target.properties = target.properties || {};
@@ -149,7 +150,42 @@ function property(ob: propDefinition) {
       }
    }
 }
+*/
 
+// property decorator with automatic name for computed props
+function property(ob: propDefinition) {
+   return (target: PolymerElement, propertyKey: string) => {
+      target.properties = target.properties || {};
+      if (typeof (target[propertyKey]) === "function") {
+         // property is function, treat it as a computed property         
+         var params = ob["computed"];
+         var getterName = "get_computed_" + propertyKey;
+         ob["computed"] = getterName + "(" + params + ")";
+         target.properties[propertyKey] = ob;
+         target[getterName] = target[propertyKey];
+      }
+      else {
+         // normal property
+         target.properties[propertyKey] = ob;
+      }
+   }
+}
+
+// computed decorator
+function computed() {
+   return (target: PolymerElement, computedFuncName: string) => {
+      target.properties = target.properties || {};
+      var propOb = target.properties[computedFuncName] || {};
+      var getterName = "get_computed_" + computedFuncName;
+      var funcText: string = target[computedFuncName].toString();
+      var start = funcText.indexOf("(");
+      var end = funcText.indexOf(")");
+      var propertiesList = funcText.substring(start+1,end);
+      propOb["computed"] = getterName + "(" + propertiesList + ")";
+      target.properties[computedFuncName] = propOb;
+      target[getterName] = target[computedFuncName];
+   }
+}
 
 // listener decorator
 function listener(eventName: string) {
@@ -191,16 +227,6 @@ function observe(propertiesList: string) {
          target.properties[propertiesList] = target.properties[propertiesList] || {};
          target.properties[propertiesList].observer = observerName;
       }
-   }
-}
-
-// computed decorator
-function computed(propertyName: string, propertiesList: string) {
-   return (target: PolymerElement, computedFuncName: string) => {
-      target.properties = target.properties || {};
-      var propOb = target.properties[propertyName] || {};
-      propOb["computed"] = computedFuncName + "(" + propertiesList + ")";
-      target.properties[propertyName] = propOb;
    }
 }
 

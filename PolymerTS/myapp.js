@@ -72,7 +72,7 @@ function hostAttributes(attributes) {
     };
 }
 /*
-// property decorator
+// property decorator (simple version)
 function property(ob: propDefinition) {
     return (target: PolymerElement, propertyKey: string) => {
         target.properties = target.properties || {};
@@ -80,20 +80,57 @@ function property(ob: propDefinition) {
     }
 }
 */
-// property decorator
+/*
+// property decorator, computed properties via "name:"
+function property(ob: propDefinition) {
+   return (target: PolymerElement, propertyKey: string) => {
+      target.properties = target.properties || {};
+      if (typeof (target[propertyKey]) === "function")
+      {
+         // property is function, treat it as a computed property
+         var name = ob["name"];
+         ob["computed"] = propertyKey + "(" + ob["computed"] + ")";
+         target.properties[name] = ob;
+      }
+      else
+      {
+         // normal property
+         target.properties[propertyKey] = ob;
+      }
+   }
+}
+*/
+// property decorator with automatic name for computed props
 function property(ob) {
     return function (target, propertyKey) {
         target.properties = target.properties || {};
         if (typeof (target[propertyKey]) === "function") {
-            // property is function, treat it as a computed property
-            var name = ob["name"];
-            ob["computed"] = propertyKey + "(" + ob["computed"] + ")";
-            target.properties[name] = ob;
+            // property is function, treat it as a computed property         
+            var params = ob["computed"];
+            var getterName = "get_computed_" + propertyKey;
+            ob["computed"] = getterName + "(" + params + ")";
+            target.properties[propertyKey] = ob;
+            target[getterName] = target[propertyKey];
         }
         else {
             // normal property
             target.properties[propertyKey] = ob;
         }
+    };
+}
+// computed decorator
+function computed() {
+    return function (target, computedFuncName) {
+        target.properties = target.properties || {};
+        var propOb = target.properties[computedFuncName] || {};
+        var getterName = "get_computed_" + computedFuncName;
+        var funcText = target[computedFuncName].toString();
+        var start = funcText.indexOf("(");
+        var end = funcText.indexOf(")");
+        var propertiesList = funcText.substring(start + 1, end);
+        propOb["computed"] = getterName + "(" + propertiesList + ")";
+        target.properties[computedFuncName] = propOb;
+        target[getterName] = target[computedFuncName];
     };
 }
 // listener decorator
@@ -135,15 +172,6 @@ function observe(propertiesList) {
             target.properties[propertiesList].observer = observerName;
         };
     }
-}
-// computed decorator
-function computed(propertyName, propertiesList) {
-    return function (target, computedFuncName) {
-        target.properties = target.properties || {};
-        var propOb = target.properties[propertyName] || {};
-        propOb["computed"] = computedFuncName + "(" + propertiesList + ")";
-        target.properties[propertyName] = propOb;
-    };
 }
 // element registration functions
 function createElement(element) {
@@ -211,8 +239,21 @@ var MyElement = (function (_super) {
        return "Douglas Adams [" + test + "]";
     }
     */
-    MyElement.prototype.computefullname = function (test) {
-        return "alba: " + test;
+    /*
+    @property({ name:"fullname", type: String, computed: "test" })
+    computefullname(test)
+    {
+       return "alba: "+test;
+    }
+    */
+    /*
+    @property({type: String, computed: "test" })
+    fullname(test) {
+       return "Douglas Adams [" + test + "]";
+    }
+    */
+    MyElement.prototype.fullname = function (test) {
+        return "Douglas Adams [" + test + "]";
     };
     __decorate([
         property({ type: String, value: "1024" /*, observer: "testChanged" */ })
@@ -228,10 +269,10 @@ var MyElement = (function (_super) {
         __decorate([
             observe("test,test1")
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
-    Object.defineProperty(MyElement.prototype, "computefullname",
+    Object.defineProperty(MyElement.prototype, "fullname",
         __decorate([
-            property({ name: "fullname", type: String, computed: "test" })
-        ], MyElement.prototype, "computefullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "computefullname")));
+            computed()
+        ], MyElement.prototype, "fullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "fullname")));
     MyElement = __decorate([
         component("my-element"),
         behavior(MyBehaviour)
