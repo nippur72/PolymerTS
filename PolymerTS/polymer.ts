@@ -82,7 +82,10 @@ interface PolymerElement {
 	attached?():void;
 	detached?():void;
 	attributeChanged?(attrName: string, oldVal: any, newVal: any):void;
-	updateStyles?():void;
+   updateStyles?(): void;
+
+   // 
+   prototype?: Object;
 }
 
 // component decorator
@@ -108,6 +111,7 @@ function hostAttributes(attributes: Object) {
 
 // property definition interface
 interface propDefinition {
+   name?: string;
 	type?: any;
 	value?: any;
 	reflectToAttribute?: boolean;
@@ -117,6 +121,7 @@ interface propDefinition {
 	observer?: string;
 }
 
+/*
 // property decorator
 function property(ob: propDefinition) {
 	return (target: PolymerElement, propertyKey: string) => {
@@ -124,6 +129,27 @@ function property(ob: propDefinition) {
 		target.properties[propertyKey] = ob;
 	}
 }
+*/
+
+// property decorator
+function property(ob: propDefinition) {
+   return (target: PolymerElement, propertyKey: string) => {
+      target.properties = target.properties || {};
+      if (typeof (target[propertyKey]) === "function")
+      {
+         // property is function, treat it as a computed property
+         var name = ob["name"];
+         ob["computed"] = propertyKey + "(" + ob["computed"] + ")";
+         target.properties[name] = ob;
+      }
+      else
+      {
+         // normal property
+         target.properties[propertyKey] = ob;
+      }
+   }
+}
+
 
 // listener decorator
 function listener(eventName: string) {
@@ -165,6 +191,16 @@ function observe(propertiesList: string) {
          target.properties[propertiesList] = target.properties[propertiesList] || {};
          target.properties[propertiesList].observer = observerName;
       }
+   }
+}
+
+// computed decorator
+function computed(propertyName: string, propertiesList: string) {
+   return (target: PolymerElement, computedFuncName: string) => {
+      target.properties = target.properties || {};
+      var propOb = target.properties[propertyName] || {};
+      propOb["computed"] = computedFuncName + "(" + propertiesList + ")";
+      target.properties[propertyName] = propOb;
    }
 }
 

@@ -71,11 +71,29 @@ function hostAttributes(attributes) {
         target.prototype["hostAttributes"] = attributes;
     };
 }
+/*
+// property decorator
+function property(ob: propDefinition) {
+    return (target: PolymerElement, propertyKey: string) => {
+        target.properties = target.properties || {};
+        target.properties[propertyKey] = ob;
+    }
+}
+*/
 // property decorator
 function property(ob) {
     return function (target, propertyKey) {
         target.properties = target.properties || {};
-        target.properties[propertyKey] = ob;
+        if (typeof (target[propertyKey]) === "function") {
+            // property is function, treat it as a computed property
+            var name = ob["name"];
+            ob["computed"] = propertyKey + "(" + ob["computed"] + ")";
+            target.properties[name] = ob;
+        }
+        else {
+            // normal property
+            target.properties[propertyKey] = ob;
+        }
     };
 }
 // listener decorator
@@ -117,6 +135,15 @@ function observe(propertiesList) {
             target.properties[propertiesList].observer = observerName;
         };
     }
+}
+// computed decorator
+function computed(propertyName, propertiesList) {
+    return function (target, computedFuncName) {
+        target.properties = target.properties || {};
+        var propOb = target.properties[propertyName] || {};
+        propOb["computed"] = computedFuncName + "(" + propertiesList + ")";
+        target.properties[propertyName] = propOb;
+    };
 }
 // element registration functions
 function createElement(element) {
@@ -177,6 +204,16 @@ var MyElement = (function (_super) {
     MyElement.prototype.test_and_test1_Changed = function (newTest, newTest1) {
         console.log("test=" + newTest + ", test1=" + newTest1);
     };
+    /*
+    @computed("fullname", "test")
+    computeFullName(test)
+    {
+       return "Douglas Adams [" + test + "]";
+    }
+    */
+    MyElement.prototype.computefullname = function (test) {
+        return "alba: " + test;
+    };
     __decorate([
         property({ type: String, value: "1024" /*, observer: "testChanged" */ })
     ], MyElement.prototype, "test");
@@ -191,6 +228,10 @@ var MyElement = (function (_super) {
         __decorate([
             observe("test,test1")
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
+    Object.defineProperty(MyElement.prototype, "computefullname",
+        __decorate([
+            property({ name: "fullname", type: String, computed: "test" })
+        ], MyElement.prototype, "computefullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "computefullname")));
     MyElement = __decorate([
         component("my-element"),
         behavior(MyBehaviour)

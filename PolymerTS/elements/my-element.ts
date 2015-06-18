@@ -46,6 +46,20 @@ class MyElement extends base implements PolymerElement
    }
 
    /*
+   @computed("fullname", "test")
+   computeFullName(test)
+   {
+      return "Douglas Adams [" + test + "]";         
+   }
+   */
+
+   @property({ name:"fullname", type: String, computed: "test" })
+   computefullname(test)
+   {
+      return "alba: "+test;
+   }
+
+   /*
    ready()
    {
       
