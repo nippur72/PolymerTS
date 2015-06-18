@@ -66,7 +66,7 @@ function extend(tagname) {
     };
 }
 // hostAttributes decorator
-function hostAttribute(attributes) {
+function hostAttributes(attributes) {
     return function (target) {
         target.prototype["hostAttributes"] = attributes;
     };

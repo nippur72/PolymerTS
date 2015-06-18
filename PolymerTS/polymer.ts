@@ -100,7 +100,7 @@ function extend(tagname: string) {
 }
 
 // hostAttributes decorator
-function hostAttribute(attributes: Object) {
+function hostAttributes(attributes: Object) {
 	return (target: Function) => {
 		target.prototype["hostAttributes"] = attributes;
 	}
