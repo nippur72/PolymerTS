@@ -1,4 +1,6 @@
-﻿class MyBehaviour extends base implements PolymerElement
+﻿/// <reference path="../../PolymerTS/polymer-ts.ts" />
+
+class MyBehaviour extends base implements PolymerElement
 {
    @listener("behave")
    onBehave() {

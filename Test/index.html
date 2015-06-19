@@ -5,15 +5,20 @@
    <meta charset="utf-8" />
    <title>Polymer with TypeScript example</title>
 
+   <!-- polymer and webcomponents standard library -->
    <link rel="import" href="bower_components/polymer/polymer.html">
-
-   <link rel="stylesheet" href="app.css" type="text/css" />
-   <script src="myapp.js"></script>
-
    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
    
+   <!-- polymer-ts -->
+   <script src="polymerts/polymer-ts.js"></script>
+   
+   <!-- custom elements -->
    <link rel="import" href="elements/my-element.html">
    <link rel="import" href="elements/my-timer.html">
+
+   <!-- app -->
+   <script src="app.js"></script>   
+        
 </head>
 
 <body>
@@ -29,7 +34,7 @@
 
    <script>
    window.addEventListener('WebComponentsReady', function (e) {
-      RegisterAll();
+      //RegisterAll();
    });
    </script>
 </body>

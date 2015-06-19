@@ -1,9 +1,12 @@
-﻿<link rel="import" href="bower_components/polymer/polymer.html">
-
-<dom-module id="my-timer">
+﻿<dom-module id="my-timer">
    <template>
       <p>This is a timer element, and the count which started 
       from <span>{{start}}</span> is now: <span>{{count}}</span></p>
    </template>
 </dom-module>
 
+<script type="text/javascript" src="my-timer.js"></script>
+
+<script>
+   createElement(MyTimer);
+</script>
