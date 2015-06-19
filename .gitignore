@@ -3,8 +3,9 @@
 PolymerTS/bower_components/
 PolymerTS/obj/
 PolymerTS/bin/
-
-
+Test/bower_components/
+Test/obj/
+Test/bin/
 
 
 # Windows image file caches
