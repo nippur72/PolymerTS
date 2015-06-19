@@ -2,105 +2,79 @@
 // Project: https://github.com/polymer
 // Definitions by: Antonino Porcino <https://github.com/nippur72>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
-// ref to Polymer.Base (this)
-var base = (function () {
-    function base() {
-    }
-    base.prototype.arrayDelete = function (path, item) { };
-    base.prototype.async = function (callback, waitTime) { };
-    base.prototype.attachedCallback = function () { };
-    base.prototype.attributeFollows = function (name, toElement, fromElement) { };
-    base.prototype.cancelAsync = function (handle) { };
-    base.prototype.cancelDebouncer = function (jobName) { };
-    base.prototype.classFollows = function (name, toElement, fromElement) { };
-    base.prototype.create = function (tag, props) { };
-    base.prototype.debounce = function (jobName, callback, wait) { };
-    base.prototype.deserialize = function (value, type) { };
-    base.prototype.distributeContent = function () { };
-    base.prototype.domHost = function () { };
-    base.prototype.elementMatches = function (selector, node) { };
-    base.prototype.fire = function (type, detail, options) { };
-    base.prototype.flushDebouncer = function (jobName) { };
-    base.prototype.get = function (path) { };
-    base.prototype.getContentChildNodes = function (slctr) { };
-    base.prototype.getContentChildren = function (slctr) { };
-    base.prototype.getNativePrototype = function (tag) { };
-    base.prototype.getPropertyInfo = function (property) { };
-    base.prototype.importHref = function (href, onload, onerror) { };
-    base.prototype.instanceTemplate = function (template) { };
-    base.prototype.isDebouncerActive = function (jobName) { };
-    base.prototype.linkPaths = function (to, from) { };
-    base.prototype.listen = function (node, eventName, methodName) { };
-    base.prototype.mixin = function (target, source) { };
-    base.prototype.notifyPath = function (path, value, fromAbove) { };
-    base.prototype.pop = function (path) { };
-    base.prototype.push = function (path, value) { };
-    base.prototype.reflectPropertyToAttribute = function (name) { };
-    base.prototype.resolveUrl = function (url) { };
-    base.prototype.scopeSubtree = function (container, shouldObserve) { };
-    base.prototype.serialize = function (value) { };
-    base.prototype.serializeValueToAttribute = function (value, attribute, node) { };
-    base.prototype.set = function (path, value, root) { };
-    base.prototype.setScrollDirection = function (direction, node) { };
-    base.prototype.shift = function (path, value) { };
-    base.prototype.splice = function (path, start, deleteCount) { };
-    base.prototype.toggleAttribute = function (name, bool, node) { };
-    base.prototype.toggleClass = function (name, bool, node) { };
-    base.prototype.transform = function (transform, node) { };
-    base.prototype.translate3d = function (x, y, z, node) { };
-    base.prototype.unlinkPaths = function (path) { };
-    base.prototype.unshift = function (path, value) { };
-    base.prototype.updateStyles = function () { };
-    return base;
-})();
-// component decorator
+var polymer;
+(function (polymer) {
+    var Base = (function () {
+        function Base() {
+        }
+        Base.prototype.arrayDelete = function (path, item) { };
+        Base.prototype.async = function (callback, waitTime) { };
+        Base.prototype.attachedCallback = function () { };
+        Base.prototype.attributeFollows = function (name, toElement, fromElement) { };
+        Base.prototype.cancelAsync = function (handle) { };
+        Base.prototype.cancelDebouncer = function (jobName) { };
+        Base.prototype.classFollows = function (name, toElement, fromElement) { };
+        Base.prototype.create = function (tag, props) { };
+        Base.prototype.debounce = function (jobName, callback, wait) { };
+        Base.prototype.deserialize = function (value, type) { };
+        Base.prototype.distributeContent = function () { };
+        Base.prototype.domHost = function () { };
+        Base.prototype.elementMatches = function (selector, node) { };
+        Base.prototype.fire = function (type, detail, options) { };
+        Base.prototype.flushDebouncer = function (jobName) { };
+        Base.prototype.get = function (path) { };
+        Base.prototype.getContentChildNodes = function (slctr) { };
+        Base.prototype.getContentChildren = function (slctr) { };
+        Base.prototype.getNativePrototype = function (tag) { };
+        Base.prototype.getPropertyInfo = function (property) { };
+        Base.prototype.importHref = function (href, onload, onerror) { };
+        Base.prototype.instanceTemplate = function (template) { };
+        Base.prototype.isDebouncerActive = function (jobName) { };
+        Base.prototype.linkPaths = function (to, from) { };
+        Base.prototype.listen = function (node, eventName, methodName) { };
+        Base.prototype.mixin = function (target, source) { };
+        Base.prototype.notifyPath = function (path, value, fromAbove) { };
+        Base.prototype.pop = function (path) { };
+        Base.prototype.push = function (path, value) { };
+        Base.prototype.reflectPropertyToAttribute = function (name) { };
+        Base.prototype.resolveUrl = function (url) { };
+        Base.prototype.scopeSubtree = function (container, shouldObserve) { };
+        Base.prototype.serialize = function (value) { };
+        Base.prototype.serializeValueToAttribute = function (value, attribute, node) { };
+        Base.prototype.set = function (path, value, root) { };
+        Base.prototype.setScrollDirection = function (direction, node) { };
+        Base.prototype.shift = function (path, value) { };
+        Base.prototype.splice = function (path, start, deleteCount) { };
+        Base.prototype.toggleAttribute = function (name, bool, node) { };
+        Base.prototype.toggleClass = function (name, bool, node) { };
+        Base.prototype.transform = function (transform, node) { };
+        Base.prototype.translate3d = function (x, y, z, node) { };
+        Base.prototype.unlinkPaths = function (path) { };
+        Base.prototype.unshift = function (path, value) { };
+        Base.prototype.updateStyles = function () { };
+        return Base;
+    })();
+    polymer.Base = Base;
+})(polymer || (polymer = {})); // end module
+// @component decorator
 function component(tagname) {
     return function (target) {
         target.prototype["is"] = tagname;
     };
 }
-// extend decorator
+// @extend decorator
 function extend(tagname) {
     return function (target) {
         target.prototype["extends"] = tagname;
     };
 }
-// hostAttributes decorator
+// @hostAttributes decorator
 function hostAttributes(attributes) {
     return function (target) {
         target.prototype["hostAttributes"] = attributes;
     };
 }
-/*
-// property decorator (simple version)
-function property(ob: propDefinition) {
-    return (target: PolymerElement, propertyKey: string) => {
-        target.properties = target.properties || {};
-        target.properties[propertyKey] = ob;
-    }
-}
-*/
-/*
-// property decorator, computed properties via "name:"
-function property(ob: propDefinition) {
-   return (target: PolymerElement, propertyKey: string) => {
-      target.properties = target.properties || {};
-      if (typeof (target[propertyKey]) === "function")
-      {
-         // property is function, treat it as a computed property
-         var name = ob["name"];
-         ob["computed"] = propertyKey + "(" + ob["computed"] + ")";
-         target.properties[name] = ob;
-      }
-      else
-      {
-         // normal property
-         target.properties[propertyKey] = ob;
-      }
-   }
-}
-*/
-// property decorator with automatic name for computed props
+// @property decorator with automatic name for computed props
 function property(ob) {
     return function (target, propertyKey) {
         target.properties = target.properties || {};
@@ -118,7 +92,7 @@ function property(ob) {
         }
     };
 }
-// computed decorator
+// @computed decorator
 function computed(ob) {
     return function (target, computedFuncName) {
         target.properties = target.properties || {};
@@ -134,14 +108,14 @@ function computed(ob) {
         target[getterName] = target[computedFuncName];
     };
 }
-// listener decorator
+// @listener decorator
 function listener(eventName) {
     return function (target, propertyKey) {
         target.listeners = target.listeners || {};
         target.listeners[eventName] = propertyKey;
     };
 }
-// behavior decorator
+// @behavior decorator
 function behavior(behaviorObject) {
     return function (target) {
         if (typeof (target) === "function") {
@@ -156,7 +130,7 @@ function behavior(behaviorObject) {
         }
     };
 }
-// observe decorator
+// @observe decorator
 function observe(propertiesList) {
     if (propertiesList.indexOf(",") > 0) {
         // observing multiple properties
