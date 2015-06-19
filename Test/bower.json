@@ -1,5 +1,5 @@
 {
-  "name": "Test",
+  "name": "polymer-ts-testapp",
   "version": "0.0.0",
   "homepage": "https://github.com/nippur72/PolymerTS",
   "authors": [
@@ -14,6 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.0.0"
+    "polymer": "Polymer/polymer#1.0.0",
+    "polymer-ts": "..\\..\\PolymerTS"
   }
 }

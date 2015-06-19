@@ -22,6 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bower_components\polymer-ts\polymer-ts.js" />
     <Content Include="bower_components\polymer\LICENSE.txt" />
     <Content Include="bower_components\polymer\polymer-micro.html" />
     <Content Include="bower_components\polymer\polymer-mini.html" />
@@ -46,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="elements\my-timer.ts" />
   </ItemGroup>
@@ -59,6 +61,9 @@
     <Content Include="bower_components\webcomponentsjs\package.json" />
     <Content Include="bower_components\webcomponentsjs\README.md" />
     <Content Include="polymerts\polymer-ts.js.map" />
+    <Content Include="bower_components\polymer-ts\.bower.json" />
+    <Content Include="bower_components\polymer-ts\bower.json" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

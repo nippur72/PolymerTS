@@ -1,4 +1,4 @@
-﻿/// <reference path="../../PolymerTS/polymer-ts.ts" />
+﻿/// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
 
 class MyBehaviour extends base implements PolymerElement
 {
