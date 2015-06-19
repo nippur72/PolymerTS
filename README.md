@@ -4,16 +4,26 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
 
 Note: this repo is not yet published on [DefinitelyTyped](https://github.com/borisyankov/DefinitelyTyped).
 
-To use PolymerTS, just get the file `polymer.ts` and include in your TypeScript project.
-
-To run the very small example contained in this repo, clone it and install Polymer:
-
-- manually: extract .zip file into `bower_components` folder
-- or more easily via bower: `bower update`
-
-Then open in Visual Studio and run the project.
-
 If you find bugs or want to improve it, just send a pull request.
+
+# Installation
+
+Install via bower:
+```
+bower install -save polymer-ts
+```
+You'll get the following files in `bower_components/polymer-ts`:
+- `polymer-ts.js` the JavaScript file to add in your app (via `<script src="">`)
+- `polymer-ts.ts` the file to reference in your TypeScript code (via `/// <reference path="...">`)
+
+# Running the example
+
+To run the very small example contained in the repo:
+
+- clone the repo `nippur72/PolymerTS`
+- go to the `Test` directory
+- run `bower update`
+- Open the solution in Visual Studio and run the Test project.
 
 # Supported features
 
@@ -36,6 +46,49 @@ If you find bugs or want to improve it, just send a pull request.
 - extend the `base` element 
 - implement the `PolymerElement` interface
 - use @decorators as needed 
+
+# How to correctly reference in markup
+
+In the `head` section of your main .html file:
+
+```HTML
+<head>
+   <!-- polymer and webcomponents standard library -->
+   <link rel="import" href="bower_components/polymer/polymer.html">
+   <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+   
+   <!-- include the file "polymer-ts.js" before the elements -->
+   <script src="bower_components/polymer-ts/polymer-ts.js"></script>
+   
+   <!-- your custom elements -->
+   <link rel="import" href="elements/my-element.html">   
+</head>
+```
+
+In your custom element (e.g. `elements/my-element.html`):
+```HTML
+<dom-module id="my-element">
+   <!-- ... your custom element here... -->
+</dom-module>
+
+<!-- your element code typescript transpiled file --> 
+<script type="text/javascript" src="my-element.js"></script>
+
+<!-- create the element in polymer -->
+<script>
+   createElement(MyElement);
+</script>
+```
+
+In your element typescript code (e.g. `elements/my-element.ts`):
+```TypeScript
+/// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
+
+@component("my-element")
+class MyElement extends base implements PolymerElement
+{
+}
+```
 
 # Examples
 
@@ -78,8 +131,6 @@ class MyTimer extends base implements PolymerElement
 ```
 
 ```HTML
-<!-- link to polymer.html is not needed as element registration is done outside of HTML definition -->
-
 <dom-module id="my-timer">
    <template>
       <p>This is a timer element, and the count which started 
