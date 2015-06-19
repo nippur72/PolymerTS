@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolymerTS", "PolymerTS\PolymerTS.csproj", "{427F1995-BEC9-4546-AB67-1DC5BC1A14A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolymerTS", "PolymerTS.csproj", "{427F1995-BEC9-4546-AB67-1DC5BC1A14A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B1FC5320-C3B0-4224-8C90-9DB35561D7E7}"
 	ProjectSection(ProjectDependencies) = postProject

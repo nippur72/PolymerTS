@@ -1,8 +1,8 @@
 *.js.map
 *.suo
-PolymerTS/bower_components/
-PolymerTS/obj/
-PolymerTS/bin/
+bower_components/
+obj/
+bin/
 Test/bower_components/
 Test/obj/
 Test/bin/
