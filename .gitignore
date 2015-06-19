@@ -1,4 +1,3 @@
-*.js.map
 *.suo
 bower_components/
 obj/
@@ -6,7 +5,8 @@ bin/
 Test/bower_components/
 Test/obj/
 Test/bin/
-
+Test/*.map
+Test/*.js
 
 # Windows image file caches
 Thumbs.db
