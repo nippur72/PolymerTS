@@ -1,0 +1,29 @@
+{
+  "name": "polymer-ts",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nippur72/PolymerTS",
+  "authors": [
+    "Antonino Porcino <nino.porcino@gmail.com>"
+  ],
+  "description": "Polymer 1.0 for TypeScript",
+  "main": "polymer-ts.js",
+  "keywords": [
+    "polymer",
+    "typescript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Test/*",
+    "bin/*",
+    "obj/*",
+    "*.sln",
+    "*.suo",
+    "*.csproj",
+    "*.csproj.user",
+    "README.md",
+    "web.*"
+  ]
+}
