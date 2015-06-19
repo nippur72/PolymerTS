@@ -7,6 +7,8 @@ Test/obj/
 Test/bin/
 Test/*.map
 Test/*.js
+Test/elements/*.map
+Test/elements/*.js
 
 # Windows image file caches
 Thumbs.db
