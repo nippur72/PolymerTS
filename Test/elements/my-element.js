@@ -5,7 +5,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var __decorate = this.__decorate || function (decorators, target, key, desc) {
+if (typeof __decorate !== "function") __decorate = function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
     switch (arguments.length) {
         case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
@@ -26,7 +26,7 @@ var MyBehaviour = (function (_super) {
             listener("behave")
         ], MyBehaviour.prototype, "onBehave", Object.getOwnPropertyDescriptor(MyBehaviour.prototype, "onBehave")));
     return MyBehaviour;
-})(base);
+})(polymer.Base);
 var MyElement = (function (_super) {
     __extends(MyElement, _super);
     function MyElement() {
@@ -97,5 +97,5 @@ var MyElement = (function (_super) {
         behavior(MyBehaviour)
     ], MyElement);
     return MyElement;
-})(base);
+})(polymer.Base);
 //# sourceMappingURL=my-element.js.map

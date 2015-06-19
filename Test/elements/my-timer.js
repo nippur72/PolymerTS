@@ -1,4 +1,10 @@
-var __decorate = this.__decorate || function (decorators, target, key, desc) {
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+if (typeof __decorate !== "function") __decorate = function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
     switch (arguments.length) {
         case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
@@ -6,8 +12,10 @@ var __decorate = this.__decorate || function (decorators, target, key, desc) {
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var MyTimer = (function () {
+var MyTimer = (function (_super) {
+    __extends(MyTimer, _super);
     function MyTimer() {
+        _super.apply(this, arguments);
     }
     MyTimer.prototype.ready = function () {
         var _this = this;
@@ -26,5 +34,5 @@ var MyTimer = (function () {
         component("my-timer")
     ], MyTimer);
     return MyTimer;
-})();
+})(polymer.Base);
 //# sourceMappingURL=my-timer.js.map

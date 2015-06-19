@@ -43,8 +43,8 @@ To run the very small example contained in the repo:
 # How to write elements
 
 - write elements as TypeScript classes
-- extend the `base` element 
-- implement the `PolymerElement` interface
+- extend the `polymer.Base` class 
+- implement the `polymer.Element` interface
 - use @decorators as needed 
 
 # How to correctly reference in markup
@@ -95,7 +95,7 @@ class MyElement extends base implements PolymerElement
 ### A timer-based counter element
 ```TypeScript
 @component("my-timer")
-class MyTimer extends base implements PolymerElement
+class MyTimer extends polymer.Base implements polymer.Element
 {
    @property({ type: Number, value: 0 })
    public start: number;   
@@ -154,7 +154,7 @@ To use the element
 First you create your custom behaviour in a separate class, and the you "import" it with the `@behaviour` decorator. You can put the decorator close the `class` keyword or within the class itself. 
 
 ```TypeScript
-class MyBehaviour extends base implements PolymerElement
+class MyBehaviour extends polymer.Base implements polymer.Element
 {
    @listener("something_has_happened")
    onBehave() {
@@ -165,7 +165,7 @@ class MyBehaviour extends base implements PolymerElement
 ```TypeScript
 @component("my-element")
 @behavior(MyBehaviour)
-class MyElement extends base implements PolymerElement
+class MyElement extends polymer.Base implements polymer.Element
 {
   // ...
 }
@@ -173,7 +173,7 @@ class MyElement extends base implements PolymerElement
 or
 ```TypeScript
 @component("my-element")
-class MyElement extends base implements PolymerElement
+class MyElement extends polymer.Base implements polymer.Element
 {
 	@behavior(MyBehaviour)  
 	// ...

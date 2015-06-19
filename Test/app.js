@@ -1,5 +1,5 @@
 function RegisterAll() {
     //createElement(MyElement);
-    createElement(MyTimer);
+    //createElement(MyTimer);
 }
 //# sourceMappingURL=app.js.map

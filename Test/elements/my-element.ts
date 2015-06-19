@@ -1,6 +1,6 @@
 ﻿/// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
 
-class MyBehaviour extends base implements PolymerElement
+class MyBehaviour extends polymer.Base implements polymer.Element
 {
    @listener("behave")
    onBehave() {
@@ -10,7 +10,7 @@ class MyBehaviour extends base implements PolymerElement
 
 @component("my-element")
 @behavior(MyBehaviour)
-class MyElement extends base implements PolymerElement
+class MyElement extends polymer.Base implements polymer.Element
 {
    @property({ type: String, value: "1024" /*, observer: "testChanged" */})
    test: string; 
