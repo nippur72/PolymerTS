@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.0.0",
-    "polymer-ts": "nippur72/PolymerTS"
+    "polymer": "~1.0.4",
+    "polymer-ts": "~0.0.1"
   }
 }

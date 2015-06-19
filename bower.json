@@ -26,5 +26,8 @@
     "*.csproj.user",
     "README.md",
     "web.*"
-  ]
+  ],
+  "dependencies": {
+    "polymer": "~1.0.4"
+  }
 }
