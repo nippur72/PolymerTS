@@ -2,9 +2,25 @@
 
 Write Polymer 1.0 elements as TypeScript @decorated classes! 
 
-Note: this repo is not yet published on [DefinitelyTyped](https://github.com/borisyankov/DefinitelyTyped).
-
 If you find bugs or want to improve it, just send a pull request.
+
+# Table of contents
+
+- Installation
+- Supported features
+- How to write elements
+- How to correctly reference in markup
+- @decorators explained
+   - @component
+   - @property
+   - @observe
+   - @computed
+   - @listener
+- Examples
+   - A timer-based counter element
+   - Using behaviours
+   - Using computed properties
+- Running the example
 
 # Installation
 
@@ -16,23 +32,14 @@ You'll get the following files in `bower_components/polymer-ts`:
 - `polymer-ts.js` the JavaScript file to add in your app (via `<script src="">`)
 - `polymer-ts.ts` the file to reference in your TypeScript code (via `/// <reference path="...">`)
 
-# Running the example
-
-To run the very small example contained in the repo:
-
-- clone the repo `nippur72/PolymerTS`
-- go to the `Test` directory
-- run `bower update`
-- Open the solution in Visual Studio and run the Test project.
-
 # Supported features
 
 - Decorators
-   - `@component(name)` sets component's name (equivalent to `is:` in PolymerJS)
+   - `@component(tagName)` sets component's name (equivalent to `is:` in PolymerJS)
    - `@extend(name)` extends a native tag (equivalent to `extends:` in PolymerJS)
    - `@hostAttributes(attrs)` sets host attributes (equivalent to `hostAttributes:` in PolymerJS)
    - `@property(defs)` sets a property (equivalent to `properties:` in PolymerJS)
-   - `@observe(defs)` sets an observer function on single or multiple properties (equivalent to `observers:` in PolymerJS)
+   - `@observe(propList)` sets an observer function on single or multiple properties (equivalent to `observers:` in PolymerJS)
    - `@computed()` defines a computed property
    - `@listener(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
    - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
@@ -88,6 +95,99 @@ In your element typescript code (e.g. `elements/my-element.ts`):
 class MyElement extends polymer.base implements polymer.Element
 {
 }
+```
+
+# @decorators explained
+
+## @component(tagName)
+
+Sets the tag name of the custom component. The decorator is applied to the TypeScript `class` keyword. Notice that tag names must include a `-` as per WebComponents specs. Example of a `<my-element>`:
+ 
+```TypeScript
+@component("my-element")
+class MyElement extends polymer.Base implements polymer.Element
+{
+}
+```
+
+## @property(def)
+
+Creates a Polymer property. It can be applied to a member field or a function. When applied to a function, the property becomes a computed property.
+
+The parameter `def` is a map object that sets the options for the property:
+
+```TypeScript
+{
+    type?: any;
+    value?: any;
+    reflectToAttribute?: boolean;
+    readonly?: boolean;
+    notify?: boolean;
+    computed?: string;
+    observer?: string;
+}
+```
+
+Example:
+```TypeScript
+@property({ type: number, value: 42 });
+initialValue: number;
+```
+While you can specify `computed` and `observer` in a property definition, there are specific decorators `@computed` and `@observe` that are easier to use. 
+
+## @observe(propList)
+
+Sets an observer function for a single property or a list of properties.
+
+If observing a single property, the function must be of the type `function(newVal,OldVal)`.
+
+If observing multiple properties (comma separated), the function receives only the new values,
+in the same order of the list. 
+
+```TypeScript
+@observe("firstname,lastname");
+fullname(newFirstName,newLastName)
+{
+   // ... 
+}
+```
+
+## @computed
+
+Creates a computed property or sets the function for a computed property.
+
+The easiest way is to decorate a function that takes as arguments the properties that are involved in the computed property. 
+
+In the following example, a computed property named "fullname" is created, based on the properties "firstName" and "lastName":
+
+```TypeScript
+@computed
+fullname(firstName,lastName)
+{
+   return firstName+" "+lastName; 
+}
+```
+
+The decorator accepts also a map object for setting options on the property, e.g.:
+```TypeScript
+@computed({ type: String })
+fullname(firstName,lastName)
+{
+   return firstName+" "+lastName; 
+}
+```
+
+## @listener(eventName)
+
+Sets a listener function for an event.
+
+In the following example the function `resetCounter()` is called whenever the event `reset-counters` is triggered (e.g. via `fire()`).
+
+```TypeScript
+   @listener("reset-counters")
+   resetCounter() {
+      this.count = 0;
+   }
 ```
 
 # Examples
@@ -204,3 +304,12 @@ fullname(first,last) {
    return first+" "+last; 
 }
 ```
+
+# Running the example
+
+To run the very small example contained in this repo:
+
+- clone the repo `nippur72/PolymerTS`
+- go to the `Test` directory
+- run `bower update`
+- Open the solution in Visual Studio and run the Test project.
