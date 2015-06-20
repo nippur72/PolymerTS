@@ -118,13 +118,13 @@ The parameter `def` is a map object that sets the options for the property:
 
 ```TypeScript
 {
-    type?: any;
-    value?: any;
-    reflectToAttribute?: boolean;
-    readonly?: boolean;
-    notify?: boolean;
-    computed?: string;
-    observer?: string;
+    type?: any;                     // Boolean, Date, Number, String, Array or Object
+    value?: any;                    // default value for the property
+    reflectToAttribute?: boolean;   // should the property reflect to attribute
+    readonly?: boolean;             // marks property as read-only
+    notify?: boolean;               // if set to true, will trigger "propname-changed"
+    computed?: string;              // computed function call (as string)
+    observer?: string;              // observer function call (as string)
 }
 ```
 
@@ -133,7 +133,7 @@ Example:
 @property({ type: number, value: 42 });
 initialValue: number;
 ```
-While you can specify `computed` and `observer` in a property definition, there are specific decorators `@computed` and `@observe` that are easier to use. 
+While you can specify `computed` and `observer` in a property definition, there are the specific decorators `@computed` and `@observe` that are easier to use. 
 
 ## @observe(propList)
 
@@ -145,8 +145,18 @@ If observing multiple properties (comma separated), the function receives only t
 in the same order of the list. 
 
 ```TypeScript
+// single property observer
+@observe("name");
+nameChanged(newName,oldName)
+{
+   // ... 
+}
+```
+
+```TypeScript
+// multiple property observer
 @observe("firstname,lastname");
-fullname(newFirstName,newLastName)
+fullnameChanged(newFirstName,newLastName)
 {
    // ... 
 }
