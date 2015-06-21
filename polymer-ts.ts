@@ -123,7 +123,7 @@ function hostAttributes(attributes: Object) {
 }
 
 // @property decorator with automatic name for computed props
-function property(ob: polymer.Property) {
+function property(ob?: polymer.Property) {
    return (target: polymer.Element, propertyKey: string) => {
       target.properties = target.properties || {};
       if (typeof (target[propertyKey]) === "function") {

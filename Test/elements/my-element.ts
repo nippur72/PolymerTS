@@ -16,7 +16,10 @@ class MyElement extends polymer.Base implements polymer.Element
    test: string; 
      
    @property({ type: String, value: "2048" /*, observer: "testChanged" */ })
-   test1: string;   
+   test1: string;  
+
+   @property()
+   dummy_property: any;    
 
    //@behavior(MyBehaviour)
    
@@ -70,7 +73,7 @@ class MyElement extends polymer.Base implements polymer.Element
    }
    */
 
-   @computed({ type: String })
+   @computed({ type: String })   
    fullname(test) {
       return "Douglas Adams [" + test + "]";    
    }

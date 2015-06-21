@@ -42,7 +42,6 @@
     <Content Include="elements\my-element.html" />
     <Content Include="elements\my-timer.html" />
     <Content Include="index.html" />
-    <Content Include="polymerts\polymer-ts.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +59,6 @@
     <Content Include="bower_components\webcomponentsjs\build.log" />
     <Content Include="bower_components\webcomponentsjs\package.json" />
     <Content Include="bower_components\webcomponentsjs\README.md" />
-    <Content Include="polymerts\polymer-ts.js.map" />
     <Content Include="bower_components\polymer-ts\.bower.json" />
     <Content Include="bower_components\polymer-ts\bower.json" />
     <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
