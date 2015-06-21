@@ -1,6 +1,5 @@
 {
-  "name": "polymer-ts",
-  "version": "0.0.1",
+  "name": "polymer-ts",  
   "homepage": "https://github.com/nippur72/PolymerTS",
   "authors": [
     "Antonino Porcino <nino.porcino@gmail.com>"
@@ -28,6 +27,6 @@
     "web.*"
   ],
   "dependencies": {
-    "polymer": "~1.0.4"
+    "polymer": ">=1.0.4"
   }
 }
