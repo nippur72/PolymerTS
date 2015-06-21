@@ -102,9 +102,13 @@ declare var Polymer: {
 }
 
 // @component decorator
-function component(tagname: string) {
+function component(tagname: string, extendsTag?: string) {
 	return function(target: Function) {
-		target.prototype["is"] = tagname;
+      target.prototype["is"] = tagname;
+      if (extendsTag !== undefined)
+      {
+         target.prototype["extends"] = extendsTag;
+      }
 	}
 }
 

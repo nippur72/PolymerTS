@@ -57,9 +57,12 @@ var polymer;
     polymer.Base = Base;
 })(polymer || (polymer = {})); // end module
 // @component decorator
-function component(tagname) {
+function component(tagname, extendsTag) {
     return function (target) {
         target.prototype["is"] = tagname;
+        if (extendsTag !== undefined) {
+            target.prototype["extends"] = extendsTag;
+        }
     };
 }
 // @extend decorator

@@ -110,6 +110,22 @@ class MyElement extends polymer.Base implements polymer.Element
 }
 ```
 
+If the component extends a native HTML tag, pass it as second argument or use the `@extend` decorator:
+
+```TypeScript
+@component("my-button","button")
+class MyButton extends polymer.Base implements polymer.Element
+{
+}
+```
+or
+```TypeScript
+@component("my-button") @extend("button")
+class MyButton extends polymer.Base implements polymer.Element
+{
+}
+```
+
 ## @property(def)
 
 Creates a Polymer property. It can be applied to a member field or a function. When applied to a function, the property becomes a computed property.
