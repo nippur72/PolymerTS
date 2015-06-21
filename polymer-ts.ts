@@ -127,7 +127,7 @@ function hostAttributes(attributes: Object) {
 }
 
 // @property decorator with automatic name for computed props
-function property(ob?: polymer.Property) {
+function property(ob?: polymer.Property) {      
    return (target: polymer.Element, propertyKey: string) => {
       target.properties = target.properties || {};
       if (typeof (target[propertyKey]) === "function") {
@@ -140,16 +140,15 @@ function property(ob?: polymer.Property) {
       }
       else {
          // normal property
-         target.properties[propertyKey] = ob;
+         target.properties[propertyKey] = ob || {};
       }
    }
 }
 
 // @computed decorator
-function computed(ob?: polymer.Property) {
+function computed(ob?: polymer.Property) {   
    return (target: polymer.Element, computedFuncName: string) => {
-      target.properties = target.properties || {};
-      //var propOb = target.properties[computedFuncName] || {};
+      target.properties = target.properties || {};      
       var propOb = ob || {};
       var getterName = "get_computed_" + computedFuncName;
       var funcText: string = target[computedFuncName].toString();

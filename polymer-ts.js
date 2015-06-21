@@ -91,7 +91,7 @@ function property(ob) {
         }
         else {
             // normal property
-            target.properties[propertyKey] = ob;
+            target.properties[propertyKey] = ob || {};
         }
     };
 }
@@ -99,7 +99,6 @@ function property(ob) {
 function computed(ob) {
     return function (target, computedFuncName) {
         target.properties = target.properties || {};
-        //var propOb = target.properties[computedFuncName] || {};
         var propOb = ob || {};
         var getterName = "get_computed_" + computedFuncName;
         var funcText = target[computedFuncName].toString();
