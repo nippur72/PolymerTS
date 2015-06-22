@@ -60,9 +60,9 @@ In the `head` section of your main .html file:
 
 ```HTML
 <head>
-   <!-- polymer and webcomponents standard library -->
-   <link rel="import" href="bower_components/polymer/polymer.html">
+   <!-- webcomponents and polymer standard library -->
    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+   <link rel="import" href="bower_components/polymer/polymer.html">   
    
    <!-- include the file "polymer-ts.js" before the elements -->
    <script src="bower_components/polymer-ts/polymer-ts.js"></script>
