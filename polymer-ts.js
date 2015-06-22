@@ -71,6 +71,18 @@ function extend(tagname) {
         target.prototype["extends"] = tagname;
     };
 }
+// @template decorator
+function template(templateString) {
+    return function (target) {
+        target.prototype["template"] = templateString;
+    };
+}
+// @style decorator
+function style(styleString) {
+    return function (target) {
+        target.prototype["style"] = styleString;
+    };
+}
 // @hostAttributes decorator
 function hostAttributes(attributes) {
     return function (target) {
@@ -152,9 +164,34 @@ function observe(propertiesList) {
 }
 // element registration functions
 function createElement(element) {
+    if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
+        createTemplate(element);
+    }
     Polymer(element.prototype);
 }
 function createClass(element) {
+    if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
+        createTemplate(element);
+    }
     Polymer.Class(element.prototype);
+}
+function createTemplate(definition) {
+    var domModule = document.createElement('dom-module');
+    var proto = definition.prototype;
+    domModule.id = proto.is;
+    // attaches style
+    if (proto.style !== undefined) {
+        var elemStyle = document.createElement('style', 'custom-style');
+        domModule.appendChild(elemStyle);
+        elemStyle.textContent = proto.style;
+    }
+    // attaches template
+    if (proto.template !== undefined) {
+        var elemTemplate = document.createElement('template');
+        domModule.appendChild(elemTemplate);
+        elemTemplate.innerHTML = proto.template;
+    }
+    // tells polymer the element has been created
+    domModule.createdCallback();
 }
 //# sourceMappingURL=polymer-ts.js.map

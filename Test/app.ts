@@ -1,6 +1,7 @@
 ﻿
-function RegisterAll() {
-   //createElement(MyElement);
-   //createElement(MyTimer);
+function RegisterAll()
+{   
+   createElement(MyInline);   
 }
+
 

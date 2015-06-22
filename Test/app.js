@@ -1,5 +1,4 @@
 function RegisterAll() {
-    //createElement(MyElement);
-    //createElement(MyTimer);
+    createElement(MyInline);
 }
 //# sourceMappingURL=app.js.map

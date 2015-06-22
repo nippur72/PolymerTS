@@ -6,15 +6,16 @@
    <title>Polymer with TypeScript example</title>
 
    <!-- polymer and webcomponents standard library -->
+   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
    <link rel="import" href="bower_components/polymer/polymer.html">
-   <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-   
+      
    <!-- polymer-ts -->
    <script src="bower_components/polymer-ts/polymer-ts.js"></script>
    
    <!-- custom elements -->
    <link rel="import" href="elements/my-element.html">
    <link rel="import" href="elements/my-timer.html">
+   <script src="elements/my-inline.js"></script>   
 
    <!-- app -->
    <script src="app.js"></script>   
@@ -32,9 +33,11 @@
    <my-timer start="42"></my-timer>
    <hr />
 
+   <my-inline>xxxxx</my-inline>
+   
    <script>
    window.addEventListener('WebComponentsReady', function (e) {
-      //RegisterAll();
+      RegisterAll();
    });
    </script>
 </body>

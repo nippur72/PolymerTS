@@ -48,6 +48,7 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="elements\my-element.ts" />
+    <TypeScriptCompile Include="elements\my-inline.ts" />
     <TypeScriptCompile Include="elements\my-timer.ts" />
   </ItemGroup>
   <ItemGroup>

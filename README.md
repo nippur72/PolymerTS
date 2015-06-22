@@ -16,6 +16,7 @@ If you find bugs or want to improve it, just send a pull request.
    - @observe
    - @computed
    - @listener
+- Creating elements imperatively: @template and @style
 - Examples
    - A timer-based counter element
    - Using behaviours
@@ -214,6 +215,35 @@ In the following example the function `resetCounter()` is called whenever the ev
    resetCounter() {
       this.count = 0;
    }
+```
+
+# Creating elements only with code: @template and @style
+
+**Eperimental feature**: It's also possible to create elements using TypeScript code only, without having any external .html. That can be useful if you want to keep template and logic in the same
+TypeScript file.
+
+Use the tags `@template` and `@style` to specify the element's template and style, as in the following example: 
+```TypeScript
+@component("my-example")
+
+// pass as argument what would be within <dom-module> and </dom-module>
+@template(`<div>This element has been created completely from code</div>`)
+
+// pass as argument what would be within <style> and </style>
+@style(`:host { display: block; } div { color: red; }`)
+
+class MyExample extends polymer.Base implements polymer.Element
+{
+   // ...
+}
+```
+Registration is done with `createElement` but be sure to call it after the `WebComponentsReady` event has been fired:
+```JavaScript
+   <script>
+   window.addEventListener('WebComponentsReady', function (e) {
+      createElement(MyExample);   
+   });
+   </script>
 ```
 
 # Examples

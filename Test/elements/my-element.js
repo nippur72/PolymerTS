@@ -71,7 +71,6 @@ var MyElement = (function (_super) {
        return "Douglas Adams [" + test + "]";
     }
     */
-    //@computed({ type: String })
     MyElement.prototype.fullname = function (test) {
         return "Douglas Adams [" + test + "]";
     };
@@ -82,7 +81,7 @@ var MyElement = (function (_super) {
         property({ type: String, value: "2048" /*, observer: "testChanged" */ })
     ], MyElement.prototype, "test1");
     __decorate([
-        property
+        property()
     ], MyElement.prototype, "dummy_property");
     Object.defineProperty(MyElement.prototype, "testChanged",
         __decorate([
@@ -94,7 +93,7 @@ var MyElement = (function (_super) {
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
     Object.defineProperty(MyElement.prototype, "fullname",
         __decorate([
-            computed
+            computed({ type: String })
         ], MyElement.prototype, "fullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "fullname")));
     MyElement = __decorate([
         component("my-element"),

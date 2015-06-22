@@ -68,4 +68,14 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)polymer-ts.ts" "$(SolutionDir)\Test\bower_components\polymer-ts"
+copy "$(SolutionDir)polymer-ts.js" "$(SolutionDir)\Test\bower_components\polymer-ts"
+copy "$(SolutionDir)polymer-ts.js.map" "$(SolutionDir)\Test\bower_components\polymer-ts"
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

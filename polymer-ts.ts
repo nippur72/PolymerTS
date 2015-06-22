@@ -119,6 +119,20 @@ function extend(tagname: string) {
 	}
 }
 
+// @template decorator
+function template(templateString: string) {
+   return (target: Function) => {
+      target.prototype["template"] = templateString;
+   }
+}
+
+// @style decorator
+function style(styleString: string) {
+   return (target: Function) => {
+      target.prototype["style"] = styleString;
+   }
+}
+
 // @hostAttributes decorator
 function hostAttributes(attributes: Object) {
 	return (target: Function) => {
@@ -206,9 +220,41 @@ function observe(propertiesList: string) {
 
 // element registration functions
 function createElement(element: polymer.Element): void {
+   if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+      createTemplate(element);
+   }
 	Polymer(element.prototype);
 }
 
 function createClass(element: polymer.Element): void {
-	Polymer.Class(element.prototype);
+   if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+      createTemplate(element);
+   }
+   Polymer.Class(element.prototype);
 }
+
+function createTemplate(definition: polymer.Element) {
+   var domModule: any = document.createElement('dom-module');
+
+   var proto = <any> definition.prototype;
+
+   domModule.id = proto.is;
+
+   // attaches style
+   if(proto.style !== undefined) {
+      var elemStyle = (<any> document).createElement('style', 'custom-style');  
+      domModule.appendChild(elemStyle);
+      elemStyle.textContent = proto.style;
+   }
+
+   // attaches template
+   if(proto.template !== undefined) {
+      var elemTemplate = document.createElement('template');
+      domModule.appendChild(elemTemplate);
+      elemTemplate.innerHTML = proto.template;
+   }
+
+   // tells polymer the element has been created
+   domModule.createdCallback();
+}
+
