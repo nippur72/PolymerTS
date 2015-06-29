@@ -175,8 +175,8 @@ function computed(ob?: polymer.Property) {
    }
 }
 
-// @listener decorator
-function listener(eventName: string) {
+// @listen decorator
+function listen(eventName: string) {
 	return (target: polymer.Element, propertyKey: string) => {
 		target.listeners = target.listeners || {};
 		target.listeners[eventName] = propertyKey;

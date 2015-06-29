@@ -122,8 +122,8 @@ function computed(ob) {
         target[getterName] = target[computedFuncName];
     };
 }
-// @listener decorator
-function listener(eventName) {
+// @listen decorator
+function listen(eventName) {
     return function (target, propertyKey) {
         target.listeners = target.listeners || {};
         target.listeners[eventName] = propertyKey;

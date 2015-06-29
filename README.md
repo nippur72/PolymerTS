@@ -15,7 +15,8 @@ If you find bugs or want to improve it, just send a pull request.
    - @property
    - @observe
    - @computed
-   - @listener
+   - @listen
+   - @behaviour
 - Creating elements imperatively: @template and @style
 - Examples
    - A timer-based counter element
@@ -42,7 +43,7 @@ You'll get the following files in `bower_components/polymer-ts`:
    - `@property(defs)` sets a property (equivalent to `properties:` in PolymerJS)
    - `@observe(propList)` sets an observer function on single or multiple properties (equivalent to `observers:` in PolymerJS)
    - `@computed()` defines a computed property
-   - `@listener(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
+   - `@listen(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
    - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
 - Registration functions
    - `createElement(className)` register in Polymer and create the element
@@ -204,17 +205,54 @@ fullname(firstName,lastName)
 }
 ```
 
-## @listener(eventName)
+## @listen(eventName)
 
 Sets a listener function for an event.
 
 In the following example the function `resetCounter()` is called whenever the event `reset-counters` is triggered (e.g. via `fire()`).
 
 ```TypeScript
-   @listener("reset-counters")
+   @listen("reset-counters")
    resetCounter() {
       this.count = 0;
    }
+```
+
+## @behaviour(className)
+
+Incorporate behaviours from another element (defined with PolymerTS). 
+
+A behaviour is firstly defined in a separate class, declaring it normally as any other Polymer element, and then its behaviour are "imported" with the `@behaviour` decorator. 
+
+The decorator can decorate the `class` keyword or it can be put within the class itself.
+
+Examples: 
+
+```TypeScript
+class MyBehaviour extends polymer.Base implements polymer.Element
+{
+   @listen("something_has_happened")
+   onBehave() {
+      console.log("something_has_happened triggered");
+   }
+}
+```
+```TypeScript
+@component("my-element")
+@behavior(MyBehaviour)
+class MyElement extends polymer.Base implements polymer.Element
+{
+  // ...
+}
+```
+or
+```TypeScript
+@component("my-element")
+class MyElement extends polymer.Base implements polymer.Element
+{
+	@behavior(MyBehaviour)  
+	// ...
+}
 ```
 
 # Creating elements only with code: @template and @style
@@ -275,7 +313,7 @@ class MyTimer extends polymer.Base implements polymer.Element
 	  }
    }
 
-   @listener("reset-counters")
+   @listen("reset-counters")
    resetCounter() {
       this.count = 0;
    }
@@ -303,37 +341,6 @@ createElement(MyTimer);   // no .prototype
 To use the element
 ```HTML
 <my-timer start="42"></my-timer>
-```
-
-### Using behaviours
-
-First you create your custom behaviour in a separate class, and the you "import" it with the `@behaviour` decorator. You can put the decorator close the `class` keyword or within the class itself. 
-
-```TypeScript
-class MyBehaviour extends polymer.Base implements polymer.Element
-{
-   @listener("something_has_happened")
-   onBehave() {
-      console.log("something_has_happened triggered");
-   }
-}
-```
-```TypeScript
-@component("my-element")
-@behavior(MyBehaviour)
-class MyElement extends polymer.Base implements polymer.Element
-{
-  // ...
-}
-```
-or
-```TypeScript
-@component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
-{
-	@behavior(MyBehaviour)  
-	// ...
-}
 ```
 
 ### Using computed properties

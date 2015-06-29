@@ -2,7 +2,7 @@
 
 class MyBehaviour extends polymer.Base implements polymer.Element
 {
-   @listener("behave")
+   @listen("behave")
    onBehave() {
       console.log("behave trigger");
    }

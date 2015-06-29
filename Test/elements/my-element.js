@@ -23,7 +23,7 @@ var MyBehaviour = (function (_super) {
     };
     Object.defineProperty(MyBehaviour.prototype, "onBehave",
         __decorate([
-            listener("behave")
+            listen("behave")
         ], MyBehaviour.prototype, "onBehave", Object.getOwnPropertyDescriptor(MyBehaviour.prototype, "onBehave")));
     return MyBehaviour;
 })(polymer.Base);
