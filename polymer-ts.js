@@ -7,51 +7,96 @@ var polymer;
     var Base = (function () {
         function Base() {
         }
-        Base.prototype.arrayDelete = function (path, item) { };
-        Base.prototype.async = function (callback, waitTime) { };
-        Base.prototype.attachedCallback = function () { };
-        Base.prototype.attributeFollows = function (name, toElement, fromElement) { };
-        Base.prototype.cancelAsync = function (handle) { };
-        Base.prototype.cancelDebouncer = function (jobName) { };
-        Base.prototype.classFollows = function (name, toElement, fromElement) { };
-        Base.prototype.create = function (tag, props) { };
-        Base.prototype.debounce = function (jobName, callback, wait) { };
-        Base.prototype.deserialize = function (value, type) { };
-        Base.prototype.distributeContent = function () { };
-        Base.prototype.domHost = function () { };
-        Base.prototype.elementMatches = function (selector, node) { };
-        Base.prototype.fire = function (type, detail, options) { };
-        Base.prototype.flushDebouncer = function (jobName) { };
-        Base.prototype.get = function (path) { };
-        Base.prototype.getContentChildNodes = function (slctr) { };
-        Base.prototype.getContentChildren = function (slctr) { };
-        Base.prototype.getNativePrototype = function (tag) { };
-        Base.prototype.getPropertyInfo = function (property) { };
-        Base.prototype.importHref = function (href, onload, onerror) { };
-        Base.prototype.instanceTemplate = function (template) { };
-        Base.prototype.isDebouncerActive = function (jobName) { };
-        Base.prototype.linkPaths = function (to, from) { };
-        Base.prototype.listen = function (node, eventName, methodName) { };
-        Base.prototype.mixin = function (target, source) { };
-        Base.prototype.notifyPath = function (path, value, fromAbove) { };
-        Base.prototype.pop = function (path) { };
-        Base.prototype.push = function (path, value) { };
-        Base.prototype.reflectPropertyToAttribute = function (name) { };
-        Base.prototype.resolveUrl = function (url) { };
-        Base.prototype.scopeSubtree = function (container, shouldObserve) { };
-        Base.prototype.serialize = function (value) { };
-        Base.prototype.serializeValueToAttribute = function (value, attribute, node) { };
-        Base.prototype.set = function (path, value, root) { };
-        Base.prototype.setScrollDirection = function (direction, node) { };
-        Base.prototype.shift = function (path, value) { };
-        Base.prototype.splice = function (path, start, deleteCount) { };
-        Base.prototype.toggleAttribute = function (name, bool, node) { };
-        Base.prototype.toggleClass = function (name, bool, node) { };
-        Base.prototype.transform = function (transform, node) { };
-        Base.prototype.translate3d = function (x, y, z, node) { };
-        Base.prototype.unlinkPaths = function (path) { };
-        Base.prototype.unshift = function (path, value) { };
-        Base.prototype.updateStyles = function () { };
+        Base.prototype.arrayDelete = function (path, item) {
+        };
+        Base.prototype.async = function (callback, waitTime) {
+        };
+        Base.prototype.attachedCallback = function () {
+        };
+        Base.prototype.attributeFollows = function (name, toElement, fromElement) {
+        };
+        Base.prototype.cancelAsync = function (handle) {
+        };
+        Base.prototype.cancelDebouncer = function (jobName) {
+        };
+        Base.prototype.classFollows = function (name, toElement, fromElement) {
+        };
+        Base.prototype.create = function (tag, props) {
+        };
+        Base.prototype.debounce = function (jobName, callback, wait) {
+        };
+        Base.prototype.deserialize = function (value, type) {
+        };
+        Base.prototype.distributeContent = function () {
+        };
+        Base.prototype.domHost = function () {
+        };
+        Base.prototype.elementMatches = function (selector, node) {
+        };
+        Base.prototype.fire = function (type, detail, options) {
+        };
+        Base.prototype.flushDebouncer = function (jobName) {
+        };
+        Base.prototype.get = function (path) {
+        };
+        Base.prototype.getContentChildNodes = function (slctr) {
+        };
+        Base.prototype.getContentChildren = function (slctr) {
+        };
+        Base.prototype.getNativePrototype = function (tag) {
+        };
+        Base.prototype.getPropertyInfo = function (property) {
+        };
+        Base.prototype.importHref = function (href, onload, onerror) {
+        };
+        Base.prototype.instanceTemplate = function (template) {
+        };
+        Base.prototype.isDebouncerActive = function (jobName) {
+        };
+        Base.prototype.linkPaths = function (to, from) {
+        };
+        Base.prototype.listen = function (node, eventName, methodName) {
+        };
+        Base.prototype.mixin = function (target, source) {
+        };
+        Base.prototype.notifyPath = function (path, value, fromAbove) {
+        };
+        Base.prototype.pop = function (path) {
+        };
+        Base.prototype.push = function (path, value) {
+        };
+        Base.prototype.reflectPropertyToAttribute = function (name) {
+        };
+        Base.prototype.resolveUrl = function (url) {
+        };
+        Base.prototype.scopeSubtree = function (container, shouldObserve) {
+        };
+        Base.prototype.serialize = function (value) {
+        };
+        Base.prototype.serializeValueToAttribute = function (value, attribute, node) {
+        };
+        Base.prototype.set = function (path, value, root) {
+        };
+        Base.prototype.setScrollDirection = function (direction, node) {
+        };
+        Base.prototype.shift = function (path, value) {
+        };
+        Base.prototype.splice = function (path, start, deleteCount) {
+        };
+        Base.prototype.toggleAttribute = function (name, bool, node) {
+        };
+        Base.prototype.toggleClass = function (name, bool, node) {
+        };
+        Base.prototype.transform = function (transform, node) {
+        };
+        Base.prototype.translate3d = function (x, y, z, node) {
+        };
+        Base.prototype.unlinkPaths = function (path) {
+        };
+        Base.prototype.unshift = function (path, value) {
+        };
+        Base.prototype.updateStyles = function () {
+        };
         return Base;
     })();
     polymer.Base = Base;
@@ -162,22 +207,36 @@ function observe(propertiesList) {
         };
     }
 }
+function createPolymerElementForClass(elementClass) {
+    var flattenedComponent = {};
+    var polymerBaseInstance = new polymer.Base();
+    var elementInstance = new elementClass();
+    for (var propertyKey in elementInstance) {
+        // do not include polymer functions
+        if (!(propertyKey in polymerBaseInstance)) {
+            flattenedComponent[propertyKey] = elementInstance[propertyKey];
+        }
+    }
+    return flattenedComponent;
+}
 // element registration functions
-function createElement(element) {
-    if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
-        createTemplate(element);
+function registerElement(elementClass) {
+    var element = createPolymerElementForClass(elementClass);
+    if (element.template !== undefined || element.style !== undefined) {
+        registerTemplate(element);
     }
-    Polymer(element.prototype);
+    Polymer(element);
 }
-function createClass(element) {
-    if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
-        createTemplate(element);
+function registerClass(elementClass) {
+    var element = createPolymerElementForClass(elementClass);
+    if (element.template !== undefined || element.style !== undefined) {
+        registerTemplate(element);
     }
-    Polymer.Class(element.prototype);
+    Polymer.Class(element);
 }
-function createTemplate(definition) {
+function registerTemplate(definition) {
     var domModule = document.createElement('dom-module');
-    var proto = definition.prototype;
+    var proto = definition;
     domModule.id = proto.is;
     // attaches style
     if (proto.style !== undefined) {
@@ -194,4 +253,3 @@ function createTemplate(definition) {
     // tells polymer the element has been created
     domModule.createdCallback();
 }
-//# sourceMappingURL=polymer-ts.js.map

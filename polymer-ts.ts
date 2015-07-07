@@ -237,25 +237,25 @@ function createPolymerElementForClass(elementClass: Function): polymer.Element {
 // element registration functions
 function registerElement(elementClass: Function): void {
     var element: polymer.Element = createPolymerElementForClass(elementClass);
-    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+    if ((<any> element).template !== undefined || (<any>element).style !== undefined) {
         registerTemplate(element);
     }
 
-    Polymer(element.prototype);
+    Polymer(element);
 }
 
 function registerClass(elementClass: Function): void {
     var element: polymer.Element = createPolymerElementForClass(elementClass);
-    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+    if ((<any> element).template !== undefined || (<any>element).style !== undefined) {
         registerTemplate(element);
     }
-    Polymer.Class(element.prototype);
+    Polymer.Class(element);
 }
 
 function registerTemplate(definition: polymer.Element) {
    var domModule: any = document.createElement('dom-module');
 
-   var proto = <any> definition.prototype;
+   var proto = <any> definition;
 
    domModule.id = proto.is;
 
