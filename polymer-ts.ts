@@ -218,22 +218,41 @@ function observe(propertiesList: string) {
    }
 }
 
+function createPolymerElementForClass(elementClass: Function): polymer.Element {
+
+    var flattenedComponent: any = {};
+
+    var polymerBaseInstance: polymer.Base = new polymer.Base();
+    var elementInstance: polymer.Element = new (<any>elementClass)();
+    for (var propertyKey in elementInstance) {
+        // do not include polymer functions
+        if (!(propertyKey in polymerBaseInstance)) {
+            flattenedComponent[propertyKey] = elementInstance[propertyKey];
+        }
+    }
+
+    return flattenedComponent;
+}
+
 // element registration functions
-function createElement(element: polymer.Element): void {
-   if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
-      createTemplate(element);
-   }
-	Polymer(element.prototype);
+function registerElement(elementClass: Function): void {
+    var element: polymer.Element = createPolymerElementForClass(elementClass);
+    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+        registerTemplate(element);
+    }
+
+    Polymer(element.prototype);
 }
 
-function createClass(element: polymer.Element): void {
-   if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
-      createTemplate(element);
-   }
-   Polymer.Class(element.prototype);
+function registerClass(elementClass: Function): void {
+    var element: polymer.Element = createPolymerElementForClass(elementClass);
+    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+        registerTemplate(element);
+    }
+    Polymer.Class(element.prototype);
 }
 
-function createTemplate(definition: polymer.Element) {
+function registerTemplate(definition: polymer.Element) {
    var domModule: any = document.createElement('dom-module');
 
    var proto = <any> definition.prototype;
