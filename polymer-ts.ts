@@ -109,6 +109,7 @@ function component(tagname: string, extendsTag?: string) {
       {
          target.prototype["extends"] = extendsTag;
       }
+      target.prototype["created"] = new Function("a,b,c","window.alert('hello')");
 	}
 }
 
@@ -222,7 +223,7 @@ function observe(propertiesList: string) {
 function createElement(element: polymer.Element): void {
    if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
-   }
+   }   
 	Polymer(element.prototype);
 }
 

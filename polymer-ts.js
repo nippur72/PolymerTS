@@ -63,6 +63,7 @@ function component(tagname, extendsTag) {
         if (extendsTag !== undefined) {
             target.prototype["extends"] = extendsTag;
         }
+        target.prototype["created"] = new Function("a,b,c", "window.alert('hello')");
     };
 }
 // @extend decorator
