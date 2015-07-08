@@ -19,9 +19,9 @@ If you find bugs or want to improve it, just send a pull request.
    - @behaviour
 - Creating elements imperatively: @template and @style
 - Examples
-   - A timer-based counter element
-   - Using behaviours
+   - A timer-based counter element   
    - Using computed properties
+   - Using private properties and class constructor
 - Running the example
 
 # Installation
@@ -48,6 +48,8 @@ You'll get the following files in `bower_components/polymer-ts`:
 - Registration functions
    - `createElement(className)` register in Polymer and create the element
    - `createClass(className)` register in Polymer without creating the element
+- Events
+   - class constructor automatically linked to the `created` event 
 
 # How to write elements
 
@@ -365,6 +367,36 @@ fullname(f,l) {
 @computed
 fullname(first,last) {
    return first+" "+last; 
+}
+```
+
+### Using private properties and class constructor
+
+The constructor of the class is automatically linked to the `created` event
+so you can initialize private properties directly in the constructor, making
+the `created` event totally optional.
+
+The order of execution is:
+
+1. class-defined initializations (myprivate1)
+2. class constructor (myprivate2)
+3. created event (myprivate3)
+
+```TypeScript
+@component("my-element")
+class MyElement extends polymer.Base implements polymer.Element {
+   private myprivate1 = 1;
+   private myprivate2;
+   private myprivate3;
+
+   constructor() {
+      this.myprivate2 = 2;
+   }
+
+   // this is optional and can be moved within the constructor
+   created() {
+      this.myprivate3 = 3;
+   }
 }
 ```
 
