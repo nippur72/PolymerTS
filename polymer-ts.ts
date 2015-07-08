@@ -109,6 +109,22 @@ function component(tagname: string, extendsTag?: string) {
       {
          target.prototype["extends"] = extendsTag;
       }
+
+      // patches constructor and "created" event
+      
+      // saves class constructor
+      target.prototype["$$constructor"] = target; 
+
+      // saves created() event function 
+      if (target.prototype.created !== undefined) {
+         target.prototype["$$oldcreated"] = target.prototype.created; 
+      }
+
+      // define a new "created" event, calling constructor and old created()
+      target.prototype["created"] = function () {
+         this.$$constructor.apply(this);
+         if (this.$$oldcreated !== undefined) this.$$oldcreated();
+      };
 	}
 }
 
@@ -222,7 +238,7 @@ function observe(propertiesList: string) {
 function createElement(element: polymer.Element): void {
    if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
-   }
+   }   
 	Polymer(element.prototype);
 }
 
