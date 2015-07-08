@@ -56,6 +56,20 @@ var polymer;
     })();
     polymer.Base = Base;
 })(polymer || (polymer = {})); // end module
+function patchConstructor(target) {
+    // saves class constructor
+    target.prototype["$$constructor"] = target;
+    // saves created() event function 
+    if (target.prototype.created !== undefined) {
+        target.prototype["$$oldcreated"] = target.prototype.created;
+    }
+    // define a new "created" event, calling constructor and old created()
+    target.prototype["created"] = function () {
+        this.$$constructor.apply(this);
+        if (this.$$oldcreated !== undefined)
+            this.$$oldcreated();
+    };
+}
 // @component decorator
 function component(tagname, extendsTag) {
     return function (target) {
@@ -63,19 +77,6 @@ function component(tagname, extendsTag) {
         if (extendsTag !== undefined) {
             target.prototype["extends"] = extendsTag;
         }
-        // patches constructor and "created" event
-        // saves class constructor
-        target.prototype["$$constructor"] = target;
-        // saves created() event function 
-        if (target.prototype.created !== undefined) {
-            target.prototype["$$oldcreated"] = target.prototype.created;
-        }
-        // define a new "created" event, calling constructor and old created()
-        target.prototype["created"] = function () {
-            this.$$constructor.apply(this);
-            if (this.$$oldcreated !== undefined)
-                this.$$oldcreated();
-        };
     };
 }
 // @extend decorator
@@ -180,12 +181,14 @@ function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
+    patchConstructor(element);
     Polymer(element.prototype);
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
+    patchConstructor(element);
     Polymer.Class(element.prototype);
 }
 function createTemplate(definition) {
