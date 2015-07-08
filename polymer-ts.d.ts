@@ -83,7 +83,6 @@ declare var Polymer: {
     flush?();
     patchConstructor(target: Function): void;
 };
-declare function patchConstructor(target: Function): void;
 declare function component(tagname: string, extendsTag?: string): (target: Function) => void;
 declare function extend(tagname: string): (target: Function) => void;
 declare function template(templateString: string): (target: Function) => void;
@@ -94,7 +93,7 @@ declare function computed(ob?: polymer.Property): (target: polymer.Element, comp
 declare function listen(eventName: string): (target: polymer.Element, propertyKey: string) => void;
 declare function behavior(behaviorObject: any): any;
 declare function observe(propertiesList: string): (target: polymer.Element, observerFuncName: string) => void;
-declare function patchProperties(target: Function): void;
+declare function setupArtificialInstantation(elementClass: Function): polymer.Element;
 declare function createElement(element: polymer.Element): void;
 declare function createClass(element: polymer.Element): void;
 declare function createTemplate(definition: polymer.Element): void;

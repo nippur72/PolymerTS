@@ -103,22 +103,6 @@ declare var Polymer: {
    patchConstructor(target: Function): void;   
 }
 
-function patchConstructor(target: Function): void {         
-   // saves class constructor
-   target.prototype["$$constructor"] = target; 
-
-   // saves created() event function 
-   if (target.prototype.created !== undefined) {
-      target.prototype["$$oldcreated"] = target.prototype.created;
-   }
-
-   // define a new "created" event, calling constructor and old created()
-   target.prototype["created"] = function () {
-      this.$$constructor.apply(this);
-      if (this.$$oldcreated !== undefined) this.$$oldcreated();
-   };
-}
-
 // @component decorator
 function component(tagname: string, extendsTag?: string) {
 	return function(target: Function) {
@@ -236,30 +220,35 @@ function observe(propertiesList: string) {
    }
 }
 
-function patchProperties(target: Function): void {
-  var initialPropertiesValues: any = {};
+function setupArtificialInstantation(elementClass: Function): polymer.Element {
 
   var polymerBaseInstance: polymer.Base = new polymer.Base();
-  var elementInstance: polymer.Element = new (<any>target)();
+  
+  var registeredElement: polymer.Element = {};
+
+  // adding all required members to registered element (inherited members, methods, instance properties...)
+  var elementInstance: polymer.Element = new (<any>elementClass)();
   for (var propertyKey in elementInstance) {
-      // do not include polymer functions
+      // do not include polymer.Base functions
       if (!(propertyKey in polymerBaseInstance)) {
-          initialPropertiesValues[propertyKey] = elementInstance[propertyKey];
+          registeredElement[propertyKey] = elementInstance[propertyKey];
       }
   }
 
-  // adding missing members to prototype (inherited members and instance properties)
-  for (var propKey in initialPropertiesValues) {
-     target.prototype[propKey] = initialPropertiesValues[propKey];
-  }
-
-  var oldCreated = target.prototype["created"];
-  target.prototype["created"] = function () {
-      for (var propKey in initialPropertiesValues) {
-        this[propKey] = initialPropertiesValues[propKey];
-      }
-      if (oldCreated !== undefined) oldCreated.apply(this);
+  var oldCreated = registeredElement["created"];
+  registeredElement["created"] = function () {
+    // creates a fresh instance in order to grab instantiated properties from it
+    elementInstance = new (<any>elementClass)();
+    for (var propertyKey in elementInstance) {
+        // do not include polymer functions
+        if (!(propertyKey in polymerBaseInstance)) {
+            this[propertyKey] = elementInstance[propertyKey];
+        }
+    }
+    if (oldCreated !== undefined) oldCreated.apply(this);
   };
+
+  return registeredElement;
 }
 
 // element registration functions
@@ -267,18 +256,14 @@ function createElement(element: polymer.Element): void {
    if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }   
-   patchConstructor(<Function> element);
-   patchProperties(<Function> element);
-	Polymer(element.prototype);
+   Polymer(setupArtificialInstantation(<Function> element));
 }
 
 function createClass(element: polymer.Element): void {
    if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }
-   patchConstructor(<Function> element);
-   patchProperties(<Function> element);
-   Polymer.Class(element.prototype);
+   Polymer.Class(setupArtificialInstantation(<Function> element));
 }
 
 function createTemplate(definition: polymer.Element) {

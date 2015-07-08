@@ -101,20 +101,6 @@ var polymer;
     })();
     polymer.Base = Base;
 })(polymer || (polymer = {})); // end module
-function patchConstructor(target) {
-    // saves class constructor
-    target.prototype["$$constructor"] = target;
-    // saves created() event function 
-    if (target.prototype.created !== undefined) {
-        target.prototype["$$oldcreated"] = target.prototype.created;
-    }
-    // define a new "created" event, calling constructor and old created()
-    target.prototype["created"] = function () {
-        this.$$constructor.apply(this);
-        if (this.$$oldcreated !== undefined)
-            this.$$oldcreated();
-    };
-}
 // @component decorator
 function component(tagname, extendsTag) {
     return function (target) {
@@ -221,44 +207,44 @@ function observe(propertiesList) {
         };
     }
 }
-function patchProperties(target) {
-    var initialPropertiesValues = {};
+function setupArtificialInstantation(elementClass) {
     var polymerBaseInstance = new polymer.Base();
-    var elementInstance = new target();
+    var registeredElement = {};
+    // adding all required members to registered element (inherited members, methods, instance properties...)
+    var elementInstance = new elementClass();
     for (var propertyKey in elementInstance) {
-        // do not include polymer functions
+        // do not include polymer.Base functions
         if (!(propertyKey in polymerBaseInstance)) {
-            initialPropertiesValues[propertyKey] = elementInstance[propertyKey];
+            registeredElement[propertyKey] = elementInstance[propertyKey];
         }
     }
-    for (var propKey in initialPropertiesValues) {
-        target.prototype[propKey] = initialPropertiesValues[propKey];
-    }
-    var oldCreated = target.prototype["created"];
-    target.prototype["created"] = function () {
-        for (var propKey in initialPropertiesValues) {
-            this[propKey] = initialPropertiesValues[propKey];
+    var oldCreated = registeredElement["created"];
+    registeredElement["created"] = function () {
+        // creates a fresh instance in order to grab instantiated properties from it
+        elementInstance = new elementClass();
+        for (var propertyKey in elementInstance) {
+            // do not include polymer functions
+            if (!(propertyKey in polymerBaseInstance)) {
+                this[propertyKey] = elementInstance[propertyKey];
+            }
         }
         if (oldCreated !== undefined)
             oldCreated.apply(this);
     };
+    return registeredElement;
 }
 // element registration functions
 function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    patchConstructor(element);
-    patchProperties(element);
-    Polymer(element.prototype);
+    Polymer(setupArtificialInstantation(element));
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    patchConstructor(element);
-    patchProperties(element);
-    Polymer.Class(element.prototype);
+    Polymer.Class(setupArtificialInstantation(element));
 }
 function createTemplate(definition) {
     var domModule = document.createElement('dom-module');
