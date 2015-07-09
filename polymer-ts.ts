@@ -9,6 +9,11 @@ module polymer {
 	   $: any;
 	   $$: any;
 
+	   root:HTMLElement;
+	   shadyRoot:HTMLElement;
+	   style:CSSStyleDeclaration;
+	   customStyle:{[property:string]:string;};
+
 	   arrayDelete(path: string, item: string|any):any {}
 	   async(callback: Function, waitTime?: number):any {}
 	   attachedCallback():void {}
@@ -69,7 +74,6 @@ module polymer {
       attached?(): void;
       detached?(): void;
       attributeChanged?(attrName: string, oldVal: any, newVal: any): void;
-      updateStyles?(): void;
 
       // 
       prototype?: Object;
@@ -94,6 +98,7 @@ declare var Polymer: {
 	(prototype: polymer.Element): Function;
 	Class(prototype: polymer.Element): Function;
 	dom(node: HTMLElement): HTMLElement;
+	dom(node: polymer.Base): HTMLElement;
 
 	appendChild?(node): HTMLElement;
 	insertBefore?(node, beforeNode): HTMLElement;
