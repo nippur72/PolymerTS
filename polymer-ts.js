@@ -210,3 +210,4 @@ function createTemplate(definition) {
     // tells polymer the element has been created
     domModule.createdCallback();
 }
+//# sourceMappingURL=polymer-ts.js.map
