@@ -96,7 +96,7 @@ In your element typescript code (e.g. `elements/my-element.ts`):
 /// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
 
 @component("my-element")
-class MyElement extends polymer.base implements polymer.Element
+class MyElement extends polymer.Base implements polymer.Element
 {
 }
 ```
