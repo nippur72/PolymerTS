@@ -218,33 +218,6 @@ function observe(propertiesList: string) {
    }
 }
 
-<<<<<<< HEAD
-function patchProperties(target: Function): void {
-
-    var initialPropertiesValues: any = {};
-
-    var polymerBaseInstance: polymer.Base = new polymer.Base();
-    var elementInstance: polymer.Element = new (<any>target)();
-    for (var propertyKey in elementInstance) {
-        // do not include polymer functions
-        if (!(propertyKey in polymerBaseInstance) && !(propertyKey in target.prototype)) {
-            initialPropertiesValues[propertyKey] = elementInstance[propertyKey];
-        }
-    }
-	
-   // saves created() event function 
-   var userCreatedMethod: () => void = target.prototype.created;
-
-   // define a new "created" event, calling constructor and old created()
-   target.prototype["created"] = function () {
-      
-	  for (var prop in initialPropertiesValues) {
-		  target[prop] = initialPropertiesValues[prop];
-	  }
-	  
-      if (userCreatedMethod !== undefined) userCreatedMethod;
-   };
-=======
 function setupArtificialInstantation(elementClass: Function): polymer.Element {
 
   var polymerBaseInstance: polymer.Base = new polymer.Base();
@@ -274,7 +247,6 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element {
   };
 
   return registeredElement;
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 }
 
 // element registration functions
@@ -282,26 +254,14 @@ function createElement(element: polymer.Element): void {
    if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }   
-<<<<<<< HEAD
-   patchConstructor(<Function> element);
-   patchProperties(<Function> element);
-   Polymer(element.prototype);
-=======
    Polymer(setupArtificialInstantation(<Function> element));
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 }
 
 function createClass(element: polymer.Element): void {
    if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }
-<<<<<<< HEAD
-   patchConstructor(<Function> element);
-   patchProperties(<Function> element);
-   Polymer.Class(element.prototype);
-=======
    Polymer.Class(setupArtificialInstantation(<Function> element));
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 }
 
 function createTemplate(definition: polymer.Element) {

@@ -81,13 +81,7 @@ declare var Polymer: {
     insertBefore?(node, beforeNode): HTMLElement;
     removeChild?(node): HTMLElement;
     flush?();
-<<<<<<< HEAD
 };
-declare function patchConstructor(target: Function): void;
-=======
-    patchConstructor(target: Function): void;
-};
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 declare function component(tagname: string, extendsTag?: string): (target: Function) => void;
 declare function extend(tagname: string): (target: Function) => void;
 declare function template(templateString: string): (target: Function) => void;
@@ -98,11 +92,7 @@ declare function computed(ob?: polymer.Property): (target: polymer.Element, comp
 declare function listen(eventName: string): (target: polymer.Element, propertyKey: string) => void;
 declare function behavior(behaviorObject: any): any;
 declare function observe(propertiesList: string): (target: polymer.Element, observerFuncName: string) => void;
-<<<<<<< HEAD
-declare function patchProperties(target: Function): void;
-=======
 declare function setupArtificialInstantation(elementClass: Function): polymer.Element;
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 declare function createElement(element: polymer.Element): void;
 declare function createClass(element: polymer.Element): void;
 declare function createTemplate(definition: polymer.Element): void;

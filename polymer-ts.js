@@ -207,28 +207,6 @@ function observe(propertiesList) {
         };
     }
 }
-<<<<<<< HEAD
-function patchProperties(target) {
-    var initialPropertiesValues = {};
-    var polymerBaseInstance = new polymer.Base();
-    var elementInstance = new target();
-    for (var propertyKey in elementInstance) {
-        // do not include polymer functions
-        if (!(propertyKey in polymerBaseInstance) && !(propertyKey in target.prototype)) {
-            initialPropertiesValues[propertyKey] = elementInstance[propertyKey];
-        }
-    }
-    // saves created() event function 
-    var userCreatedMethod = target.prototype.created;
-    // define a new "created" event, calling constructor and old created()
-    target.prototype["created"] = function () {
-        for (var prop in initialPropertiesValues) {
-            target[prop] = initialPropertiesValues[prop];
-        }
-        if (userCreatedMethod !== undefined)
-            userCreatedMethod;
-    };
-=======
 function setupArtificialInstantation(elementClass) {
     var polymerBaseInstance = new polymer.Base();
     var registeredElement = {};
@@ -254,32 +232,19 @@ function setupArtificialInstantation(elementClass) {
             oldCreated.apply(this);
     };
     return registeredElement;
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 }
 // element registration functions
 function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-<<<<<<< HEAD
-    patchConstructor(element);
-    patchProperties(element);
-    Polymer(element.prototype);
-=======
     Polymer(setupArtificialInstantation(element));
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-<<<<<<< HEAD
-    patchConstructor(element);
-    patchProperties(element);
-    Polymer.Class(element.prototype);
-=======
     Polymer.Class(setupArtificialInstantation(element));
->>>>>>> f7e56cf567492bc6517c14f1ee3a9a3be6645a87
 }
 function createTemplate(definition) {
     var domModule = document.createElement('dom-module');
