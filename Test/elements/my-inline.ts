@@ -1,4 +1,12 @@
-﻿
+﻿class MyAbstract extends polymer.Base implements polymer.Element
+{
+   makeSomeNoise()
+   {
+      console.log("argh!");
+   }
+}
+
+
 @component("my-inline")
 
 @template
@@ -20,7 +28,7 @@
    }
 `)
 
-class MyInline extends polymer.Base implements polymer.Element
+class MyInline extends MyAbstract
 {
    @property({ value: "hi" })
    prop: string;
@@ -50,6 +58,8 @@ class MyInline extends polymer.Base implements polymer.Element
       else console.log("correct value NOT preserved");
 
       this.myprivate[0] = 5;
+
+      this.makeSomeNoise();
    }
 }
 
