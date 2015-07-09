@@ -8,6 +8,9 @@ module polymer {
    export class Base {
 	   $: any;
 	   $$: any;
+	   root:HTMLElement;
+	   shadyRoot:HTMLElement;
+	   customStyle:CSSStyleDeclaration;
 
 	   arrayDelete(path: string, item: string|any):any {}
 	   async(callback: Function, waitTime?: number):any {}
@@ -94,6 +97,7 @@ declare var Polymer: {
 	(prototype: polymer.Element): Function;
 	Class(prototype: polymer.Element): Function;
 	dom(node: HTMLElement): HTMLElement;
+	dom(node: polymer.Base): HTMLElement;
 
 	appendChild?(node): HTMLElement;
 	insertBefore?(node, beforeNode): HTMLElement;
