@@ -8,9 +8,11 @@ module polymer {
    export class Base {
 	   $: any;
 	   $$: any;
+
 	   root:HTMLElement;
 	   shadyRoot:HTMLElement;
-	   customStyle:CSSStyleDeclaration;
+           style:CSSStyleDeclaration;
+	   customStyle:{[property:string]:string;};;
 
 	   arrayDelete(path: string, item: string|any):any {}
 	   async(callback: Function, waitTime?: number):any {}
