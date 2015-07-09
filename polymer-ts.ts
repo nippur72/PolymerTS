@@ -74,7 +74,6 @@ module polymer {
       attached?(): void;
       detached?(): void;
       attributeChanged?(attrName: string, oldVal: any, newVal: any): void;
-      updateStyles?(): void;
 
       // 
       prototype?: Object;
