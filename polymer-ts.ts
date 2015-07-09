@@ -95,17 +95,16 @@ module polymer {
 
 // Polymer object
 declare var Polymer: {
-	(prototype: polymer.Element): Function;
-	Class(prototype: polymer.Element): Function;
-	dom(node: HTMLElement): HTMLElement;
-	dom(node: polymer.Base): HTMLElement;
+   (prototype: polymer.Element): Function;
+   Class(prototype: polymer.Element): Function;
+   dom(node: HTMLElement): HTMLElement;
+   dom(node: polymer.Base): HTMLElement;
 
-	appendChild?(node): HTMLElement;
-	insertBefore?(node, beforeNode): HTMLElement;
-	removeChild?(node): HTMLElement;
-   flush?();   
-
-   patchConstructor(target: Function): void;   
+   appendChild(node): HTMLElement;
+   insertBefore(node, beforeNode): HTMLElement;
+   removeChild(node): HTMLElement;
+   updateStyles(): void; 
+   flush();      
 }
 
 function patchConstructor(target: Function): void {         
