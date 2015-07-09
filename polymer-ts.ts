@@ -11,8 +11,8 @@ module polymer {
 
 	   root:HTMLElement;
 	   shadyRoot:HTMLElement;
-           style:CSSStyleDeclaration;
-	   customStyle:{[property:string]:string;};;
+	   style:CSSStyleDeclaration;
+	   customStyle:{[property:string]:string;};
 
 	   arrayDelete(path: string, item: string|any):any {}
 	   async(callback: Function, waitTime?: number):any {}
