@@ -31,7 +31,9 @@
 class MyInline extends MyAbstract
 {
    @property({ value: "hi" })
-   prop: string;
+   prop: string;  
+   
+   //is = "my-inline"; 
 
    private myprivate = [1,2,3,4,5];
 

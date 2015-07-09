@@ -230,12 +230,13 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
 
    var registeredElement: polymer.Element = {};   
    
-   // copy only basic structure from prototype
-   var proto = elementClass.prototype;
-   for (var propertyKey in proto) {
+   // if "is" is defined copy from prototype, otherwise make new instance    
+   var source = (elementClass.prototype.is === undefined) ? new (<any>elementClass)(): elementClass.prototype;
+          
+   for (var propertyKey in source) {
       // do not include polymer.Base functions
       if (!(propertyKey in polymerBaseInstance)) {
-         registeredElement[propertyKey] = proto[propertyKey];
+         registeredElement[propertyKey] = source[propertyKey];
       }
    }
 
