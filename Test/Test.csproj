@@ -40,6 +40,7 @@
     <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
     <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
     <Content Include="elements\my-element.html" />
+    <Content Include="elements\my-simple.html" />
     <Content Include="elements\my-timer.html" />
     <Content Include="index.html" />
     <Content Include="web.config" />

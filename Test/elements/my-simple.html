@@ -1,0 +1,34 @@
+﻿<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="my-simple">
+   <template>
+      <h1>Simple</h1>
+      <div>{{prop}}</div>
+   </template>
+</dom-module>
+
+<script type="text/javascript" src="my-timer.js"></script>
+
+<script>
+   Polymer(
+   {
+      is: 'my-simple',
+
+      properties:
+      {
+         prop: { value: "hi" }
+      },
+
+      observers: [ "propChanged(prop)"],
+
+      propChanged: function(n)
+      {
+         console.log(n);
+      },
+
+      created: function()
+      {
+         console.log("created");
+      }
+   });
+</script>
