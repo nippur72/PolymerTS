@@ -240,8 +240,8 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
       }
    }
 
-   var oldCreated = registeredElement["created"];
-   registeredElement["created"] = function () {
+   var oldCreated = registeredElement["ready"];
+   registeredElement["ready"] = function () {
       // creates a fresh instance in order to grab instantiated properties from it
       var elementInstance = new (<any>elementClass)();
       for (var propertyKey in elementInstance) {         

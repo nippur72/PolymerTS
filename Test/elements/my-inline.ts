@@ -30,8 +30,8 @@
 
 class MyInline extends MyAbstract
 {
-   @property({ value: "hi" })
-   prop: string;  
+   @property()
+   public prop = "hello world";  
    
    //is = "my-inline"; 
 
@@ -39,21 +39,23 @@ class MyInline extends MyAbstract
 
    constructor()
    {
-      super();
-
+      super();            
       console.log("constructor()");
-      console.log(this.myprivate);      
+      this.prop = "hello world and all the rest";
+      //console.log(this.myprivate);      
    }
 
    created()
    {
+      //this.prop = "hello";
       console.log("created()");
-      console.log(this.myprivate);      
+      /*console.log(this.myprivate);      */
    }
 
    ready()
    {
       console.log("ready()");
+      /*
       console.log(this.myprivate);
 
       if (this.myprivate[0] == 1) console.log("correct value preserved");
@@ -63,7 +65,7 @@ class MyInline extends MyAbstract
 
       this.makeSomeNoise();
 
-      this.prop = "64";
+      this.prop = "64"; */
    }
 
    @observe("prop")

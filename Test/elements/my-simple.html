@@ -7,28 +7,8 @@
    </template>
 </dom-module>
 
-<script type="text/javascript" src="my-timer.js"></script>
+<script type="text/javascript" src="my-simple.js"></script>
 
 <script>
-   Polymer(
-   {
-      is: 'my-simple',
-
-      properties:
-      {
-         prop: { value: "hi" }
-      },
-
-      observers: [ "propChanged(prop)"],
-
-      propChanged: function(n)
-      {
-         console.log(n);
-      },
-
-      created: function()
-      {
-         console.log("created");
-      }
-   });
+   createMySimple();
 </script>
