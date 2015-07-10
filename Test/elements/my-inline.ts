@@ -3,9 +3,9 @@
    makeSomeNoise()
    {
       console.log("argh!");
+      this.fire("noise-made");
    }
 }
-
 
 @component("my-inline")
 
@@ -28,7 +28,7 @@
    }
 `)
 
-class MyInline extends MyAbstract
+class MyInline extends MyAbstract implements MyMixin
 {
    @property()
    public prop = "hello world";  
@@ -66,6 +66,8 @@ class MyInline extends MyAbstract
       this.makeSomeNoise();
 
       this.prop = "64"; */
+
+      this.makeSomeNoise();
    }
 
    @observe("prop")
@@ -73,5 +75,24 @@ class MyInline extends MyAbstract
    {
       console.log(`prop changed from ${oldVal} to ${newVal}`);
    }
+
+   noiseMade: ()=>void;
 }
 
+class MyMixin extends polymer.Base implements polymer.Element
+{
+   @listen("noise-made")
+   noiseMade() {
+      console.log("someone made noise!");
+   }
+}
+
+function applyMixins(derivedCtor: any, baseCtors: any[]) {
+   baseCtors.forEach(baseCtor => {
+      Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+         derivedCtor.prototype[name] = baseCtor.prototype[name];
+      })
+   });
+}
+
+applyMixins(MyInline, [MyMixin]);
