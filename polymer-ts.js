@@ -173,9 +173,9 @@ function setupArtificialInstantation(elementClass) {
             registeredElement[propertyKey] = source[propertyKey];
         }
     }
-    var oldCreated = registeredElement["ready"];
+    var oldReady = registeredElement["ready"];
     registeredElement["ready"] = function () {
-        // creates a fresh instance in order to grab instantiated properties from it
+        // creates a fresh instance in order to grab instantiated properties and inherited methods from it
         var elementInstance = new elementClass();
         for (var propertyKey in elementInstance) {
             // do not include polymer functions
@@ -183,8 +183,8 @@ function setupArtificialInstantation(elementClass) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
-        if (oldCreated !== undefined)
-            oldCreated.apply(this);
+        if (oldReady !== undefined)
+            oldReady.apply(this);
     };
     return registeredElement;
 }

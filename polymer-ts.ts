@@ -240,9 +240,9 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
       }
    }
 
-   var oldCreated = registeredElement["ready"];
+   var oldReady = registeredElement["ready"];
    registeredElement["ready"] = function () {
-      // creates a fresh instance in order to grab instantiated properties from it
+      // creates a fresh instance in order to grab instantiated properties and inherited methods from it
       var elementInstance = new (<any>elementClass)();
       for (var propertyKey in elementInstance) {         
          // do not include polymer functions
@@ -250,7 +250,7 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
             this[propertyKey] = elementInstance[propertyKey];
          }
       }
-      if (oldCreated !== undefined) oldCreated.apply(this);
+      if (oldReady !== undefined) oldReady.apply(this);
    };
 
    return registeredElement;
