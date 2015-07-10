@@ -107,22 +107,6 @@ declare var Polymer: {
    flush();      
 }
 
-function patchConstructor(target: Function): void {         
-   // saves class constructor
-   target.prototype["$$constructor"] = target; 
-
-   // saves created() event function 
-   if (target.prototype.created !== undefined) {
-      target.prototype["$$oldcreated"] = target.prototype.created;
-   }
-
-   // define a new "created" event, calling constructor and old created()
-   target.prototype["created"] = function () {
-      this.$$constructor.apply(this);
-      if (this.$$oldcreated !== undefined) this.$$oldcreated();
-   };
-}
-
 // @component decorator
 function component(tagname: string, extendsTag?: string) {
 	return function(target: Function) {
@@ -240,21 +224,51 @@ function observe(propertiesList: string) {
    }
 }
 
+function setupArtificialInstantation(elementClass: Function): polymer.Element
+{
+   var polymerBaseInstance: polymer.Base = new polymer.Base();   
+
+   var registeredElement: polymer.Element = {};   
+   
+   // if "is" is defined copy from prototype, otherwise make new instance    
+   var source = (elementClass.prototype.is === undefined) ? new (<any>elementClass)(): elementClass.prototype;
+          
+   for (var propertyKey in source) {
+      // do not include polymer.Base functions
+      if (!(propertyKey in polymerBaseInstance)) {
+         registeredElement[propertyKey] = source[propertyKey];
+      }
+   }
+
+   var oldReady = registeredElement["ready"];
+   registeredElement["ready"] = function () {
+      // creates a fresh instance in order to grab instantiated properties and inherited methods from it
+      var elementInstance = new (<any>elementClass)();
+      for (var propertyKey in elementInstance) {         
+         // do not include polymer functions
+         if (!(propertyKey in polymerBaseInstance)) {            
+            this[propertyKey] = elementInstance[propertyKey];
+         }
+      }
+      if (oldReady !== undefined) oldReady.apply(this);
+   };
+
+   return registeredElement;
+}
+
 // element registration functions
 function createElement(element: polymer.Element): void {
-   if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }   
-   patchConstructor(<Function> element);
-	Polymer(element.prototype);
+   Polymer(setupArtificialInstantation(<Function> element));
 }
 
 function createClass(element: polymer.Element): void {
-   if((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }
-   patchConstructor(<Function> element);
-   Polymer.Class(element.prototype);
+   Polymer.Class(setupArtificialInstantation(<Function> element));
 }
 
 function createTemplate(definition: polymer.Element) {

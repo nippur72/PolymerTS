@@ -6,25 +6,27 @@ If you find bugs or want to improve it, just send a pull request.
 
 # Table of contents
 
-- Installation
-- Supported features
-- How to write elements
-- How to correctly reference in markup
-- @decorators explained
-   - @component
-   - @property
-   - @observe
-   - @computed
-   - @listen
-   - @behaviour
-- Creating elements imperatively: @template and @style
-- Examples
+- [Installation](#install)
+- [Supported features](#features)
+- [How to write elements](#howtowrite)
+- [How to correctly reference in markup](#howtoreference)
+- [Decorators explained](#decorators)
+   - [@component](#component)
+   - [@property](#property)
+   - [@observe](#observe)
+   - [@computed](#computed)
+   - [@listen](#listen)
+   - [@behaviour](#behaviour)
+- [Writing elements only with code: @template and @style](#imperatively)
+- [Writing elements without using decorators](#decoratorless)
+- [Examples](#examples)
    - A timer-based counter element   
    - Using computed properties
    - Using private properties and class constructor
-- Running the example
+- [Running the repo example](#repoexample)
+- [Changelog](#changelog)
 
-# Installation
+# Installation <a name="install"></a>
 
 Install via bower:
 ```
@@ -34,7 +36,7 @@ You'll get the following files in `bower_components/polymer-ts`:
 - `polymer-ts.js` the JavaScript file to add in your app (via `<script src="">`)
 - `polymer-ts.ts` the file to reference in your TypeScript code (via `/// <reference path="...">`)
 
-# Supported features
+# Supported features <a name="features"></a>
 
 - Decorators
    - `@component(tagName)` sets component's name (equivalent to `is:` in PolymerJS)
@@ -49,16 +51,21 @@ You'll get the following files in `bower_components/polymer-ts`:
    - `createElement(className)` register in Polymer and create the element
    - `createClass(className)` register in Polymer without creating the element
 - Events
-   - class constructor automatically linked to the `created` event 
+   - class constructor automatically linked to the `ready` event 
 
-# How to write elements
+# How to write elements <a name="howtowrite"></a>
 
-- write elements as TypeScript classes
-- extend the `polymer.Base` class 
-- implement the `polymer.Element` interface
-- use @decorators as needed 
+1. Write elements as TypeScript classes
+2. Extend the `polymer.Base` class 
+3. Implement the `polymer.Element` interface
+4. Use @decorators as needed 
 
-# How to correctly reference in markup
+A class-element:
+- can have private properties/fields
+- can use class constructor (called before the `ready` event)
+- can use inherited properties and methods
+
+# How to correctly reference in markup<a name="howtoreference"></a>
 
 In the `head` section of your main .html file:
 
@@ -101,9 +108,9 @@ class MyElement extends polymer.Base implements polymer.Element
 }
 ```
 
-# @decorators explained
+# @decorators explained <a name="decorators"></a>
 
-## @component(tagName)
+## @component(tagName) <a name="component"></a>
 
 Sets the tag name of the custom component. The decorator is applied to the TypeScript `class` keyword. Notice that tag names must include a `-` as per WebComponents specs. Example of a `<my-element>`:
  
@@ -130,9 +137,10 @@ class MyButton extends polymer.Base implements polymer.Element
 }
 ```
 
-## @property(def)
+## @property(def) <a name="property"></a>
 
-Creates a Polymer property. It can be applied to a member field or a function. When applied to a function, the property becomes a computed property.
+Creates a Polymer property. It can be applied to a member field or a function. 
+When applied to a function, the property becomes a computed property.
 
 The parameter `def` is a map object that sets the options for the property:
 
@@ -148,14 +156,31 @@ The parameter `def` is a map object that sets the options for the property:
 }
 ```
 
-Example:
+Examples:
 ```TypeScript
 @property({ type: number, value: 42 });
 initialValue: number;
 ```
-While you can specify `computed` and `observer` in a property definition, there are the specific decorators `@computed` and `@observe` that are easier to use. 
 
-## @observe(propList)
+The default value for a property is optional as long as the property is initialized:
+```TypeScript
+@property();
+myprop = 42;  // direct initialization
+```
+or
+```TypeScript
+@property({ type: number });
+myprop: number;
+
+constructor() {
+   this.myprop = 42; // initialized within constructor
+}
+```
+
+While you can specify `computed` and `observer` in a property definition, 
+there are the specific decorators `@computed` and `@observe` that are easier to use. 
+
+## @observe(propList) <a name="observe"></a>
 
 Sets an observer function for a single property or a list of properties.
 
@@ -182,7 +207,7 @@ fullnameChanged(newFirstName,newLastName)
 }
 ```
 
-## @computed
+## @computed <a name="computed"></a>
 
 Creates a computed property or sets the function for a computed property.
 
@@ -207,7 +232,7 @@ fullname(firstName,lastName)
 }
 ```
 
-## @listen(eventName)
+## @listen(eventName) <a name="listen"></a>
 
 Sets a listener function for an event.
 
@@ -220,13 +245,14 @@ In the following example the function `resetCounter()` is called whenever the ev
    }
 ```
 
-## @behaviour(className)
+## @behaviour(className) <a name="behaviour"></a>
 
 Incorporate behaviours from another element (defined with PolymerTS). 
 
-A behaviour is firstly defined in a separate class, declaring it normally as any other Polymer element, and then its behaviour are "imported" with the `@behaviour` decorator. 
+A behaviour is firstly defined in a separate class, declaring it normally as any other Polymer element, 
+and then its behaviours are "imported" with the `@behaviour` decorator. 
 
-The decorator can decorate the `class` keyword or it can be put within the class itself.
+The `@behaviour` decorator can decorate the `class` keyword or it can be put within the class itself.
 
 Examples: 
 
@@ -256,10 +282,13 @@ class MyElement extends polymer.Base implements polymer.Element
 	// ...
 }
 ```
+Note: a functionality similar to `@behaviour` can be also obtained by plain class inheritance 
+or by the use of Mixins.
 
-# Creating elements only with code: @template and @style
+# Writing elements only with code: @template and @style <a name="imperatively"></a>
 
-**Eperimental feature**: It's also possible to create elements using TypeScript code only, without having any external .html. That can be useful if you want to keep template and logic in the same
+**Eperimental feature**: It's also possible to create elements using TypeScript code only, 
+without having any external .html. That can be useful if you want to keep template and logic in the same
 TypeScript file.
 
 Use the tags `@template` and `@style` to specify the element's template and style, as in the following example: 
@@ -286,7 +315,24 @@ Registration is done with `createElement` but be sure to call it after the `WebC
    </script>
 ```
 
-# Examples
+# Writing elements without using decorators <a name="decoratorless"></a>
+
+It's possible to avoid the use of decorators (e.g. for compatibility with TypeScript < 1.5) by simply writing
+their respective equivalent in plain Polymer syntax. E.g.
+```TypeScript
+class MyElement extends polymer.Base implements polymer.Element
+{
+   is = "my-element";
+
+   properties = {
+      myprop: { value: 42 }
+   };
+
+   // ...
+}
+```
+
+# Examples <a name="examples"></a>
 
 ### A timer-based counter element
 ```TypeScript
@@ -370,37 +416,7 @@ fullname(first,last) {
 }
 ```
 
-### Using private properties and class constructor
-
-The constructor of the class is automatically linked to the `created` event
-so you can initialize private properties directly in the constructor, making
-the `created` event totally optional.
-
-The order of execution is:
-
-1. class-defined initializations (myprivate1)
-2. class constructor (myprivate2)
-3. created event (myprivate3)
-
-```TypeScript
-@component("my-element")
-class MyElement extends polymer.Base implements polymer.Element {
-   private myprivate1 = 1;
-   private myprivate2;
-   private myprivate3;
-
-   constructor() {
-      this.myprivate2 = 2;
-   }
-
-   // this is optional and can be moved within the constructor
-   created() {
-      this.myprivate3 = 3;
-   }
-}
-```
-
-# Running the example
+# Running the example <a name="repoexample"></a>
 
 To run the very small example contained in this repo:
 
@@ -408,3 +424,12 @@ To run the very small example contained in this repo:
 - go to the `Test` directory
 - run `bower update`
 - Open the solution in Visual Studio and run the Test project.
+
+# Change log <a name="changelog"></a>
+
+- v0.1.0 (Jul 10, 2015) 
+  - Added support for class inheritance
+  - Added support for use of `constructor()`
+  - Added support for decorator-less syntax
+- v0.0.1 to v0.0.9 
+  - early experimental versions

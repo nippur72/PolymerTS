@@ -1,7 +1,7 @@
 ﻿
 function RegisterAll()
 {   
-   createElement(MyInline);   
+   createElement(MyInline);         
 }
 
 
