@@ -62,6 +62,14 @@ class MyInline extends MyAbstract
       this.myprivate[0] = 5;
 
       this.makeSomeNoise();
+
+      this.prop = "64";
+   }
+
+   @observe("prop")
+   hiChanged(newVal, oldVal)
+   {
+      console.log(`prop changed from ${oldVal} to ${newVal}`);
    }
 }
 
