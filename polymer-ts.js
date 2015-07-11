@@ -162,6 +162,15 @@ function observe(propertiesList) {
         };
     }
 }
+function constructWithSpread(func, argArray) {
+    var arr = [null];
+    // since "arguments" is nor a real Array we can't use concat
+    for (var t = 0; t < argArray.length; t++) {
+        arr.push(argArray[t]);
+    }
+    var nullaryFunc = Function.prototype.bind.apply(func, arr);
+    return new nullaryFunc();
+}
 function setupArtificialInstantation(elementClass) {
     var polymerBaseInstance = new polymer.Base();
     var registeredElement = {};
@@ -173,18 +182,24 @@ function setupArtificialInstantation(elementClass) {
             registeredElement[propertyKey] = source[propertyKey];
         }
     }
-    var oldReady = registeredElement["ready"];
-    registeredElement["ready"] = function () {
+    var attachToFunction = "factoryImpl";
+    var oldFunction = registeredElement[attachToFunction];
+    registeredElement[attachToFunction] = function () {
         // creates a fresh instance in order to grab instantiated properties and inherited methods from it
-        var elementInstance = new elementClass();
+        // put under comment until spread operator will be supported in TypeScript (>=1.5)
+        // var elementInstance = new (<any>elementClass)(...arguments);
+        // equivalent in ES5 code:
+        var elementInstance = constructWithSpread(elementClass, arguments);
         for (var propertyKey in elementInstance) {
             // do not include polymer functions
             if (!(propertyKey in polymerBaseInstance)) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
-        if (oldReady !== undefined)
-            oldReady.apply(this);
+        // factoryImpl is disabled (for now)
+        // if (oldFunction !== undefined) oldFunction.apply(this);
+        if (oldFunction !== undefined)
+            throw "do not use 'factoryImpl()' use constructor() instead";
     };
     return registeredElement;
 }
@@ -193,13 +208,13 @@ function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    Polymer(setupArtificialInstantation(element));
+    return Polymer(setupArtificialInstantation(element));
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    Polymer.Class(setupArtificialInstantation(element));
+    return Polymer.Class(setupArtificialInstantation(element));
 }
 function createTemplate(definition) {
     var domModule = document.createElement('dom-module');

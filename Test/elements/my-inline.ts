@@ -14,6 +14,7 @@
    <div>
       This element has been created completely from code
       <br>The prop is: <span>{{prop}}</span>
+      <br>And the marker is <span>{{marker}}</span>
    </div>
 `)
 
@@ -30,20 +31,29 @@
 
 class MyInline extends MyAbstract implements MyMixin
 {
-   @property()
-   public prop = "hello world";  
+   @property() public prop   = "hello world";  
+   @property() public marker = "default marker";  
    
    //is = "my-inline"; 
 
    private myprivate = [1,2,3,4,5];
 
-   constructor()
+   constructor(marker: string)
    {
       super();            
-      console.log("constructor()");
+      console.log(`constructor("${marker}")`);
       this.prop = "hello world and all the rest";
       //console.log(this.myprivate);      
+
+      if(marker!==undefined) this.marker = marker;
    }
+   
+   /*
+   factoryImpl(foo, bar)
+   {
+      console.log(`factoryImpl called with foo=${foo} bar=${bar}`);
+   }   
+   */
 
    created()
    {
@@ -68,6 +78,11 @@ class MyInline extends MyAbstract implements MyMixin
       this.prop = "64"; */
 
       this.makeSomeNoise();
+   }
+
+   attached()
+   {
+      console.log("attached()");
    }
 
    @observe("prop")
