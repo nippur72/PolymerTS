@@ -56,8 +56,7 @@ You'll get the following files in `bower_components/polymer-ts`:
 
 1. Write elements as TypeScript classes
 2. Extend the `polymer.Base` class 
-3. Implement the `polymer.Element` interface
-4. Use @decorators as needed 
+3. Use @decorators as needed 
 
 A class-element:
 - can have private properties/fields
@@ -102,7 +101,7 @@ In your element typescript code (e.g. `elements/my-element.ts`):
 /// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
 
 @component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
 }
 ```
@@ -115,7 +114,7 @@ Sets the tag name of the custom component. The decorator is applied to the TypeS
  
 ```TypeScript
 @component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base 
 {
 }
 ```
@@ -124,14 +123,14 @@ If the component extends a native HTML tag, pass it as second argument or use th
 
 ```TypeScript
 @component("my-button","button")
-class MyButton extends polymer.Base implements polymer.Element
+class MyButton extends polymer.Base
 {
 }
 ```
 or
 ```TypeScript
 @component("my-button") @extend("button")
-class MyButton extends polymer.Base implements polymer.Element
+class MyButton extends polymer.Base
 {
 }
 ```
@@ -256,7 +255,7 @@ The `@behaviour` decorator can decorate the `class` keyword or it can be put wit
 Examples: 
 
 ```TypeScript
-class MyBehaviour extends polymer.Base implements polymer.Element
+class MyBehaviour extends polymer.Base 
 {
    @listen("something_has_happened")
    onBehave() {
@@ -267,7 +266,7 @@ class MyBehaviour extends polymer.Base implements polymer.Element
 ```TypeScript
 @component("my-element")
 @behavior(MyBehaviour)
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
   // ...
 }
@@ -275,7 +274,7 @@ class MyElement extends polymer.Base implements polymer.Element
 or
 ```TypeScript
 @component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
 	@behavior(MyBehaviour)  
 	// ...
@@ -300,7 +299,7 @@ Use the tags `@template` and `@style` to specify the element's template and styl
 // pass as argument what would be within <style> and </style>
 @style(`:host { display: block; } div { color: red; }`)
 
-class MyExample extends polymer.Base implements polymer.Element
+class MyExample extends polymer.Base 
 {
    // ...
 }
@@ -319,7 +318,7 @@ Registration is done with `createElement` but be sure to call it after the `WebC
 It's possible to avoid the use of decorators (e.g. for compatibility with TypeScript < 1.5) by simply writing
 their respective equivalent in plain Polymer syntax. E.g.
 ```TypeScript
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
    is = "my-element";
 
@@ -336,7 +335,7 @@ class MyElement extends polymer.Base implements polymer.Element
 ### A timer-based counter element <a name="timer_example"></a>
 ```TypeScript
 @component("my-timer")
-class MyTimer extends polymer.Base implements polymer.Element
+class MyTimer extends polymer.Base
 {
    @property({ type: Number, value: 0 })
    public start: number;   
@@ -421,7 +420,7 @@ Elements can be instantiated by using a custom constructor:
 
 ```TypeScript
 @component("my-info")
-class MyInfo extends polymer.Base implements polymer.Element
+class MyInfo extends polymer.Base
 {
    private someInfo: string;
 
@@ -460,6 +459,7 @@ If you find bugs or want to improve it, just send a pull request.
 - v0.1.1 (Jul 10, 2015)
   - Added support for constructor() with parameters. 
   - `constructor()` is now a replacement of `factoryImpl()`.
+  - preamble `implements polymer.Element` no longer required
 - v0.1.0 (Jul 10, 2015) 
   - Added support for class inheritance
   - Added support for use of `constructor()`
