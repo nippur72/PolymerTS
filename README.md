@@ -2,8 +2,6 @@
 
 Write Polymer 1.0 elements as TypeScript @decorated classes! 
 
-If you find bugs or want to improve it, just send a pull request.
-
 # Table of contents
 
 - [Installation](#install)
@@ -20,10 +18,11 @@ If you find bugs or want to improve it, just send a pull request.
 - [Writing elements only with code: @template and @style](#imperatively)
 - [Writing elements without using decorators](#decoratorless)
 - [Examples](#examples)
-   - A timer-based counter element   
-   - Using computed properties
-   - Using private properties and class constructor
+   - [A timer-based counter element](#timer_example)   
+   - [Using computed properties](#computed_example)  
+   - [Using custom constructor](#custom_constructor_example)
 - [Running the repo example](#repoexample)
+- [Contributing](#contributing)
 - [Changelog](#changelog)
 
 # Installation <a name="install"></a>
@@ -50,8 +49,8 @@ You'll get the following files in `bower_components/polymer-ts`:
 - Registration functions
    - `createElement(className)` register in Polymer and create the element
    - `createClass(className)` register in Polymer without creating the element
-- Events
-   - class constructor automatically linked to the `ready` event 
+- Other
+   - class constructor mapped to factory constructor (`factoryImpl()`) 
 
 # How to write elements <a name="howtowrite"></a>
 
@@ -62,7 +61,7 @@ You'll get the following files in `bower_components/polymer-ts`:
 
 A class-element:
 - can have private properties/fields
-- can use class constructor (called before the `ready` event)
+- can use class constructor (rendered as `factoryImpl()`)
 - can use inherited properties and methods
 
 # How to correctly reference in markup<a name="howtoreference"></a>
@@ -108,7 +107,7 @@ class MyElement extends polymer.Base implements polymer.Element
 }
 ```
 
-# @decorators explained <a name="decorators"></a>
+# Decorators explained <a name="decorators"></a>
 
 ## @component(tagName) <a name="component"></a>
 
@@ -285,7 +284,7 @@ class MyElement extends polymer.Base implements polymer.Element
 Note: a functionality similar to `@behaviour` can be also obtained by plain class inheritance 
 or by the use of Mixins.
 
-# Writing elements only with code: @template and @style <a name="imperatively"></a>
+# Writing elements only with code <a name="imperatively"></a>
 
 **Eperimental feature**: It's also possible to create elements using TypeScript code only, 
 without having any external .html. That can be useful if you want to keep template and logic in the same
@@ -334,7 +333,7 @@ class MyElement extends polymer.Base implements polymer.Element
 
 # Examples <a name="examples"></a>
 
-### A timer-based counter element
+### A timer-based counter element <a name="timer_example"></a>
 ```TypeScript
 @component("my-timer")
 class MyTimer extends polymer.Base implements polymer.Element
@@ -346,7 +345,7 @@ class MyTimer extends polymer.Base implements polymer.Element
 
    private timerHandle: number;
 
-   ready() {
+   constructor() {
       this.count = this.start;
       this.timerHandle = setInterval(() => {
          this.count++;
@@ -391,7 +390,7 @@ To use the element
 <my-timer start="42"></my-timer>
 ```
 
-### Using computed properties
+### Using computed properties <a name="computed_example"></a>
 
 There are several (almost equivalent) ways of defining a computed property:
 
@@ -416,6 +415,31 @@ fullname(first,last) {
 }
 ```
 
+### Using custom constructor <a name="custom_constructor_example"></a>
+
+Elements can be instantiated by using a custom constructor:  
+
+```TypeScript
+@component("my-info")
+class MyInfo extends polymer.Base implements polymer.Element
+{
+   private someInfo: string;
+
+   constructor(someInfo: string) {
+      this.someInfo = someInfo;
+   }
+}
+
+// createElement returns the constructor for the element
+var myInfo = createElement(MyInfo);
+
+// so we can create it
+var el = <any> new myInfo("hello world");
+
+// and attach in some way to the DOM
+document.body.appendChild(el);
+```
+
 # Running the example <a name="repoexample"></a>
 
 To run the very small example contained in this repo:
@@ -425,8 +449,16 @@ To run the very small example contained in this repo:
 - run `bower update`
 - Open the solution in Visual Studio and run the Test project.
 
+# Contributing <a name="contributing"></a>
+
+Contributions are welcome.
+
+If you find bugs or want to improve it, just send a pull request.
+
 # Change log <a name="changelog"></a>
 
+- v0.1.1 (Jul 10, 2015)
+  - Added support for constructor() with parameters. `constructor()` is now a replacement of `factoryImpl()`.
 - v0.1.0 (Jul 10, 2015) 
   - Added support for class inheritance
   - Added support for use of `constructor()`
