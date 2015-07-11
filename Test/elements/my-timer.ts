@@ -1,6 +1,6 @@
 ﻿
 @component("my-timer")
-class MyTimer extends polymer.Base implements polymer.Element
+class MyTimer extends polymer.Base 
 {
    @property({ type: Number, value: 0 })
    public start: number;   
@@ -8,6 +8,8 @@ class MyTimer extends polymer.Base implements polymer.Element
    public count: number;   
 
    private timerHandle: number;
+
+   @property() firm = "Swiss clocks inc.";
 
    ready() {
       this.count = this.start;

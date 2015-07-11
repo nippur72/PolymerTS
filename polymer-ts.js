@@ -120,6 +120,9 @@ function computed(ob) {
         propOb["computed"] = getterName + "(" + propertiesList + ")";
         target.properties[computedFuncName] = propOb;
         target[getterName] = target[computedFuncName];
+        // do not copy the function in the initialization phase
+        target["$donotcopy"] = target["$donotcopy"] || {};
+        target["$donotcopy"][computedFuncName] = true;
     };
 }
 // @listen decorator
@@ -182,24 +185,38 @@ function setupArtificialInstantation(elementClass) {
             registeredElement[propertyKey] = source[propertyKey];
         }
     }
-    var attachToFunction = "factoryImpl";
-    var oldFunction = registeredElement[attachToFunction];
-    registeredElement[attachToFunction] = function () {
+    // artificial constructor: call constructor() and copies members
+    registeredElement["$custom_cons"] = function () {
         // creates a fresh instance in order to grab instantiated properties and inherited methods from it
-        // put under comment until spread operator will be supported in TypeScript (>=1.5)
-        // var elementInstance = new (<any>elementClass)(...arguments);
-        // equivalent in ES5 code:
-        var elementInstance = constructWithSpread(elementClass, arguments);
+        // TODO: when supported use spread operator (on new)     
+        var args = this.$custom_cons_args;
+        var elementInstance = constructWithSpread(elementClass, args);
+        var donotcopy = this["$donotcopy"] || {};
         for (var propertyKey in elementInstance) {
             // do not include polymer functions
-            if (!(propertyKey in polymerBaseInstance)) {
+            if (!(propertyKey in polymerBaseInstance) && !(propertyKey in donotcopy)) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
-        // factoryImpl is disabled (for now)
-        // if (oldFunction !== undefined) oldFunction.apply(this);
+    };
+    // arguments for artifical constructor
+    registeredElement["$custom_cons_args"] = [];
+    // modify "factoryImpl"
+    if (registeredElement["factoryImpl"] !== undefined) {
+        throw "do not use factoryImpl() use constructor() instead";
+    }
+    else {
+        registeredElement["factoryImpl"] = function () {
+            this.$custom_cons_args = arguments;
+        };
+    }
+    // modify "attached" event function
+    var attachToFunction = "attached";
+    var oldFunction = registeredElement[attachToFunction];
+    registeredElement[attachToFunction] = function () {
+        this.$custom_cons();
         if (oldFunction !== undefined)
-            throw "do not use 'factoryImpl()' use constructor() instead";
+            oldFunction.apply(this);
     };
     return registeredElement;
 }

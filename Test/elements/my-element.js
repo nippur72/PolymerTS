@@ -31,6 +31,7 @@ var MyElement = (function (_super) {
     __extends(MyElement, _super);
     function MyElement() {
         _super.apply(this, arguments);
+        this.test = "4096";
     }
     //@behavior(MyBehaviour)
     /*
@@ -71,6 +72,14 @@ var MyElement = (function (_super) {
        return "Douglas Adams [" + test + "]";
     }
     */
+    /*
+    @property({computed: "get_fullname(test)" })
+    fullname: string;
+ 
+    get_fullname(test) {
+       return "Douglas Adams [" + test + "]";
+    }
+    */
     MyElement.prototype.fullname = function (test) {
         return "Douglas Adams [" + test + "]";
     };
@@ -93,7 +102,7 @@ var MyElement = (function (_super) {
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
     Object.defineProperty(MyElement.prototype, "fullname",
         __decorate([
-            computed({ type: String })
+            computed()
         ], MyElement.prototype, "fullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "fullname")));
     MyElement = __decorate([
         component("my-element"),

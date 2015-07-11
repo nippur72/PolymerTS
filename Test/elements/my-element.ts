@@ -1,6 +1,6 @@
 ﻿/// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
 
-class MyBehaviour extends polymer.Base implements polymer.Element
+class MyBehaviour extends polymer.Base 
 {
    @listen("behave")
    onBehave() {
@@ -10,10 +10,10 @@ class MyBehaviour extends polymer.Base implements polymer.Element
 
 @component("my-element")
 @behavior(MyBehaviour)
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base 
 {
    @property({ type: String, value: "1024" /*, observer: "testChanged" */})
-   test: string; 
+   test: string = "4096"; 
      
    @property({ type: String, value: "2048" /*, observer: "testChanged" */ })
    test1: string;  
@@ -73,9 +73,18 @@ class MyElement extends polymer.Base implements polymer.Element
    }
    */
 
-   @computed({ type: String })   
-   fullname(test) {
+   /*
+   @property({computed: "get_fullname(test)" })
+   fullname: string;
+
+   get_fullname(test) {
       return "Douglas Adams [" + test + "]";    
+   }
+   */
+
+   @computed() fullname(test)
+   {
+      return "Douglas Adams ["+test+"]";
    }
 
    /*

@@ -16,6 +16,7 @@ var MyTimer = (function (_super) {
     __extends(MyTimer, _super);
     function MyTimer() {
         _super.apply(this, arguments);
+        this.firm = "Swiss clocks inc.";
     }
     MyTimer.prototype.ready = function () {
         var _this = this;
@@ -30,6 +31,9 @@ var MyTimer = (function (_super) {
     __decorate([
         property({ type: Number, value: 0 })
     ], MyTimer.prototype, "start");
+    __decorate([
+        property()
+    ], MyTimer.prototype, "firm");
     MyTimer = __decorate([
         component("my-timer")
     ], MyTimer);

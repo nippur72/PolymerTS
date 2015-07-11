@@ -1,4 +1,4 @@
-﻿class MyAbstract extends polymer.Base implements polymer.Element
+﻿class MyAbstract extends polymer.Base 
 {
    makeSomeNoise()
    {
