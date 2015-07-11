@@ -383,7 +383,7 @@ class MyTimer extends polymer.Base implements polymer.Element
 To register the element:
 
 ```TypeScript
-createElement(MyTimer);   // no .prototype
+createElement(MyTimer);   
 ```
 To use the element
 ```HTML
@@ -458,7 +458,8 @@ If you find bugs or want to improve it, just send a pull request.
 # Change log <a name="changelog"></a>
 
 - v0.1.1 (Jul 10, 2015)
-  - Added support for constructor() with parameters. `constructor()` is now a replacement of `factoryImpl()`.
+  - Added support for constructor() with parameters. 
+  - `constructor()` is now a replacement of `factoryImpl()`.
 - v0.1.0 (Jul 10, 2015) 
   - Added support for class inheritance
   - Added support for use of `constructor()`
