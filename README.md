@@ -2,8 +2,6 @@
 
 Write Polymer 1.0 elements as TypeScript @decorated classes! 
 
-If you find bugs or want to improve it, just send a pull request.
-
 # Table of contents
 
 - [Installation](#install)
@@ -20,10 +18,11 @@ If you find bugs or want to improve it, just send a pull request.
 - [Writing elements only with code: @template and @style](#imperatively)
 - [Writing elements without using decorators](#decoratorless)
 - [Examples](#examples)
-   - A timer-based counter element   
-   - Using computed properties
-   - Using private properties and class constructor
+   - [A timer-based counter element](#timer_example)   
+   - [Using computed properties](#computed_example)  
+   - [Using custom constructor](#custom_constructor_example)
 - [Running the repo example](#repoexample)
+- [Contributing](#contributing)
 - [Changelog](#changelog)
 
 # Installation <a name="install"></a>
@@ -50,19 +49,18 @@ You'll get the following files in `bower_components/polymer-ts`:
 - Registration functions
    - `createElement(className)` register in Polymer and create the element
    - `createClass(className)` register in Polymer without creating the element
-- Events
-   - class constructor automatically linked to the `ready` event 
+- Other
+   - class constructor mapped to factory constructor (`factoryImpl()`) 
 
 # How to write elements <a name="howtowrite"></a>
 
 1. Write elements as TypeScript classes
 2. Extend the `polymer.Base` class 
-3. Implement the `polymer.Element` interface
-4. Use @decorators as needed 
+3. Use @decorators as needed 
 
 A class-element:
 - can have private properties/fields
-- can use class constructor (called before the `ready` event)
+- can use class constructor (rendered as `factoryImpl()`)
 - can use inherited properties and methods
 
 # How to correctly reference in markup<a name="howtoreference"></a>
@@ -103,12 +101,12 @@ In your element typescript code (e.g. `elements/my-element.ts`):
 /// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
 
 @component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
 }
 ```
 
-# @decorators explained <a name="decorators"></a>
+# Decorators explained <a name="decorators"></a>
 
 ## @component(tagName) <a name="component"></a>
 
@@ -116,7 +114,7 @@ Sets the tag name of the custom component. The decorator is applied to the TypeS
  
 ```TypeScript
 @component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base 
 {
 }
 ```
@@ -125,14 +123,14 @@ If the component extends a native HTML tag, pass it as second argument or use th
 
 ```TypeScript
 @component("my-button","button")
-class MyButton extends polymer.Base implements polymer.Element
+class MyButton extends polymer.Base
 {
 }
 ```
 or
 ```TypeScript
 @component("my-button") @extend("button")
-class MyButton extends polymer.Base implements polymer.Element
+class MyButton extends polymer.Base
 {
 }
 ```
@@ -257,7 +255,7 @@ The `@behaviour` decorator can decorate the `class` keyword or it can be put wit
 Examples: 
 
 ```TypeScript
-class MyBehaviour extends polymer.Base implements polymer.Element
+class MyBehaviour extends polymer.Base 
 {
    @listen("something_has_happened")
    onBehave() {
@@ -268,7 +266,7 @@ class MyBehaviour extends polymer.Base implements polymer.Element
 ```TypeScript
 @component("my-element")
 @behavior(MyBehaviour)
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
   // ...
 }
@@ -276,7 +274,7 @@ class MyElement extends polymer.Base implements polymer.Element
 or
 ```TypeScript
 @component("my-element")
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
 	@behavior(MyBehaviour)  
 	// ...
@@ -285,7 +283,7 @@ class MyElement extends polymer.Base implements polymer.Element
 Note: a functionality similar to `@behaviour` can be also obtained by plain class inheritance 
 or by the use of Mixins.
 
-# Writing elements only with code: @template and @style <a name="imperatively"></a>
+# Writing elements only with code <a name="imperatively"></a>
 
 **Eperimental feature**: It's also possible to create elements using TypeScript code only, 
 without having any external .html. That can be useful if you want to keep template and logic in the same
@@ -301,7 +299,7 @@ Use the tags `@template` and `@style` to specify the element's template and styl
 // pass as argument what would be within <style> and </style>
 @style(`:host { display: block; } div { color: red; }`)
 
-class MyExample extends polymer.Base implements polymer.Element
+class MyExample extends polymer.Base 
 {
    // ...
 }
@@ -320,7 +318,7 @@ Registration is done with `createElement` but be sure to call it after the `WebC
 It's possible to avoid the use of decorators (e.g. for compatibility with TypeScript < 1.5) by simply writing
 their respective equivalent in plain Polymer syntax. E.g.
 ```TypeScript
-class MyElement extends polymer.Base implements polymer.Element
+class MyElement extends polymer.Base
 {
    is = "my-element";
 
@@ -334,10 +332,10 @@ class MyElement extends polymer.Base implements polymer.Element
 
 # Examples <a name="examples"></a>
 
-### A timer-based counter element
+### A timer-based counter element <a name="timer_example"></a>
 ```TypeScript
 @component("my-timer")
-class MyTimer extends polymer.Base implements polymer.Element
+class MyTimer extends polymer.Base
 {
    @property({ type: Number, value: 0 })
    public start: number;   
@@ -346,7 +344,7 @@ class MyTimer extends polymer.Base implements polymer.Element
 
    private timerHandle: number;
 
-   ready() {
+   constructor() {
       this.count = this.start;
       this.timerHandle = setInterval(() => {
          this.count++;
@@ -384,14 +382,14 @@ class MyTimer extends polymer.Base implements polymer.Element
 To register the element:
 
 ```TypeScript
-createElement(MyTimer);   // no .prototype
+createElement(MyTimer);   
 ```
 To use the element
 ```HTML
 <my-timer start="42"></my-timer>
 ```
 
-### Using computed properties
+### Using computed properties <a name="computed_example"></a>
 
 There are several (almost equivalent) ways of defining a computed property:
 
@@ -416,6 +414,31 @@ fullname(first,last) {
 }
 ```
 
+### Using custom constructor <a name="custom_constructor_example"></a>
+
+Elements can be instantiated by using a custom constructor:  
+
+```TypeScript
+@component("my-info")
+class MyInfo extends polymer.Base
+{
+   private someInfo: string;
+
+   constructor(someInfo: string) {
+      this.someInfo = someInfo;
+   }
+}
+
+// createElement returns the constructor for the element
+var myInfo = createElement(MyInfo);
+
+// so we can create it
+var el = <any> new myInfo("hello world");
+
+// and attach in some way to the DOM
+document.body.appendChild(el);
+```
+
 # Running the example <a name="repoexample"></a>
 
 To run the very small example contained in this repo:
@@ -425,8 +448,18 @@ To run the very small example contained in this repo:
 - run `bower update`
 - Open the solution in Visual Studio and run the Test project.
 
+# Contributing <a name="contributing"></a>
+
+Contributions are welcome.
+
+If you find bugs or want to improve it, just send a pull request.
+
 # Change log <a name="changelog"></a>
 
+- v0.1.1 (Jul 10, 2015)
+  - Added support for constructor() with parameters. 
+  - `constructor()` is now a replacement of `factoryImpl()`.
+  - preamble `implements polymer.Element` no longer required
 - v0.1.0 (Jul 10, 2015) 
   - Added support for class inheritance
   - Added support for use of `constructor()`

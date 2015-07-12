@@ -1,7 +1,0 @@
-﻿
-function RegisterAll()
-{   
-   createElement(MyInline);         
-}
-
-

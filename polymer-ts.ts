@@ -5,7 +5,7 @@
 
 module polymer {
 
-   export class Base {
+   export class Base implements polymer.Element {
 	   $: any;
 	   $$: any;
 
@@ -68,7 +68,7 @@ module polymer {
       observers?: String[];
 
       // lifecycle
-      factoryImpl?(): void;
+      factoryImpl?(...args): void;
       ready?(): void;
       created?(): void;
       attached?(): void;
@@ -95,7 +95,7 @@ module polymer {
 
 // Polymer object
 declare var Polymer: {
-   (prototype: polymer.Element): Function;
+   (prototype: polymer.Element): FunctionConstructor;
    Class(prototype: polymer.Element): Function;
    dom(node: HTMLElement): HTMLElement;
    dom(node: polymer.Base): HTMLElement;
@@ -178,6 +178,10 @@ function computed(ob?: polymer.Property) {
       propOb["computed"] = getterName + "(" + propertiesList + ")";
       target.properties[computedFuncName] = propOb;
       target[getterName] = target[computedFuncName];
+      
+      // do not copy the function in the initialization phase
+      target["$donotcopy"] = target["$donotcopy"] || {};                    
+      target["$donotcopy"][computedFuncName] = true;
    }
 }
 
@@ -224,6 +228,18 @@ function observe(propertiesList: string) {
    }
 }
 
+function constructWithSpread(func: Function, argArray: IArguments)
+{   
+   var arr=[null];
+   // since "arguments" is nor a real Array we can't use concat
+   for(var t=0; t<argArray.length; t++)
+   {
+      arr.push(argArray[t]);
+   }
+   var nullaryFunc = Function.prototype.bind.apply(func, arr);
+   return new nullaryFunc();
+}
+
 function setupArtificialInstantation(elementClass: Function): polymer.Element
 {
    var polymerBaseInstance: polymer.Base = new polymer.Base();   
@@ -235,40 +251,67 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
           
    for (var propertyKey in source) {
       // do not include polymer.Base functions
-      if (!(propertyKey in polymerBaseInstance)) {
+      if(!(propertyKey in polymerBaseInstance)) {         
          registeredElement[propertyKey] = source[propertyKey];
       }
    }
 
-   var oldReady = registeredElement["ready"];
-   registeredElement["ready"] = function () {
+   // artificial constructor: call constructor() and copies members
+   registeredElement["$custom_cons"] = function() {
       // creates a fresh instance in order to grab instantiated properties and inherited methods from it
-      var elementInstance = new (<any>elementClass)();
-      for (var propertyKey in elementInstance) {         
+
+      // TODO: when supported use spread operator (on new)     
+      var args = this.$custom_cons_args;
+      var elementInstance=constructWithSpread(elementClass, args);
+      var donotcopy = this["$donotcopy"] || {};
+
+      for(var propertyKey in elementInstance) {         
          // do not include polymer functions
-         if (!(propertyKey in polymerBaseInstance)) {            
-            this[propertyKey] = elementInstance[propertyKey];
+         if(!(propertyKey in polymerBaseInstance) && !(propertyKey in donotcopy)) {            
+            this[propertyKey]=elementInstance[propertyKey];
          }
-      }
-      if (oldReady !== undefined) oldReady.apply(this);
+      }      
+   };
+   
+   // arguments for artifical constructor
+   registeredElement["$custom_cons_args"] = [];
+   
+   // modify "factoryImpl"
+   if(registeredElement["factoryImpl"]!==undefined)
+   {
+      throw "do not use factoryImpl() use constructor() instead";
+   }
+   else
+   {
+      registeredElement["factoryImpl"]=function() {
+         this.$custom_cons_args = arguments;
+      };         
+   }
+   
+   // modify "attached" event function
+   var attachToFunction = "attached";
+   var oldFunction = registeredElement[attachToFunction];
+   registeredElement[attachToFunction] = function() {
+      this.$custom_cons();
+      if(oldFunction !== undefined) oldFunction.apply(this);      
    };
 
    return registeredElement;
 }
 
 // element registration functions
-function createElement(element: polymer.Element): void {
+function createElement(element: polymer.Element) {
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }   
-   Polymer(setupArtificialInstantation(<Function> element));
+   return Polymer(setupArtificialInstantation(<Function> element));
 }
 
-function createClass(element: polymer.Element): void {
+function createClass(element: polymer.Element) {
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }
-   Polymer.Class(setupArtificialInstantation(<Function> element));
+   return Polymer.Class(setupArtificialInstantation(<Function> element));
 }
 
 function createTemplate(definition: polymer.Element) {

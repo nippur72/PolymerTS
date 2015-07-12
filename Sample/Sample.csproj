@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>{B1FC5320-C3B0-4224-8C90-9DB35561D7E7}</ProjectGuid>
+    <ProjectGuid>{81CD4220-B34B-46BB-88B3-FB69808F789F}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
@@ -22,20 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\jasmine\images\jasmine-horizontal.png" />
-    <Content Include="bower_components\jasmine\images\jasmine-horizontal.svg" />
-    <Content Include="bower_components\jasmine\images\jasmine_favicon.png" />
-    <Content Include="bower_components\jasmine\lib\console\console.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\boot.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\example\node_example\lib\jasmine_examples\Player.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\example\node_example\lib\jasmine_examples\Song.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine-html.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine.css" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\json2.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\node_boot.js" />
-    <Content Include="bower_components\jasmine\requirements.txt" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.js" />
     <Content Include="bower_components\polymer\LICENSE.txt" />
     <Content Include="bower_components\polymer\polymer-micro.html" />
     <Content Include="bower_components\polymer\polymer-mini.html" />
@@ -55,17 +42,16 @@
     <Content Include="elements\my-element.html" />
     <Content Include="elements\my-simple.html" />
     <Content Include="elements\my-timer.html" />
-    <Content Include="test.html" />
+    <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="test.ts" />
+    <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="elements\my-inline.ts" />
     <TypeScriptCompile Include="elements\my-simple.ts" />
     <TypeScriptCompile Include="elements\my-timer.ts" />
-    <TypeScriptCompile Include="typings\jasmine\jasmine.d.ts" />
-    <TypeScriptCompile Include="typings\tsd.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower_components\polymer\.bower.json" />
@@ -76,16 +62,10 @@
     <Content Include="bower_components\webcomponentsjs\build.log" />
     <Content Include="bower_components\webcomponentsjs\package.json" />
     <Content Include="bower_components\webcomponentsjs\README.md" />
+    <Content Include="bower_components\polymer-ts\.bower.json" />
+    <Content Include="bower_components\polymer-ts\bower.json" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
     <Content Include="packages.config" />
-    <Content Include="bower_components\jasmine\.bower.json" />
-    <Content Include="bower_components\jasmine\bower.json" />
-    <Content Include="bower_components\jasmine\CONTRIBUTING.md" />
-    <Content Include="bower_components\jasmine\GOALS_2.0.md" />
-    <Content Include="bower_components\jasmine\MANIFEST.in" />
-    <Content Include="bower_components\jasmine\MIT.LICENSE" />
-    <Content Include="bower_components\jasmine\package.json" />
-    <Content Include="bower_components\jasmine\README.md" />
-    <Content Include="bower_components\jasmine\RELEASE.md" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -110,7 +90,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1693</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1693/</IISUrl>
+          <IISUrl>http://localhost:1694/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

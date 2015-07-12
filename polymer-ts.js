@@ -120,6 +120,9 @@ function computed(ob) {
         propOb["computed"] = getterName + "(" + propertiesList + ")";
         target.properties[computedFuncName] = propOb;
         target[getterName] = target[computedFuncName];
+        // do not copy the function in the initialization phase
+        target["$donotcopy"] = target["$donotcopy"] || {};
+        target["$donotcopy"][computedFuncName] = true;
     };
 }
 // @listen decorator
@@ -162,6 +165,15 @@ function observe(propertiesList) {
         };
     }
 }
+function constructWithSpread(func, argArray) {
+    var arr = [null];
+    // since "arguments" is nor a real Array we can't use concat
+    for (var t = 0; t < argArray.length; t++) {
+        arr.push(argArray[t]);
+    }
+    var nullaryFunc = Function.prototype.bind.apply(func, arr);
+    return new nullaryFunc();
+}
 function setupArtificialInstantation(elementClass) {
     var polymerBaseInstance = new polymer.Base();
     var registeredElement = {};
@@ -173,18 +185,38 @@ function setupArtificialInstantation(elementClass) {
             registeredElement[propertyKey] = source[propertyKey];
         }
     }
-    var oldReady = registeredElement["ready"];
-    registeredElement["ready"] = function () {
+    // artificial constructor: call constructor() and copies members
+    registeredElement["$custom_cons"] = function () {
         // creates a fresh instance in order to grab instantiated properties and inherited methods from it
-        var elementInstance = new elementClass();
+        // TODO: when supported use spread operator (on new)     
+        var args = this.$custom_cons_args;
+        var elementInstance = constructWithSpread(elementClass, args);
+        var donotcopy = this["$donotcopy"] || {};
         for (var propertyKey in elementInstance) {
             // do not include polymer functions
-            if (!(propertyKey in polymerBaseInstance)) {
+            if (!(propertyKey in polymerBaseInstance) && !(propertyKey in donotcopy)) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
-        if (oldReady !== undefined)
-            oldReady.apply(this);
+    };
+    // arguments for artifical constructor
+    registeredElement["$custom_cons_args"] = [];
+    // modify "factoryImpl"
+    if (registeredElement["factoryImpl"] !== undefined) {
+        throw "do not use factoryImpl() use constructor() instead";
+    }
+    else {
+        registeredElement["factoryImpl"] = function () {
+            this.$custom_cons_args = arguments;
+        };
+    }
+    // modify "attached" event function
+    var attachToFunction = "attached";
+    var oldFunction = registeredElement[attachToFunction];
+    registeredElement[attachToFunction] = function () {
+        this.$custom_cons();
+        if (oldFunction !== undefined)
+            oldFunction.apply(this);
     };
     return registeredElement;
 }
@@ -193,13 +225,13 @@ function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    Polymer(setupArtificialInstantation(element));
+    return Polymer(setupArtificialInstantation(element));
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    Polymer.Class(setupArtificialInstantation(element));
+    return Polymer.Class(setupArtificialInstantation(element));
 }
 function createTemplate(definition) {
     var domModule = document.createElement('dom-module');
