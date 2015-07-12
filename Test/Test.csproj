@@ -56,7 +56,6 @@
     <Content Include="elements\my-simple.html" />
     <Content Include="elements\my-timer.html" />
     <Content Include="test.html" />
-    <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
