@@ -102,7 +102,7 @@ var MyElement = (function (_super) {
         ], MyElement.prototype, "test_and_test1_Changed", Object.getOwnPropertyDescriptor(MyElement.prototype, "test_and_test1_Changed")));
     Object.defineProperty(MyElement.prototype, "fullname",
         __decorate([
-            computed()
+            computed
         ], MyElement.prototype, "fullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "fullname")));
     MyElement = __decorate([
         component("my-element"),
