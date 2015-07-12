@@ -82,7 +82,7 @@ class MyElement extends polymer.Base
    }
    */
 
-   @computed() fullname(test)
+   @computed fullname(test)
    {
       return "Douglas Adams ["+test+"]";
    }
