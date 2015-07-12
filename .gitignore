@@ -9,6 +9,7 @@ Test/*.map
 Test/*.js
 Test/elements/*.map
 Test/elements/*.js
+.vs/
 
 packages/
 
