@@ -10,6 +10,8 @@ Test/*.js
 Test/elements/*.map
 Test/elements/*.js
 
+packages/
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

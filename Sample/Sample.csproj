@@ -3,11 +3,11 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>{427F1995-BEC9-4546-AB67-1DC5BC1A14A7}</ProjectGuid>
+    <ProjectGuid>{81CD4220-B34B-46BB-88B3-FB69808F789F}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
@@ -19,13 +19,53 @@
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bower_components\polymer-ts\polymer-ts.js" />
+    <Content Include="bower_components\polymer\LICENSE.txt" />
+    <Content Include="bower_components\polymer\polymer-micro.html" />
+    <Content Include="bower_components\polymer\polymer-mini.html" />
+    <Content Include="bower_components\polymer\polymer.html" />
+    <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
+    <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />
+    <Content Include="bower_components\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="bower_components\webcomponentsjs\MutationObserver.js" />
+    <Content Include="bower_components\webcomponentsjs\MutationObserver.min.js" />
+    <Content Include="bower_components\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="bower_components\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="elements\my-element.html" />
+    <Content Include="elements\my-simple.html" />
+    <Content Include="elements\my-timer.html" />
+    <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="polymer-ts.ts" />
+    <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
+    <TypeScriptCompile Include="elements\my-element.ts" />
+    <TypeScriptCompile Include="elements\my-inline.ts" />
+    <TypeScriptCompile Include="elements\my-simple.ts" />
+    <TypeScriptCompile Include="elements\my-timer.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="README.md" />
+    <Content Include="bower_components\polymer\.bower.json" />
+    <Content Include="bower_components\polymer\bower.json" />
+    <Content Include="bower_components\polymer\build.log" />
+    <Content Include="bower_components\webcomponentsjs\.bower.json" />
+    <Content Include="bower_components\webcomponentsjs\bower.json" />
+    <Content Include="bower_components\webcomponentsjs\build.log" />
+    <Content Include="bower_components\webcomponentsjs\package.json" />
+    <Content Include="bower_components\webcomponentsjs\README.md" />
+    <Content Include="bower_components\polymer-ts\.bower.json" />
+    <Content Include="bower_components\polymer-ts\bower.json" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
+    <Content Include="packages.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -38,7 +78,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>PolymerTS</RootNamespace>
+    <RootNamespace>Test</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
@@ -48,9 +88,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2148</DevelopmentServerPort>
+          <DevelopmentServerPort>1693</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2148/</IISUrl>
+          <IISUrl>http://localhost:1693/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -69,18 +109,4 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)polymer-ts.ts" "$(SolutionDir)\Test\bower_components\polymer-ts"
-copy "$(SolutionDir)polymer-ts.js" "$(SolutionDir)\Test\bower_components\polymer-ts"
-copy "$(SolutionDir)polymer-ts.js.map" "$(SolutionDir)\Test\bower_components\polymer-ts"
-
-copy "$(SolutionDir)polymer-ts.ts" "$(SolutionDir)\Sample\bower_components\polymer-ts"
-copy "$(SolutionDir)polymer-ts.js" "$(SolutionDir)\Sample\bower_components\polymer-ts"
-copy "$(SolutionDir)polymer-ts.js.map" "$(SolutionDir)\Sample\bower_components\polymer-ts"
-</PostBuildEvent>
-  </PropertyGroup>
 </Project>
