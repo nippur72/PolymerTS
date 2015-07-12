@@ -1,22 +1,42 @@
 ﻿/// <reference path="typings/jasmine/jasmine.d.ts" />
 
+var polymerReady = false;
+
+window.addEventListener('WebComponentsReady', (e) =>
+{           
+   polymerReady = true;
+});
+
+RunSpecs();
+
+// mimics the old Jasmine 1.3 waitsFor()
+function waitFor(F)
+{
+   beforeEach((done) => {
+      setInterval(() => {
+         if(F()) done();
+      }, 250);
+   });        
+}
+
 function RunSpecs()
 {
-   describe("A jasmine test", () =>   
+   describe("WebComponents", () => {
+      waitFor( () => polymerReady );
+
+      it("fires the event 'WebComponentsReady'", () =>
+      {         
+         expect(polymerReady).toBe(true);
+      });
+   });
+
+   describe("<my-element>", () =>   
    {
-      it("constains a spec", () =>
+      it("initializes properties", () =>
       {
-         expect(!false).toBe(true);
-
-         var el=document.querySelector("#myelid");
-
-         expect((<any> el).test).toBe("");        
+         var el = <MyElement> <any> document.querySelector("#myelid");
+         expect(el.test).toBe("4096");        
       });
    });
 }
-
-
-
-
-
 
