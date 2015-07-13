@@ -217,7 +217,7 @@ In the following example, a computed property named "fullname" is created, based
 @computed()
 fullname(firstName,lastName)
 {
-   return firstName+" "+lastName; 
+   return firstName+" "+lastName; // firstname is the same as this.firstName
 }
 ```
 
@@ -225,6 +225,18 @@ The decorator accepts also a map object for setting options on the property, e.g
 ```TypeScript
 @computed({ type: String })
 fullname(firstName,lastName)
+{
+   return firstName+" "+lastName; 
+}
+```
+
+The `@computed` decorator is a shortcut for `@property`:
+ 
+```TypeScript
+@property({computed: 'computefullname(firstName,lastName)'})
+fullname: string;
+
+computefullname(firstName,lastName)
 {
    return firstName+" "+lastName; 
 }
