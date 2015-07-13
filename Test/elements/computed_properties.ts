@@ -48,15 +48,13 @@ class PropertyInitializationTest extends polymer.Base {
 
 @component("listener-test")
 @template("")
-class ListenerTest extends polymer.Base {
-   @property() bar="mybar"
+class ListenerTest extends polymer.Base
+{
+   @property() bar="mybar";
 
    constructor() {      
       super();
-      setTimeout(() =>
-      {
-         this.fire("change-bar");
-      },100);
+      this.fire("change-bar");      
    }
 
    @listen("change-bar")

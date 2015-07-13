@@ -113,10 +113,10 @@ function RunSpecs()
       beforeEach(() =>
       {
          // register in Polymer and get the constructor
-         elementConstructor = createElement(CustomConstructorTest);
+         createElement(CustomConstructorTest);
          
-         // create the element
-         el = new elementConstructor("42");
+         // create the element         
+         el = CustomConstructorTest.create("42");
 
          // connect it to DOM
          var root = querySelector("#put_custom_constructor_here");
@@ -137,10 +137,10 @@ function RunSpecs()
 
       beforeEach(() => {
          // register in Polymer and get the constructor
-         elementConstructor = createElement(PropertyInitializationTest);
+         createElement(PropertyInitializationTest);
          
          // create the element
-         el = new elementConstructor();
+         el = PropertyInitializationTest.create();
 
          // connect it to DOM
          var root = querySelector("#put_custom_constructor_here");
@@ -169,7 +169,7 @@ function RunSpecs()
 
       // wait for the 'attached' event
       waitFor(() => (el.bar=="foo"));
-
+                      
       it("sets an event listener function", () => {
          expect(el.bar).toBe("foo");
       });
