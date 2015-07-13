@@ -120,9 +120,11 @@ function computed(ob) {
         propOb["computed"] = getterName + "(" + propertiesList + ")";
         target.properties[computedFuncName] = propOb;
         target[getterName] = target[computedFuncName];
+        /*
         // do not copy the function in the initialization phase
         target["$donotcopy"] = target["$donotcopy"] || {};
         target["$donotcopy"][computedFuncName] = true;
+        */
     };
 }
 // @listen decorator
@@ -165,14 +167,10 @@ function observe(propertiesList) {
         };
     }
 }
-function constructWithSpread(func, argArray) {
-    var arr = [null];
-    // since "arguments" is nor a real Array we can't use concat
-    for (var t = 0; t < argArray.length; t++) {
-        arr.push(argArray[t]);
-    }
-    var nullaryFunc = Function.prototype.bind.apply(func, arr);
-    return new nullaryFunc();
+function SimulatedNew(fn, argArray) {
+    var newObj = Object.create(fn.prototype);
+    fn.apply(newObj, argArray);
+    return newObj;
 }
 function setupArtificialInstantation(elementClass) {
     var polymerBaseInstance = new polymer.Base();
@@ -187,17 +185,19 @@ function setupArtificialInstantation(elementClass) {
     }
     // artificial constructor: call constructor() and copies members
     registeredElement["$custom_cons"] = function () {
-        // creates a fresh instance in order to grab instantiated properties and inherited methods from it
-        // TODO: when supported use spread operator (on new)     
+        // reads arguments coming from factoryImpl
         var args = this.$custom_cons_args;
-        var elementInstance = constructWithSpread(elementClass, args);
-        var donotcopy = this["$donotcopy"] || {};
+        // copies members from instance to polymer element (this)
+        var elementInstance = Object.create(elementClass.prototype);
+        //var donotcopy = this["$donotcopy"] || {};
         for (var propertyKey in elementInstance) {
             // do not include polymer functions
-            if (!(propertyKey in polymerBaseInstance) && !(propertyKey in donotcopy)) {
+            if (!(propertyKey in polymerBaseInstance) /*&& !(propertyKey in donotcopy)*/) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
+        // applies class constructor on the polumer element (this)
+        elementClass.apply(this, args);
     };
     // arguments for artifical constructor
     registeredElement["$custom_cons_args"] = [];
@@ -226,15 +226,6 @@ function createElement(element) {
     }
     return Polymer(setupArtificialInstantation(element));
 }
-/*
-// element registration functions
-function createElement(element: polymer.Element) {
-   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
-      createTemplate(element);
-   }
-   return Polymer(setupArtificialInstantation(<Function> element));
-}
-*/
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
