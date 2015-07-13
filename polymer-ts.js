@@ -167,11 +167,6 @@ function observe(propertiesList) {
         };
     }
 }
-function SimulatedNew(fn, argArray) {
-    var newObj = Object.create(fn.prototype);
-    fn.apply(newObj, argArray);
-    return newObj;
-}
 function setupArtificialInstantation(elementClass) {
     var polymerBaseInstance = new polymer.Base();
     var registeredElement = {};

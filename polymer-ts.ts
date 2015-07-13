@@ -230,12 +230,6 @@ function observe(propertiesList: string) {
    }
 }
 
-function SimulatedNew(fn: Function, argArray: IArguments) {
-   var newObj=Object.create(fn.prototype);
-   fn.apply(newObj, argArray);
-   return newObj;
-}
-
 function setupArtificialInstantation(elementClass: Function): polymer.Element
 {
    var polymerBaseInstance: polymer.Base = new polymer.Base();   
