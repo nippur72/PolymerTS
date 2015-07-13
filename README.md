@@ -214,7 +214,7 @@ The easiest way is to decorate a function that takes as arguments the properties
 In the following example, a computed property named "fullname" is created, based on the properties "firstName" and "lastName":
 
 ```TypeScript
-@computed
+@computed()
 fullname(firstName,lastName)
 {
    return firstName+" "+lastName; 
