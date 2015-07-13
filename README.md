@@ -49,6 +49,7 @@ You'll get the following files in `bower_components/polymer-ts`:
 - Registration functions
    - `createElement(className)` register in Polymer and create the element
    - `createClass(className)` register in Polymer without creating the element
+   - `className.create()` manually create an element
 - Other
    - class constructor mapped to factory constructor (`factoryImpl()`) 
 
@@ -441,11 +442,8 @@ class MyInfo extends polymer.Base
    }
 }
 
-// createElement returns the constructor for the element
-var myInfo = createElement(MyInfo);
-
-// so we can create it
-var el = <any> new myInfo("hello world");
+// creates the element passing a parameter
+var el = MyInfo.create("hello world");
 
 // and attach in some way to the DOM
 document.body.appendChild(el);
@@ -468,6 +466,9 @@ If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
 
+- v0.1.2 (Jul 13, 2015)
+  - Improved the way objects are instatiated
+  - support for static method `create()` on the element class 
 - v0.1.1 (Jul 10, 2015)
   - Added support for constructor() with parameters. 
   - `constructor()` is now a replacement of `factoryImpl()`.

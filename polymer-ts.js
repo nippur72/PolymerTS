@@ -52,6 +52,13 @@ var polymer;
         Base.prototype.unlinkPaths = function (path) { };
         Base.prototype.unshift = function (path, value) { };
         Base.prototype.updateStyles = function () { };
+        Base.create = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            throw "element not yet registered in Polymer";
+        };
         return Base;
     })();
     polymer.Base = Base;
@@ -120,11 +127,6 @@ function computed(ob) {
         propOb["computed"] = getterName + "(" + propertiesList + ")";
         target.properties[computedFuncName] = propOb;
         target[getterName] = target[computedFuncName];
-        /*
-        // do not copy the function in the initialization phase
-        target["$donotcopy"] = target["$donotcopy"] || {};
-        target["$donotcopy"][computedFuncName] = true;
-        */
     };
 }
 // @listen decorator
@@ -184,10 +186,9 @@ function setupArtificialInstantation(elementClass) {
         var args = this.$custom_cons_args;
         // copies members from instance to polymer element (this)
         var elementInstance = Object.create(elementClass.prototype);
-        //var donotcopy = this["$donotcopy"] || {};
         for (var propertyKey in elementInstance) {
             // do not include polymer functions
-            if (!(propertyKey in polymerBaseInstance) /*&& !(propertyKey in donotcopy)*/) {
+            if (!(propertyKey in polymerBaseInstance)) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
@@ -219,7 +220,12 @@ function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
-    return Polymer(setupArtificialInstantation(element));
+    var maker = Polymer(setupArtificialInstantation(element));
+    element["create"] = function () {
+        var newOb = Object.create(maker.prototype);
+        return maker.apply(newOb, arguments);
+    };
+    return maker;
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {

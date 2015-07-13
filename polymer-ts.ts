@@ -5,7 +5,7 @@
 
 module polymer {
 
-   export class Base implements polymer.Element {
+   export class Base implements polymer.Element, polymer.PolymerTSElement {
 	   $: any;
 	   $$: any;
 
@@ -58,7 +58,11 @@ module polymer {
 	   translate3d(x, y, z, node?: HTMLElement):void {}
 	   unlinkPaths(path: string):void {}
 	   unshift(path: string, value: any):any {}
-	   updateStyles():void {}
+      updateStyles(): void {}
+
+      static create<T extends polymer.Base>(...args: any[]): T {
+         throw "element not yet registered in Polymer";
+      }
    }
 
    export interface Element {
@@ -77,6 +81,13 @@ module polymer {
 
       // 
       prototype?: Object;
+   }
+
+   // members set by PolymerTS
+   export interface PolymerTSElement
+   {      
+      $custom_cons?: FunctionConstructor;
+      $custom_cons_args?: any[];
    }
 
    // property definition interface
@@ -178,12 +189,6 @@ function computed(ob?: polymer.Property) {
       propOb["computed"] = getterName + "(" + propertiesList + ")";
       target.properties[computedFuncName] = propOb;
       target[getterName] = target[computedFuncName];
-      
-      /*
-      // do not copy the function in the initialization phase
-      target["$donotcopy"] = target["$donotcopy"] || {};                    
-      target["$donotcopy"][computedFuncName] = true;
-      */
    }
 }
 
@@ -253,10 +258,9 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
 
       // copies members from instance to polymer element (this)
       var elementInstance = Object.create(elementClass.prototype);
-      //var donotcopy = this["$donotcopy"] || {};
       for(var propertyKey in elementInstance) {         
          // do not include polymer functions
-         if(!(propertyKey in polymerBaseInstance) /*&& !(propertyKey in donotcopy)*/) {            
+         if(!(propertyKey in polymerBaseInstance)) {            
             this[propertyKey] = elementInstance[propertyKey];
          }
       }      
@@ -291,14 +295,19 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
    return registeredElement;
 }
 
-function createElement<T extends polymer.Element>(element: new (...args: any[]) => T): new (...args: any[]) => T {
+function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }
-   return <any> Polymer(setupArtificialInstantation(element));
+   var maker = <any> Polymer(setupArtificialInstantation(element));
+   element["create"]=function() {      
+      var newOb = Object.create(maker.prototype);      
+      return maker.apply(newOb, arguments); 
+   };
+   return maker;
 }
 
-function createClass<T extends polymer.Element>(element: new (...args: any[]) => T): new (...args: any[]) => T {
+function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);
    }

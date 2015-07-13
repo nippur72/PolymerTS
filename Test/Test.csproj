@@ -57,7 +57,6 @@
     <Content Include="elements\polymer_register.html" />
     <Content Include="elements\my-element.html" />
     <Content Include="elements\my-simple.html" />
-    <Content Include="elements\my-timer.html" />
     <Content Include="test.html" />
     <Content Include="web.config" />
   </ItemGroup>
@@ -68,7 +67,6 @@
     <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="elements\my-inline.ts" />
     <TypeScriptCompile Include="elements\my-simple.ts" />
-    <TypeScriptCompile Include="elements\my-timer.ts" />
     <TypeScriptCompile Include="typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="typings\tsd.d.ts" />
   </ItemGroup>
