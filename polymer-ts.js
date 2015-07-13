@@ -220,13 +220,21 @@ function setupArtificialInstantation(elementClass) {
     };
     return registeredElement;
 }
-// element registration functions
 function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);
     }
     return Polymer(setupArtificialInstantation(element));
 }
+/*
+// element registration functions
+function createElement(element: polymer.Element) {
+   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+      createTemplate(element);
+   }
+   return Polymer(setupArtificialInstantation(<Function> element));
+}
+*/
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         createTemplate(element);

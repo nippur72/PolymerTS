@@ -299,6 +299,14 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
    return registeredElement;
 }
 
+function createElement<T extends polymer.Element>(element: new (...args: any[]) => T): new (...args: any[]) => T {
+   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+      createTemplate(element);
+   }
+   return <any> Polymer(setupArtificialInstantation(element));
+}
+
+/*
 // element registration functions
 function createElement(element: polymer.Element) {
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
@@ -306,7 +314,7 @@ function createElement(element: polymer.Element) {
    }   
    return Polymer(setupArtificialInstantation(<Function> element));
 }
-
+*/
 function createClass(element: polymer.Element) {
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       createTemplate(element);

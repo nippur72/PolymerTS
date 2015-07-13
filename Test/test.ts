@@ -45,7 +45,7 @@ function implements(instance: Object, classFunction: Function)
 
 function RunSpecs()
 {
-   describe("WebComponents library", () => {
+   describe("webcomponents library", () => {
       waitFor( () => polymerReady );
 
       it("fires the event 'WebComponentsReady'", () =>
@@ -54,24 +54,7 @@ function RunSpecs()
       });
    });
 
-   /*
-   describe("<my-element>", () =>   
-   {
-      it("initializes properties", () =>
-      {
-         var el = <MyElement> <any> document.querySelector("#myelid");
-         expect(el.test).toBe("4096");        
-      });
-   });
-   */
-
-   registerTest();
-   computedPropertiesTest();
-}
-
-function registerTest()
-{
-   describe("@component", () => {
+   describe("@component decorator", () => {
       it('registers regular elements', () => {
          var el = querySelector('#testElement');
          expect(implements(el, TestElement)).toBe(true);
@@ -93,19 +76,16 @@ function registerTest()
       });
    });
 
-   describe("@extend", () => {
+   describe("@extend decorator", () => {
       it('extends builtin elements', () => {
          var el = querySelector('#testInput2');
          expect(implements(el, TestInput2)).toBe(true);
       });
    });
-}
 
-function computedPropertiesTest()
-{
-   describe("Computed properties", () =>
+   describe("a computed property", () =>
    {      
-      it('work with @computed decorator', () => {
+      it('can be set with @computed decorator', () => {
          var element = <ComputedPropertiesTest> <any> querySelector('#computedProperties1');
 
          expect(element.computed1).toBe(2);
@@ -115,7 +95,7 @@ function computedPropertiesTest()
          expect(element.computed1).toBe(6);
       });
 
-      it('work with @property decorator', () => {
+      it('can be set with @property decorator', () => {
          var element=<ComputedPropertiesTest> <any> querySelector('#computedProperties2');
 
          expect(element.computed2).toBe(2);
@@ -125,4 +105,56 @@ function computedPropertiesTest()
          expect(element.computed2).toBe(6);
       });
    });
+
+   describe("custom constructor", () =>
+   {
+      var elementConstructor, el;
+
+      beforeEach(() =>
+      {
+         // register in Polymer and get the constructor
+         elementConstructor = createElement(CustomConstructorTest);
+         
+         // create the element
+         el = new elementConstructor("42");
+
+         // connect it to DOM
+         var root = querySelector("#put_custom_constructor_here");
+         root.appendChild(el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar == "42") );
+
+      it("provides custom initialization", () =>
+      {
+         expect(el.bar).toBe("42");
+      });         
+   });
+
+   describe("constructor()", () => {
+      var elementConstructor, el;
+
+      beforeEach(() => {
+         // register in Polymer and get the constructor
+         elementConstructor = createElement(PropertyInitializationTest);
+         
+         // create the element
+         el = new elementConstructor();
+
+         // connect it to DOM
+         var root = querySelector("#put_custom_constructor_here");
+         root.appendChild(el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar == "mybar"));
+
+      it("initializes properties correctly", () => {
+         expect(el.bar).toBe("mybar");
+         expect(el.foo).toBe("myfoo");
+         expect(el.war).toBe("mywar");
+      });
+   });
 }
+

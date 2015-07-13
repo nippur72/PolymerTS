@@ -1,4 +1,4 @@
-@component('computed-properties-test')
+@component("computed-properties-test")
 class ComputedPropertiesTest extends polymer.Base
 {
    @property() first  = 1;
@@ -18,4 +18,31 @@ class ComputedPropertiesTest extends polymer.Base
    }                    
 }
 
+@component("custom-constructor-test")
+@template("<div>this element has a custom constructor</div>")
+class CustomConstructorTest extends polymer.Base
+{
+   @property() bar: string;
 
+   constructor(foo: string)
+   {
+      super();
+      this.bar = foo;
+   }
+}
+
+
+@component("property-initialization-test")
+@template("")
+class PropertyInitializationTest extends polymer.Base {
+   @property() bar = "mybar"
+
+   @property() foo: string;
+
+   @property({ value: "mywar" }) war;
+
+   constructor() {
+      super();
+      this.foo = "myfoo";
+   }
+}
