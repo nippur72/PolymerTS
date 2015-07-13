@@ -45,7 +45,7 @@ function implements(instance: Object, classFunction: Function)
 
 function RunSpecs()
 {
-   describe("WebComponents", () => {
+   describe("WebComponents library", () => {
       waitFor( () => polymerReady );
 
       it("fires the event 'WebComponentsReady'", () =>
@@ -71,15 +71,32 @@ function RunSpecs()
 
 function registerTest()
 {
-   describe("Registration", () => {
-      it('works on regular elements', () => {
-         var el=querySelector('#testElement');
+   describe("@component", () => {
+      it('registers regular elements', () => {
+         var el = querySelector('#testElement');
          expect(implements(el, TestElement)).toBe(true);
+         expect(el["is"]).toBe(TestElement.prototype["is"]);
       });
 
+      it('extends builtin elements using second argument', () => {
+         var el = querySelector('#testInput1');
+         expect(implements(el, TestInput1)).toBe(true);
+      });
+
+      it("sets 'is:' correctly", () => {
+         var el1 = querySelector('#testElement');
+         var el2 = querySelector('#testInput1');
+         var el3 = querySelector('#testInput2');
+         expect(el1["is"]).toBe(TestElement.prototype["is"]);
+         expect(el2["is"]).toBe(TestInput1.prototype["is"]);
+         expect(el3["is"]).toBe(TestInput2.prototype["is"]);
+      });
+   });
+
+   describe("@extend", () => {
       it('extends builtin elements', () => {
-         var el=querySelector('#testInput');
-         expect(implements(el, TestInput)).toBe(true);
+         var el = querySelector('#testInput2');
+         expect(implements(el, TestInput2)).toBe(true);
       });
    });
 }

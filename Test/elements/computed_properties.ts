@@ -6,7 +6,7 @@ class ComputedPropertiesTest extends polymer.Base
    
    @computed() computed1(first, second)
    {
-      return this.first + this.second;
+      return first + second;
    }     
                   
    @property({ computed: 'getcomputed2(first,second)' })
