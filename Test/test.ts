@@ -156,5 +156,23 @@ function RunSpecs()
          expect(el.war).toBe("mywar");
       });
    });
+
+   describe("@listen decorator", () => {
+      var elementConstructor, el;
+
+      beforeEach(() => {
+         elementConstructor=createElement(ListenerTest);
+         el=new elementConstructor();
+         var root=querySelector("#put_custom_constructor_here");
+         root.appendChild(el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar=="foo"));
+
+      it("sets an event listener function", () => {
+         expect(el.bar).toBe("foo");
+      });
+   });
 }
 

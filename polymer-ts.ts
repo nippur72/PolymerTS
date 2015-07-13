@@ -262,7 +262,7 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
 
       // TODO: when supported use spread operator (on new)     
       var args = this.$custom_cons_args;
-      var elementInstance=constructWithSpread(elementClass, args);
+      var elementInstance = constructWithSpread(elementClass, args);
       var donotcopy = this["$donotcopy"] || {};
 
       for(var propertyKey in elementInstance) {         

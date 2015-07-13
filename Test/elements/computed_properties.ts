@@ -31,7 +31,6 @@ class CustomConstructorTest extends polymer.Base
    }
 }
 
-
 @component("property-initialization-test")
 @template("")
 class PropertyInitializationTest extends polymer.Base {
@@ -44,5 +43,25 @@ class PropertyInitializationTest extends polymer.Base {
    constructor() {
       super();
       this.foo = "myfoo";
+   }
+}
+
+@component("listener-test")
+@template("")
+class ListenerTest extends polymer.Base {
+   @property() bar="mybar"
+
+   constructor() {      
+      super();
+      setTimeout(() =>
+      {
+         this.fire("change-bar");
+      },100);
+   }
+
+   @listen("change-bar")
+   changeBarEvent()
+   {
+      this.bar = "foo";
    }
 }
