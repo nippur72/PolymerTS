@@ -267,7 +267,7 @@ function setupArtificialInstantation(elementClass: Function): polymer.Element
          }
       }      
 
-      // applies class constructor on the polumer element (this)
+      // applies class constructor on the polymer element (this)
       elementClass.apply(this, args);
    };
    

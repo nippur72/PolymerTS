@@ -196,7 +196,7 @@ function setupArtificialInstantation(elementClass) {
                 this[propertyKey] = elementInstance[propertyKey];
             }
         }
-        // applies class constructor on the polumer element (this)
+        // applies class constructor on the polymer element (this)
         elementClass.apply(this, args);
     };
     // arguments for artifical constructor
