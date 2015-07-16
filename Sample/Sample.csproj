@@ -27,6 +27,7 @@
     <Content Include="bower_components\polymer\polymer-micro.html" />
     <Content Include="bower_components\polymer\polymer-mini.html" />
     <Content Include="bower_components\polymer\polymer.html" />
+    <Content Include="polymer.js" />
     <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
     <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
     <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />

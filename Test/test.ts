@@ -4,7 +4,7 @@ var polymerReady = false;
 
 window.addEventListener('WebComponentsReady', (e) =>
 {           
-   polymerReady = true;
+   polymerReady = true;  
 });
 
 RunSpecs();

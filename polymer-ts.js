@@ -1,68 +1,90 @@
-// Type definitions for polymer v1.0
-// Project: https://github.com/polymer
-// Definitions by: Antonino Porcino <https://github.com/nippur72>
-// Definitions: https://github.com/borisyankov/DefinitelyTyped
+// PolymerTS - Polymer for TypeScript
+//
+// https://github.com/nippur72/PolymerTS
+//
+// Antonino Porcino, nino.porcino@gmail.com
 var polymer;
 (function (polymer) {
-    var Base = (function () {
-        function Base() {
-        }
-        Base.prototype.arrayDelete = function (path, item) { };
-        Base.prototype.async = function (callback, waitTime) { };
-        Base.prototype.attachedCallback = function () { };
-        Base.prototype.attributeFollows = function (name, toElement, fromElement) { };
-        Base.prototype.cancelAsync = function (handle) { };
-        Base.prototype.cancelDebouncer = function (jobName) { };
-        Base.prototype.classFollows = function (name, toElement, fromElement) { };
-        Base.prototype.create = function (tag, props) { };
-        Base.prototype.debounce = function (jobName, callback, wait) { };
-        Base.prototype.deserialize = function (value, type) { };
-        Base.prototype.distributeContent = function () { };
-        Base.prototype.domHost = function () { };
-        Base.prototype.elementMatches = function (selector, node) { };
-        Base.prototype.fire = function (type, detail, options) { };
-        Base.prototype.flushDebouncer = function (jobName) { };
-        Base.prototype.get = function (path) { };
-        Base.prototype.getContentChildNodes = function (slctr) { };
-        Base.prototype.getContentChildren = function (slctr) { };
-        Base.prototype.getNativePrototype = function (tag) { };
-        Base.prototype.getPropertyInfo = function (property) { };
-        Base.prototype.importHref = function (href, onload, onerror) { };
-        Base.prototype.instanceTemplate = function (template) { };
-        Base.prototype.isDebouncerActive = function (jobName) { };
-        Base.prototype.linkPaths = function (to, from) { };
-        Base.prototype.listen = function (node, eventName, methodName) { };
-        Base.prototype.mixin = function (target, source) { };
-        Base.prototype.notifyPath = function (path, value, fromAbove) { };
-        Base.prototype.pop = function (path) { };
-        Base.prototype.push = function (path, value) { };
-        Base.prototype.reflectPropertyToAttribute = function (name) { };
-        Base.prototype.resolveUrl = function (url) { };
-        Base.prototype.scopeSubtree = function (container, shouldObserve) { };
-        Base.prototype.serialize = function (value) { };
-        Base.prototype.serializeValueToAttribute = function (value, attribute, node) { };
-        Base.prototype.set = function (path, value, root) { };
-        Base.prototype.setScrollDirection = function (direction, node) { };
-        Base.prototype.shift = function (path, value) { };
-        Base.prototype.splice = function (path, start, deleteCount) { };
-        Base.prototype.toggleAttribute = function (name, bool, node) { };
-        Base.prototype.toggleClass = function (name, bool, node) { };
-        Base.prototype.transform = function (transform, node) { };
-        Base.prototype.translate3d = function (x, y, z, node) { };
-        Base.prototype.unlinkPaths = function (path) { };
-        Base.prototype.unshift = function (path, value) { };
-        Base.prototype.updateStyles = function () { };
-        Base.create = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i - 0] = arguments[_i];
-            }
+    // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"   
+    function createEs6PolymerBase() {
+        // create a placeholder class 
+        var pb = function () { };
+        // make it available as polymer.Base
+        window["polymer"]["Base"] = pb;
+        // add a default create method()
+        pb.prototype["create"] = function () {
             throw "element not yet registered in Polymer";
         };
-        return Base;
-    })();
-    polymer.Base = Base;
+    }
+    polymer.createEs6PolymerBase = createEs6PolymerBase;
+    function prepareForRegistration(elementClass) {
+        // backward compatibility with TypeScript 1.4 (no decorators)
+        if (elementClass.prototype.is === undefined) {
+            var proto = elementClass.prototype;
+            var instance = new elementClass();
+            proto.is = instance.is;
+            proto.extends = instance.extends;
+            proto.properties = instance.properties;
+            proto.listeners = instance.listeners;
+            proto.observers = instance.observers;
+            proto.behaviors = instance.behaviors;
+            proto.hostAttributes = instance.hostAttributes;
+            proto.style = instance.style;
+            proto.template = instance.template;
+        }
+        var preparedElement = elementClass.prototype;
+        // artificial constructor: call constructor() and copies members
+        preparedElement["$custom_cons"] = function () {
+            // reads arguments coming from factoryImpl
+            var args = this.$custom_cons_args;
+            // applies class constructor on the polymer element (this)
+            elementClass.apply(this, args);
+        };
+        // arguments for artifical constructor
+        preparedElement["$custom_cons_args"] = [];
+        // modify "factoryImpl"
+        if (preparedElement["factoryImpl"] !== undefined) {
+            throw "do not use factoryImpl() use constructor() instead";
+        }
+        else {
+            preparedElement["factoryImpl"] = function () {
+                this.$custom_cons_args = arguments;
+            };
+        }
+        // modify "attached" event function
+        var attachToFunction = "attached";
+        var oldFunction = preparedElement[attachToFunction];
+        preparedElement[attachToFunction] = function () {
+            this.$custom_cons();
+            if (oldFunction !== undefined)
+                oldFunction.apply(this);
+        };
+        return preparedElement;
+    }
+    polymer.prepareForRegistration = prepareForRegistration;
+    function injectTemplateAndStyle(definition) {
+        var domModule = document.createElement('dom-module');
+        var proto = definition.prototype;
+        domModule.id = proto.is;
+        // attaches style
+        if (proto.style !== undefined) {
+            var elemStyle = document.createElement('style', 'custom-style');
+            domModule.appendChild(elemStyle);
+            elemStyle.textContent = proto.style;
+        }
+        // attaches template
+        if (proto.template !== undefined) {
+            var elemTemplate = document.createElement('template');
+            domModule.appendChild(elemTemplate);
+            elemTemplate.innerHTML = proto.template;
+        }
+        // tells polymer the element has been created
+        domModule.createdCallback();
+    }
+    polymer.injectTemplateAndStyle = injectTemplateAndStyle;
 })(polymer || (polymer = {})); // end module
+// modifies Polymer.Base and makes it available as an ES6 class named polymer.Base 
+polymer.createEs6PolymerBase();
 // @component decorator
 function component(tagname, extendsTag) {
     return function (target) {
@@ -169,58 +191,12 @@ function observe(propertiesList) {
         };
     }
 }
-function setupArtificialInstantation(elementClass) {
-    var polymerBaseInstance = new polymer.Base();
-    var registeredElement = {};
-    // if "is" is defined copy from prototype, otherwise make new instance    
-    var source = (elementClass.prototype.is === undefined) ? new elementClass() : elementClass.prototype;
-    for (var propertyKey in source) {
-        // do not include polymer.Base functions
-        if (!(propertyKey in polymerBaseInstance)) {
-            registeredElement[propertyKey] = source[propertyKey];
-        }
-    }
-    // artificial constructor: call constructor() and copies members
-    registeredElement["$custom_cons"] = function () {
-        // reads arguments coming from factoryImpl
-        var args = this.$custom_cons_args;
-        // copies members from instance to polymer element (this)
-        var elementInstance = Object.create(elementClass.prototype);
-        for (var propertyKey in elementInstance) {
-            // do not include polymer functions
-            if (!(propertyKey in polymerBaseInstance)) {
-                this[propertyKey] = elementInstance[propertyKey];
-            }
-        }
-        // applies class constructor on the polymer element (this)
-        elementClass.apply(this, args);
-    };
-    // arguments for artifical constructor
-    registeredElement["$custom_cons_args"] = [];
-    // modify "factoryImpl"
-    if (registeredElement["factoryImpl"] !== undefined) {
-        throw "do not use factoryImpl() use constructor() instead";
-    }
-    else {
-        registeredElement["factoryImpl"] = function () {
-            this.$custom_cons_args = arguments;
-        };
-    }
-    // modify "attached" event function
-    var attachToFunction = "attached";
-    var oldFunction = registeredElement[attachToFunction];
-    registeredElement[attachToFunction] = function () {
-        this.$custom_cons();
-        if (oldFunction !== undefined)
-            oldFunction.apply(this);
-    };
-    return registeredElement;
-}
 function createElement(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
-        createTemplate(element);
+        polymer.injectTemplateAndStyle(element);
     }
-    var maker = Polymer(setupArtificialInstantation(element));
+    // register element and make available its constructor as "create()"
+    var maker = Polymer(polymer.prepareForRegistration(element));
     element["create"] = function () {
         var newOb = Object.create(maker.prototype);
         return maker.apply(newOb, arguments);
@@ -229,27 +205,8 @@ function createElement(element) {
 }
 function createClass(element) {
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
-        createTemplate(element);
+        polymer.injectTemplateAndStyle(element);
     }
-    return Polymer.Class(setupArtificialInstantation(element));
-}
-function createTemplate(definition) {
-    var domModule = document.createElement('dom-module');
-    var proto = definition.prototype;
-    domModule.id = proto.is;
-    // attaches style
-    if (proto.style !== undefined) {
-        var elemStyle = document.createElement('style', 'custom-style');
-        domModule.appendChild(elemStyle);
-        elemStyle.textContent = proto.style;
-    }
-    // attaches template
-    if (proto.template !== undefined) {
-        var elemTemplate = document.createElement('template');
-        domModule.appendChild(elemTemplate);
-        elemTemplate.innerHTML = proto.template;
-    }
-    // tells polymer the element has been created
-    domModule.createdCallback();
+    return Polymer.Class(polymer.prepareForRegistration(element));
 }
 //# sourceMappingURL=polymer-ts.js.map

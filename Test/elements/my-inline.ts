@@ -94,7 +94,7 @@ class MyInline extends MyAbstract implements MyMixin
    noiseMade: ()=>void;
 }
 
-class MyMixin extends polymer.Base implements polymer.Element
+class MyMixin extends polymer.Base 
 {
    @listen("noise-made")
    noiseMade() {
