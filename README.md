@@ -466,6 +466,8 @@ If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
 
+- v0.1.3 (Jul 16, 2015)
+  - polymer.Base is now seen as a full ES6 inheritable class 
 - v0.1.2 (Jul 13, 2015)
   - Improved the way objects are instatiated
   - support for static method `create()` on the element class 
