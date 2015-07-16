@@ -63,3 +63,26 @@ class ListenerTest extends polymer.Base
       this.bar = "foo";
    }
 }
+
+@component("my-es6")
+@template(`<div>
+              <div>{{bar}}</div>
+           </div>`
+         )
+
+class MyEs6 extends polymer.Base {
+   @property({value: "mybar"}) bar;
+
+   /*
+   constructor() {
+      super();
+      this.fire("change-bar");
+   }
+
+   @listen("change-bar")
+   changeBarEvent() {
+      this.bar = "foo";
+   }
+   */
+}
+
