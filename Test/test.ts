@@ -93,6 +93,8 @@ function RunSpecs()
          expect(element.computed1).toBe(3);
          element.set('second', 4);
          expect(element.computed1).toBe(6);
+
+         // TODO check for "get_"
       });
 
       it('can be set with @property decorator', () => {
@@ -113,7 +115,7 @@ function RunSpecs()
       beforeEach(() =>
       {
          // register in Polymer and get the constructor
-         createElement(CustomConstructorTest);
+         CustomConstructorTest.register();
          
          // create the element         
          el = CustomConstructorTest.create("42");
@@ -137,7 +139,7 @@ function RunSpecs()
 
       beforeEach(() => {
          // register in Polymer and get the constructor
-         createElement(PropertyInitializationTest);
+         PropertyInitializationTest.register();
          
          // create the element
          el = PropertyInitializationTest.create();
@@ -158,22 +160,36 @@ function RunSpecs()
    });
 
    describe("polymer.Base", () => {
-      var elementConstructor, el;
-
       it("doesn't allow an element to be used before it's registered", () => {
-         expect(() => 
-         {             
-            var el = UnInitializedTest.create();
-         }).toThrow();
+         expect(()=>UnInitializedTest.create()).toThrow("element not yet registered in Polymer");
       });
+
+      it("doesn't allow an element to be registered twice", () => {
+         expect(() => DoubleInitializationTest.register() ).not.toThrow();
+         expect(() => DoubleInitializationTest.register() ).toThrow("element already registered in Polymer");                  
+      });
+
+      it("create elements that are extensions of HTMLElement", () => { 
+         var el = DoubleInitializationTest.create();                 
+         expect(implements(el, HTMLElement)).toBe(true);
+      });
+
+      it("create elements that are extensions Polymer.Base", () => {
+         var el=DoubleInitializationTest.create();
+         expect(implements(el, Polymer.Base)).toBe(true);
+      });
+
+      it("does not allow to redefine factoryImpl()", () => {
+         expect(() => createElement(NoFactoryImplTest)).toThrow("do not use factoryImpl() use constructor() instead");
+      });      
    });
 
    describe("@listen decorator", () => {
       var elementConstructor, el;
 
       beforeEach(() => {
-         elementConstructor=createElement(ListenerTest);
-         el=new elementConstructor();
+         ListenerTest.register();
+         el=ListenerTest.create();
          var root=querySelector("#put_custom_constructor_here");
          root.appendChild(el);
       });
@@ -185,5 +201,36 @@ function RunSpecs()
          expect(el.bar).toBe("foo");
       });
    });
+
+   describe("@observe decorator", () => {      
+      var el;
+
+      beforeEach(() => {
+         if(!polymer.isRegistered(ObserverTest)) ObserverTest.register();
+         el = ObserverTest.create();         
+         querySelector("#put_custom_constructor_here").appendChild(el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar=="mybar"));           
+
+      it("observes a single property changes", () => {
+         expect((<ObserverTest>el).nbar_changed).toBe(0);
+         expect((<ObserverTest>el).nbar_foo_changed).toBe(0);
+         el.set("bar", "42");
+         expect((<ObserverTest>el).nbar_changed).toBe(1);
+         expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
+      });
+
+      it("observes more than one property changes", () => {
+         expect((<ObserverTest>el).nbar_changed).toBe(0);
+         expect((<ObserverTest>el).nbar_foo_changed).toBe(0);
+         el.set("foo", "42");         
+         expect((<ObserverTest>el).nbar_changed).toBe(0);
+         expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
+      });
+   });
+
+   // TODO add tests for template, style, behavior, hostAttributes   
 }
 

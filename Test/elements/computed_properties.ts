@@ -1,7 +1,7 @@
 @component("computed-properties-test")
 class ComputedPropertiesTest extends polymer.Base
 {
-   @property() first  = 1;
+   @property() first  = 1;   
    @property() second = 1;
    
    @computed() computed1(first, second)
@@ -46,12 +46,37 @@ class PropertyInitializationTest extends polymer.Base {
    }
 }
 
+@component("double-initialization-test")
+@template("")
+class DoubleInitializationTest extends polymer.Base {
+   @property() bar="mybar"
+
+   @property() foo: string;
+
+   @property({ value: "mywar" }) war;
+
+   constructor() {
+      super();
+      this.foo="myfoo";
+   }
+}
+
 @component("uninitialized-test")
 @template("")
-class UnInitializedTest extends polymer.Base {
+class UnInitializedTest extends polymer.Base
+{
    @property() bar = "mybar"
 }
 
+@component("no-factory-impl-test")
+@template("")
+class NoFactoryImplTest extends polymer.Base
+{
+   factoryImpl()
+   {      
+      return null;
+   }
+}
 
 @component("listener-test")
 @template("")
@@ -71,25 +96,23 @@ class ListenerTest extends polymer.Base
    }
 }
 
-@component("my-es6")
-@template(`<div>
-              <div>{{bar}}</div>
-           </div>`
-         )
+@component("observer-test")
+@template("")
+class ObserverTest extends polymer.Base {
+   @property() bar="mybar";
+   @property() foo="myfoo";
+   @property() nbar_changed = 0;
+   @property() nbar_foo_changed = 0;
 
-class MyEs6 extends polymer.Base {
-   @property({value: "mybar"}) bar;
-
-   /*
-   constructor() {
-      super();
-      this.fire("change-bar");
+   @observe("bar")
+   changedBar() {
+      this.nbar_changed++;
    }
 
-   @listen("change-bar")
-   changeBarEvent() {
-      this.bar = "foo";
+   @observe("bar,foo")
+   changedBarAndFoo() {
+      this.nbar_foo_changed++;
    }
-   */
 }
+
 
