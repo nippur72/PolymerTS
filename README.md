@@ -97,7 +97,7 @@ In your custom element (e.g. `elements/my-element.html`):
 
 <!-- create the element in polymer -->
 <script>
-   createElement(MyElement);
+   MyElement.register();
 </script>
 ```
 
@@ -325,7 +325,7 @@ Registration is done with `createElement` but be sure to call it after the `WebC
 ```JavaScript
    <script>
    window.addEventListener('WebComponentsReady', function (e) {
-      createElement(MyExample);   
+      MyExample.register();   
    });
    </script>
 ```
@@ -399,7 +399,7 @@ class MyTimer extends polymer.Base
 To register the element:
 
 ```TypeScript
-createElement(MyTimer);   
+MyTimer.register();;   
 ```
 To use the element
 ```HTML
