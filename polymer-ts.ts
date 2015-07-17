@@ -7,7 +7,7 @@
 module polymer {   
 
    // this is the original Polymer.Base
-   export declare class PolymerBase {
+   export declare class PolymerBase /* extends HTMLElement */ {   // commented as not yet supported by TypeScript
 	   $: any;
 	   $$: any;
 
@@ -217,9 +217,7 @@ declare var Polymer: {
    updateStyles(): void; 
    flush();   
    
-   Base: any;   
-
-   registerClass(prototype: polymer.Element): Function;
+   Base: any;     
 }
 
 // @component decorator
