@@ -45,6 +45,7 @@ var MyElement = (function (_super) {
     MyElement.prototype.handleClick = function () {
         this.test = this.test + "x";
         this.fire("behave");
+        var s;
     };
     MyElement.prototype.testChanged = function (newValue, oldValue) {
         console.log("test has changed from " + oldValue + " to " + newValue);

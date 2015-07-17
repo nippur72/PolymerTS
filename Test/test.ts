@@ -157,6 +157,17 @@ function RunSpecs()
       });
    });
 
+   describe("polymer.Base", () => {
+      var elementConstructor, el;
+
+      it("doesn't allow an element to be used before it's registered", () => {
+         expect(() => 
+         {             
+            var el = UnInitializedTest.create();
+         }).toThrow();
+      });
+   });
+
    describe("@listen decorator", () => {
       var elementConstructor, el;
 

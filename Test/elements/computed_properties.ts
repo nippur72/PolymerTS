@@ -46,6 +46,13 @@ class PropertyInitializationTest extends polymer.Base {
    }
 }
 
+@component("uninitialized-test")
+@template("")
+class UnInitializedTest extends polymer.Base {
+   @property() bar = "mybar"
+}
+
+
 @component("listener-test")
 @template("")
 class ListenerTest extends polymer.Base

@@ -12,7 +12,7 @@ var polymer;
         // make it available as polymer.Base
         window["polymer"]["Base"] = pb;
         // add a default create method()
-        pb.prototype["create"] = function () {
+        pb["create"] = function () {
             throw "element not yet registered in Polymer";
         };
     }

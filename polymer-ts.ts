@@ -116,7 +116,7 @@ module polymer {
       window["polymer"]["Base"] = pb;
 
       // add a default create method()
-      pb.prototype["create"] = function () {
+      pb["create"] = function () {
          throw "element not yet registered in Polymer";
       }
    }

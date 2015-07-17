@@ -19,8 +19,8 @@ class MyElement extends polymer.Base
    test1: string;  
 
    @property()
-   dummy_property: any;    
-
+   dummy_property: any; 
+                                 
    //@behavior(MyBehaviour)
    
    /*
@@ -36,6 +36,8 @@ class MyElement extends polymer.Base
    {    
       this.test = this.test + "x";
       this.fire("behave");  
+
+      var s: HTMLElement;
    }
   
    @observe("test")
