@@ -87,6 +87,8 @@ module polymer {
    {      
       $custom_cons?: FunctionConstructor;
       $custom_cons_args?: any[];
+      template?: string;
+      style?: string;
    }
 
    // property definition interface
@@ -104,6 +106,7 @@ module polymer {
    // the ES6-inheritable version of Polymer.Base
    export declare class Base extends polymer.PolymerBase implements polymer.Element {
       static create<T extends polymer.Base>(...args: any[]): T;
+      static register(): void;
    }    
 
    // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"   
@@ -118,6 +121,11 @@ module polymer {
       // add a default create method()
       pb["create"] = function () {
          throw "element not yet registered in Polymer";
+      }
+
+      // add a default create method()
+      pb["register"] = function() {        
+         createElement(this);
       }
    }
 
@@ -197,6 +205,11 @@ module polymer {
 
       // tells polymer the element has been created
       domModule.createdCallback();
+   }
+
+   export function isRegistered(element: polymer.Element)
+   {
+      return (<polymer.PolymerTSElement>(element.prototype)).$custom_cons!==undefined;
    }
 
 } // end module
@@ -336,9 +349,12 @@ function observe(propertiesList: string) {
       }
    }
 }
-
+                   
 function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
-   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
+   if(polymer.isRegistered(element)) {
+      throw "element already registered in Polymer";
+   }
+   if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
       polymer.injectTemplateAndStyle(element);
    }
    // register element and make available its constructor as "create()"
@@ -351,6 +367,9 @@ function createElement<T extends polymer.Base>(element: new (...args: any[]) => 
 }
 
 function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
+   if(polymer.isRegistered(element)) {
+      throw "element already registered in Polymer";
+   }
    if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
       polymer.injectTemplateAndStyle(element);
    }

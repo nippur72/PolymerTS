@@ -15,6 +15,10 @@ var polymer;
         pb["create"] = function () {
             throw "element not yet registered in Polymer";
         };
+        // add a default create method()
+        pb["register"] = function () {
+            createElement(this);
+        };
     }
     polymer.createEs6PolymerBase = createEs6PolymerBase;
     function prepareForRegistration(elementClass) {
@@ -82,6 +86,10 @@ var polymer;
         domModule.createdCallback();
     }
     polymer.injectTemplateAndStyle = injectTemplateAndStyle;
+    function isRegistered(element) {
+        return (element.prototype).$custom_cons !== undefined;
+    }
+    polymer.isRegistered = isRegistered;
 })(polymer || (polymer = {})); // end module
 // modifies Polymer.Base and makes it available as an ES6 class named polymer.Base 
 polymer.createEs6PolymerBase();
@@ -192,7 +200,10 @@ function observe(propertiesList) {
     }
 }
 function createElement(element) {
-    if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
+    if (polymer.isRegistered(element)) {
+        throw "element already registered in Polymer";
+    }
+    if ((element.prototype).template !== undefined || (element.prototype).style !== undefined) {
         polymer.injectTemplateAndStyle(element);
     }
     // register element and make available its constructor as "create()"
@@ -204,6 +215,9 @@ function createElement(element) {
     return maker;
 }
 function createClass(element) {
+    if (polymer.isRegistered(element)) {
+        throw "element already registered in Polymer";
+    }
     if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
         polymer.injectTemplateAndStyle(element);
     }
