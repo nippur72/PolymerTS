@@ -47,11 +47,15 @@ You'll get the following files in `bower_components/polymer-ts`:
    - `@listen(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
    - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
 - Registration functions
-   - `createElement(className)` register in Polymer and create the element
-   - `createClass(className)` register in Polymer without creating the element
+   - `className.register()` register in Polymer and in `document.registerElement()`
    - `className.create()` manually create an element
+   - `createElement(className)` same as `className.register()`
+   - `createClass(className)` register in Polymer without creating the element
 - Other
    - class constructor mapped to factory constructor (`factoryImpl()`) 
+
+Unsupported:
+   - property defined with getter/setter
 
 # How to write elements <a name="howtowrite"></a>
 
@@ -465,7 +469,8 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
-
+- v0.1.4 (Jul 17, 2015)
+  - register elements with `className.register()`
 - v0.1.3 (Jul 16, 2015)
   - polymer.Base is now seen as a full ES6 inheritable class 
 - v0.1.2 (Jul 13, 2015)
