@@ -9,7 +9,6 @@ class TestInput1 extends polymer.Base {
 
 }
 
-
 @component('test-input2')
 @extend('input')
 class TestInput2 extends polymer.Base

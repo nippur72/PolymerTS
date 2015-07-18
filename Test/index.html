@@ -5,12 +5,12 @@
    <meta charset="utf-8" />
    <title>PolymerTS specRunner</title>
 
-   <!-- polymer and webcomponents standard library -->
-   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>   
-   <script src="polymer.js"></script>        
+   <!-- webcomponents, polymer standard, polymer-ts -->
+   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>   
+   <script src="polymer.js"></script>   
    <script src="bower_components/polymer-ts/polymer-ts.js"></script>       
 
-   <!-- jasmine lib -->
+   <!-- jasmine -->
    <link rel="shortcut icon" type="image/png" href="bower_components/jasmine/images/jasmine_favicon.png">
    <link rel="stylesheet" type="text/css" href="bower_components/jasmine/lib/jasmine-core/jasmine.css">
    <script src="bower_components/jasmine/lib/jasmine-core/jasmine.js"></script>
@@ -19,13 +19,14 @@
    
    <!-- custom elements -->
    <link rel="import" href="elements/polymer_register.html">
-   <link rel="import" href="elements/computed_properties.html">
+   <link rel="import" href="elements/test_components.html">
 
-   <script src="test.js"></script>             
+   <!-- application -->
+   <script src="test.js"></script>   
+      
 </head>
 
-<body>
-   <!-- polymer_register_test -->
+<body>   
    <div id="put_test_elements_here" style="display:none">
       <test-element id="testElement"></test-element>
       <input is="test-input1" id="testInput1">
@@ -36,6 +37,6 @@
 
       <div id="put_custom_constructor_here"></div>
       <hr />
-   </div>         
+   </div>          
 </body>
 </html>

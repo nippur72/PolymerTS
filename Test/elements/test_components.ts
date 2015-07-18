@@ -18,6 +18,8 @@ class ComputedPropertiesTest extends polymer.Base
    }                    
 }
 
+ComputedPropertiesTest.register();
+
 @component("custom-constructor-test")
 @template("<div>this element has a custom constructor</div>")
 class CustomConstructorTest extends polymer.Base
@@ -30,6 +32,8 @@ class CustomConstructorTest extends polymer.Base
       this.bar = foo;
    }
 }
+
+CustomConstructorTest.register();
 
 @component("property-initialization-test")
 @template("")
@@ -45,6 +49,8 @@ class PropertyInitializationTest extends polymer.Base {
       this.foo = "myfoo";
    }
 }
+
+PropertyInitializationTest.register();        
 
 @component("double-initialization-test")
 @template("")
@@ -96,6 +102,8 @@ class ListenerTest extends polymer.Base
    }
 }
 
+ListenerTest.register();
+
 @component("observer-test")
 @template("")
 class ObserverTest extends polymer.Base {
@@ -115,4 +123,43 @@ class ObserverTest extends polymer.Base {
    }
 }
 
+ObserverTest.register();
 
+class BehaviorBaseTest extends polymer.Base {
+   hasfired: boolean;
+
+   @listen("base-called")
+   onBaseCalled() {
+      this.hasfired = true;   
+   }
+}
+
+@component("behavior-test1")
+@template("")            
+@behavior(BehaviorBaseTest)
+class BehaviorTest1 extends polymer.Base
+{
+   @property() bar="mybar";
+   @property() hasfired=false;
+
+   attached()
+   {
+      this.fire("base-called");
+   }
+}
+
+BehaviorTest1.register();
+
+@component("behavior-test2")
+@template("")
+class BehaviorTest2 extends polymer.Base {
+   @property() bar="mybar";
+   @property() hasfired=false;
+   @behavior(BehaviorBaseTest)
+
+   attached() {
+      this.fire("base-called");
+   }
+}
+
+BehaviorTest2.register();

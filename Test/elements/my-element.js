@@ -110,3 +110,4 @@ var MyElement = (function (_super) {
     ], MyElement);
     return MyElement;
 })(polymer.Base);
+MyElement.register();

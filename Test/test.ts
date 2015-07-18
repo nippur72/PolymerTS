@@ -114,9 +114,6 @@ function RunSpecs()
 
       beforeEach(() =>
       {
-         // register in Polymer and get the constructor
-         CustomConstructorTest.register();
-         
          // create the element         
          el = CustomConstructorTest.create("42");
 
@@ -138,9 +135,6 @@ function RunSpecs()
       var elementConstructor, el;
 
       beforeEach(() => {
-         // register in Polymer and get the constructor
-         PropertyInitializationTest.register();
-         
          // create the element
          el = PropertyInitializationTest.create();
 
@@ -180,7 +174,7 @@ function RunSpecs()
       });
 
       it("does not allow to redefine factoryImpl()", () => {
-         expect(() => createElement(NoFactoryImplTest)).toThrow("do not use factoryImpl() use constructor() instead");
+         expect(() => NoFactoryImplTest.register()).toThrow("do not use factoryImpl() use constructor() instead");
       });      
    });
 
@@ -188,7 +182,6 @@ function RunSpecs()
       var elementConstructor, el;
 
       beforeEach(() => {
-         ListenerTest.register();
          el=ListenerTest.create();
          var root=querySelector("#put_custom_constructor_here");
          root.appendChild(el);
@@ -205,8 +198,7 @@ function RunSpecs()
    describe("@observe decorator", () => {      
       var el;
 
-      beforeEach(() => {
-         if(!polymer.isRegistered(ObserverTest)) ObserverTest.register();
+      beforeEach(() => {         
          el = ObserverTest.create();         
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
@@ -231,6 +223,31 @@ function RunSpecs()
       });
    });
 
-   // TODO add tests for template, style, behavior, hostAttributes   
+   describe("@behavior decorator", () => {
+      var elementConstructor, el1, el2;
+
+      beforeEach(() => {
+         el1=BehaviorTest1.create();                  
+         el2=BehaviorTest2.create();         
+         querySelector("#put_custom_constructor_here").appendChild(el1);
+         querySelector("#put_custom_constructor_here").appendChild(el2);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el1.bar=="mybar")); 
+
+      it("mixes code from another class (decorating the 'class' keyword)", () => {
+         expect(el1.hasfired).toBe(true);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el2.bar=="mybar"));
+
+      it("mixes code from another class (decorator inside the class body)", () => {
+         expect(el2.hasfired).toBe(true);
+      });
+   });
+
+   // TODO add tests for template, style, hostAttributes, mixins
 }
 

@@ -220,18 +220,16 @@
     <Content Include="bower_components\webcomponentsjs\webcomponents-lite.min.js" />
     <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
     <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
-    <Content Include="elements\computed_properties.html" />
+    <Content Include="elements\test_components.html" />
     <Content Include="elements\polymer_register.html" />
-    <Content Include="elements\my-element.html" />
     <Content Include="elements\my-simple.html" />
-    <Content Include="test.html" />
+    <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
-    <TypeScriptCompile Include="elements\computed_properties.ts" />
+    <TypeScriptCompile Include="elements\test_components.ts" />
     <TypeScriptCompile Include="test.ts" />
-    <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="elements\my-inline.ts" />
     <TypeScriptCompile Include="elements\my-simple.ts" />
     <TypeScriptCompile Include="typings\jasmine\jasmine.d.ts" />
