@@ -73,15 +73,16 @@ In the `head` section of your main .html file:
 
 ```HTML
 <head>
-   <!-- webcomponents and polymer standard library -->
-   <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-   <link rel="import" href="bower_components/polymer/polymer.html">   
-   
-   <!-- include the file "polymer-ts.js" before the elements -->
-   <script src="bower_components/polymer-ts/polymer-ts.js"></script>
+   <!-- webcomponents, polymer standard, polymer-ts -->
+   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>   
+   <link rel="import" href="bower_components/polymer/polymer.html">
+   <link rel="import" href="bower_components/polymer-ts/polymer-ts.html"> 
    
    <!-- your custom elements -->
    <link rel="import" href="elements/my-element.html">   
+
+   <!-- your application -->
+   <script src="myapp.js"></script>            
 </head>
 ```
 
@@ -93,11 +94,6 @@ In your custom element (e.g. `elements/my-element.html`):
 
 <!-- your element code typescript transpiled file --> 
 <script type="text/javascript" src="my-element.js"></script>
-
-<!-- create the element in polymer -->
-<script>
-   MyElement.register();
-</script>
 ```
 
 In your element typescript code (e.g. `elements/my-element.ts`):
@@ -108,6 +104,30 @@ In your element typescript code (e.g. `elements/my-element.ts`):
 class MyElement extends polymer.Base
 {
 }
+
+// after the element is defined, we register it in Polymer
+MyElement.register();
+```
+
+The above example loads in the following order:
+- WebComponents
+- Polymer
+- PolymerTS
+- Your custom elements
+- Your app 
+
+Do not use the `<script>` tag on the main page to load PolymerTS or custom elements, 
+always use the `<link rel="import">` syntax. This will make sure that scripts will be loaded
+in the correct order.
+
+Any global code in your app that depends on Polymer should be started only after the event 
+`WebComponentsReady` has been fired:
+
+```TypeScript
+window.addEventListener('WebComponentsReady', (e) =>
+{           
+   // any code that depends on polymer here
+});
 ```
 
 # Decorators explained <a name="decorators"></a>
@@ -469,7 +489,8 @@ If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
 - v0.1.5 (Jul 18, 2015)
-  - global functions `createElement()` and `createClass()` deprecated, use `Element.resgister()` instead
+  - BREAKING CHANGE: global functions `createElement()` and `createClass()` deprecated, use `Element.resgister()` instead
+  - BREAKING CHANGE: use `<link rel="import">` to load PolymerTS and custom elements
 - v0.1.4 (Jul 17, 2015)
   - register elements with `className.register()`
 - v0.1.3 (Jul 16, 2015)

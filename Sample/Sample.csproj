@@ -22,12 +22,12 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bower_components\polymer-ts\polymer-ts.html" />
     <Content Include="bower_components\polymer-ts\polymer-ts.js" />
     <Content Include="bower_components\polymer\LICENSE.txt" />
     <Content Include="bower_components\polymer\polymer-micro.html" />
     <Content Include="bower_components\polymer\polymer-mini.html" />
     <Content Include="bower_components\polymer\polymer.html" />
-    <Content Include="polymer.js" />
     <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
     <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
     <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />
@@ -44,6 +44,7 @@
     <Content Include="elements\my-simple.html" />
     <Content Include="elements\my-timer.html" />
     <Content Include="index.html" />
+    <Content Include="elements\my-inline.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

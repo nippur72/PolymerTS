@@ -5,18 +5,16 @@
    <meta charset="utf-8" />
    <title>Polymer with TypeScript example</title>
 
-   <!-- polymer and webcomponents standard library -->
+   <!-- webcomponents, polymer standard, polymer-ts -->
    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-   <script src="polymer.js"></script>        
-
-   <!-- polymer-ts -->
-   <script src="bower_components/polymer-ts/polymer-ts.js"></script>
+   <link rel="import" href="bower_components/polymer/polymer.html">
+   <link rel="import" href="bower_components/polymer-ts/polymer-ts.html">
    
    <!-- custom elements -->
    <link rel="import" href="elements/my-element.html">
    <link rel="import" href="elements/my-timer.html">
    <link rel="import" href="elements/my-simple.html">
-   <script src="elements/my-inline.js"></script>   
+   <link rel="import" href="elements/my-inline.html">     
 
    <!-- app -->
    <script src="app.js"></script>   
@@ -45,12 +43,7 @@
    <hr />
 
    <div id="puthere"></div>
-
-   <script>
-   window.addEventListener('WebComponentsReady', function (e) {
-      RegisterAll();
-   });
-   </script>
+   
    
 </body>
 </html>

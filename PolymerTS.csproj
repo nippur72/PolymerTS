@@ -19,6 +19,7 @@
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="polymer-ts.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
