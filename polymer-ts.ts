@@ -125,7 +125,7 @@ module polymer {
 
       // add a default create method()
       pb["register"]=function(dontRegister?: boolean) {
-         if(dontRegister==true) polymer.createClass(this);
+         if(dontRegister===true) polymer.createClass(this);
          else polymer.createElement(this);
       }
    }
@@ -183,7 +183,7 @@ module polymer {
       return preparedElement;
    }
 
-   export function injectTemplateAndStyle(definition: polymer.Element) {
+   export function createDomModule(definition: polymer.Element) {
       var domModule: any = document.createElement('dom-module');
 
       var proto = <any> definition.prototype;
@@ -213,7 +213,7 @@ module polymer {
          throw "element already registered in Polymer";
       }
       if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
-         polymer.injectTemplateAndStyle(element);
+         polymer.createDomModule(element);
       }
       // register element and make available its constructor as "create()"
       var maker=<any> Polymer(polymer.prepareForRegistration(element));
@@ -229,7 +229,7 @@ module polymer {
          throw "element already registered in Polymer";
       }
       if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
-         polymer.injectTemplateAndStyle(element);
+         polymer.createDomModule(element);
       }
       // register element and make available its constructor as "create()"
       var maker=<any> Polymer.Class(polymer.prepareForRegistration(element));

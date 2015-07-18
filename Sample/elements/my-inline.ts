@@ -1,4 +1,5 @@
-﻿class MyAbstract extends polymer.Base 
+﻿/*
+class MyAbstract extends polymer.Base 
 {
    makeSomeNoise()
    {
@@ -6,6 +7,7 @@
       this.fire("noise-made");
    }
 }
+*/
 
 @component("my-inline")
 
@@ -29,15 +31,17 @@
    }
 `)
 
-class MyInline extends MyAbstract implements MyMixin
+//class MyInline extends MyAbstract implements MyMixin
+class MyInline extends polymer.Base
 {
-   @property() public prop   = "hello world";  
+   /*
+   @property() public prop="hello world";  
    @property() public marker = "default marker";  
    
-   //is = "my-inline"; 
-
    private myprivate = [1,2,3,4,5];
+   */
 
+   /*
    constructor(marker: string)
    {
       super();            
@@ -47,25 +51,28 @@ class MyInline extends MyAbstract implements MyMixin
 
       if(marker!==undefined) this.marker = marker;
    }
-   
+   */
+
    /*
    factoryImpl(foo, bar)
    {
       console.log(`factoryImpl called with foo=${foo} bar=${bar}`);
    }   
    */
-
+   
+   /*
    created()
    {
       //this.prop = "hello";
       console.log("created()");
-      /*console.log(this.myprivate);      */
-   }
+      //console.log(this.myprivate);      
+   }*/
 
+   /*
    ready()
    {
       console.log("ready()");
-      /*
+      
       console.log(this.myprivate);
 
       if (this.myprivate[0] == 1) console.log("correct value preserved");
@@ -75,7 +82,7 @@ class MyInline extends MyAbstract implements MyMixin
 
       this.makeSomeNoise();
 
-      this.prop = "64"; */
+      this.prop = "64"; 
 
       this.makeSomeNoise();
    }
@@ -92,8 +99,12 @@ class MyInline extends MyAbstract implements MyMixin
    }
 
    noiseMade: ()=>void;
+   */
 }
 
+MyInline.register();
+
+/*
 class MyMixin extends polymer.Base implements polymer.Element
 {
    @listen("noise-made")
@@ -111,3 +122,4 @@ function applyMixins(derivedCtor: any, baseCtors: any[]) {
 }
 
 applyMixins(MyInline, [MyMixin]);
+*/

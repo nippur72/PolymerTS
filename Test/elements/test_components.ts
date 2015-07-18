@@ -163,3 +163,23 @@ class BehaviorTest2 extends polymer.Base {
 }
 
 BehaviorTest2.register();
+
+
+@component("template-test")
+
+@template("<div>this element is made from a template<div id='inner'>inner text</div></div>")
+
+@style
+(`
+   :host { display: block; }
+   div { color: red; }
+   #inner { width: 50px; }
+`)
+
+class TemplateTest extends polymer.Base
+{
+   @property() bar="mybar";   
+}
+
+TemplateTest.register();
+

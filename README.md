@@ -343,6 +343,9 @@ class MyExample extends polymer.Base
 
 MyExample.register();   
 
+Note: due [this issue](https://github.com/Polymer/polymer/issues/2114), using this feature requires
+the inclusion of the full `webcomponent.js` in place of the lighter `webcomponent-lite.js`.
+
 # Writing elements without using decorators <a name="decoratorless"></a>
 
 It's possible to avoid the use of decorators (e.g. for compatibility with TypeScript < 1.5) by simply writing

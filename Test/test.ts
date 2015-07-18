@@ -60,9 +60,10 @@ function RunSpecs()
 
    describe("@component decorator", () => {
       it('registers regular elements', () => {
-         var el = querySelector('#testElement');
+         var el:any = querySelector('#testElement');
          expect(implements(el, TestElement)).toBe(true);
-         expect(el["is"]).toBe(TestElement.prototype["is"]);
+         expect(el["is"]).toBe(TestElement.prototype["is"]);         
+         expect(el.$.inner.innerHTML).toBe("innerelement");
       });
 
       it('extends builtin elements using second argument', () => {
@@ -121,9 +122,8 @@ function RunSpecs()
          // create the element         
          el = CustomConstructorTest.create("42");
 
-         // connect it to DOM
-         var root = querySelector("#put_custom_constructor_here");
-         root.appendChild(el);
+         // connect it to DOM         
+         querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
       // wait for the 'attached' event
@@ -136,15 +136,14 @@ function RunSpecs()
    });
 
    describe("constructor()", () => {
-      var elementConstructor, el;
+      var el;
 
       beforeEach(() => {
          // create the element
          el = PropertyInitializationTest.create();
 
          // connect it to DOM
-         var root = querySelector("#put_custom_constructor_here");
-         root.appendChild(el);
+         querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
       // wait for the 'attached' event
@@ -183,12 +182,11 @@ function RunSpecs()
    });
 
    describe("@listen decorator", () => {
-      var elementConstructor, el;
+      var el;
 
       beforeEach(() => {
          el=ListenerTest.create();
-         var root=querySelector("#put_custom_constructor_here");
-         root.appendChild(el);
+         querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
       // wait for the 'attached' event
@@ -228,7 +226,7 @@ function RunSpecs()
    });
 
    describe("@behavior decorator", () => {
-      var elementConstructor, el1, el2;
+      var el1, el2;
 
       beforeEach(() => {
          el1=BehaviorTest1.create();                  
@@ -252,6 +250,29 @@ function RunSpecs()
       });
    });
 
-   // TODO add tests for template, style, hostAttributes, mixins
+   describe("@template/@style decorators", () => {
+      var el;
+
+      beforeEach(() => {         
+         el = TemplateTest.create();         
+         querySelector("#put_test_elements_here").appendChild(el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar=="mybar"));
+
+      it("provide a template for the element", () => {         
+         expect(el.$.inner.innerHTML).toBe("inner text");
+      });
+      
+      it("provide a style for the element", () => {        
+         expect(el.$.inner.clientWidth).toBe(50);
+      });
+   });
+
+   // TODO add tests for hostAttributes
+   // TODO add tests for mixins
+   // TODO add tests for ineritance
+
 }
 
