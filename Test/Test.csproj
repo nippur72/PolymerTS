@@ -36,6 +36,7 @@
     <Content Include="bower_components\jasmine\lib\jasmine-core\json2.js" />
     <Content Include="bower_components\jasmine\lib\jasmine-core\node_boot.js" />
     <Content Include="bower_components\jasmine\requirements.txt" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.html" />
     <Content Include="bower_components\polymer-ts\polymer-ts.js" />
     <Content Include="bower_components\polymerfork\.gitignore" />
     <Content Include="bower_components\polymerfork\explainer\data-bind.png" />
@@ -207,7 +208,6 @@
     <Content Include="bower_components\polymer\polymer-micro.html" />
     <Content Include="bower_components\polymer\polymer-mini.html" />
     <Content Include="bower_components\polymer\polymer.html" />
-    <Content Include="polymer.js" />
     <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
     <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
     <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />

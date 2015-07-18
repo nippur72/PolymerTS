@@ -1,13 +1,17 @@
 ﻿/// <reference path="typings/jasmine/jasmine.d.ts" />
 
-var polymerReady = false;
+var polymerReady=false;
+
+// jasmine boot.js links to window.onload 
+var startJasmine = window.onload;
+window.onload = null;
 
 window.addEventListener('WebComponentsReady', (e) =>
 {           
-   polymerReady = true;  
+   polymerReady = true;     
+   RunSpecs();   
+   startJasmine(null);
 });
-
-RunSpecs();
 
 // mimics the old Jasmine 1.3 waitsFor()
 function waitFor(F)
