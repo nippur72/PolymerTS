@@ -342,6 +342,7 @@ class MyExample extends polymer.Base
 }
 
 MyExample.register();   
+```
 
 Note: due [this issue](https://github.com/Polymer/polymer/issues/2114), using this feature requires
 the inclusion of the full `webcomponent.js` in place of the lighter `webcomponent-lite.js`.
