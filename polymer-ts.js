@@ -16,8 +16,11 @@ var polymer;
             throw "element not yet registered in Polymer";
         };
         // add a default create method()
-        pb["register"] = function () {
-            createElement(this);
+        pb["register"] = function (dontRegister) {
+            if (dontRegister == true)
+                polymer.createClass(this);
+            else
+                polymer.createElement(this);
         };
     }
     polymer.createEs6PolymerBase = createEs6PolymerBase;
@@ -86,6 +89,38 @@ var polymer;
         domModule.createdCallback();
     }
     polymer.injectTemplateAndStyle = injectTemplateAndStyle;
+    function createElement(element) {
+        if (polymer.isRegistered(element)) {
+            throw "element already registered in Polymer";
+        }
+        if ((element.prototype).template !== undefined || (element.prototype).style !== undefined) {
+            polymer.injectTemplateAndStyle(element);
+        }
+        // register element and make available its constructor as "create()"
+        var maker = Polymer(polymer.prepareForRegistration(element));
+        element["create"] = function () {
+            var newOb = Object.create(maker.prototype);
+            return maker.apply(newOb, arguments);
+        };
+        return maker;
+    }
+    polymer.createElement = createElement;
+    function createClass(element) {
+        if (polymer.isRegistered(element)) {
+            throw "element already registered in Polymer";
+        }
+        if ((element.prototype).template !== undefined || (element.prototype).style !== undefined) {
+            polymer.injectTemplateAndStyle(element);
+        }
+        // register element and make available its constructor as "create()"
+        var maker = Polymer.Class(polymer.prepareForRegistration(element));
+        element["create"] = function () {
+            var newOb = Object.create(maker.prototype);
+            return maker.apply(newOb, arguments);
+        };
+        return maker;
+    }
+    polymer.createClass = createClass;
     function isRegistered(element) {
         return (element.prototype).$custom_cons !== undefined;
     }
@@ -198,29 +233,5 @@ function observe(propertiesList) {
             target.properties[propertiesList].observer = observerName;
         };
     }
-}
-function createElement(element) {
-    if (polymer.isRegistered(element)) {
-        throw "element already registered in Polymer";
-    }
-    if ((element.prototype).template !== undefined || (element.prototype).style !== undefined) {
-        polymer.injectTemplateAndStyle(element);
-    }
-    // register element and make available its constructor as "create()"
-    var maker = Polymer(polymer.prepareForRegistration(element));
-    element["create"] = function () {
-        var newOb = Object.create(maker.prototype);
-        return maker.apply(newOb, arguments);
-    };
-    return maker;
-}
-function createClass(element) {
-    if (polymer.isRegistered(element)) {
-        throw "element already registered in Polymer";
-    }
-    if (element.prototype.template !== undefined || element.prototype.style !== undefined) {
-        polymer.injectTemplateAndStyle(element);
-    }
-    return Polymer.Class(polymer.prepareForRegistration(element));
 }
 //# sourceMappingURL=polymer-ts.js.map

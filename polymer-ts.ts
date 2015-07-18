@@ -124,8 +124,9 @@ module polymer {
       }
 
       // add a default create method()
-      pb["register"] = function() {        
-         createElement(this);
+      pb["register"]=function(dontRegister?: boolean) {
+         if(dontRegister==true) polymer.createClass(this);
+         else polymer.createElement(this);
       }
    }
 
@@ -205,6 +206,38 @@ module polymer {
 
       // tells polymer the element has been created
       domModule.createdCallback();
+   }
+
+   export function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
+      if(polymer.isRegistered(element)) {
+         throw "element already registered in Polymer";
+      }
+      if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
+         polymer.injectTemplateAndStyle(element);
+      }
+      // register element and make available its constructor as "create()"
+      var maker=<any> Polymer(polymer.prepareForRegistration(element));
+      element["create"]=function() {
+         var newOb=Object.create(maker.prototype);
+         return maker.apply(newOb, arguments);
+      };
+      return maker;
+   }
+
+   export function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
+      if(polymer.isRegistered(element)) {
+         throw "element already registered in Polymer";
+      }
+      if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
+         polymer.injectTemplateAndStyle(element);
+      }
+      // register element and make available its constructor as "create()"
+      var maker=<any> Polymer.Class(polymer.prepareForRegistration(element));
+      element["create"]=function() {
+         var newOb=Object.create(maker.prototype);
+         return maker.apply(newOb, arguments);
+      };
+      return maker;
    }
 
    export function isRegistered(element: polymer.Element)
@@ -350,29 +383,4 @@ function observe(propertiesList: string) {
    }
 }
                    
-function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
-   if(polymer.isRegistered(element)) {
-      throw "element already registered in Polymer";
-   }
-   if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
-      polymer.injectTemplateAndStyle(element);
-   }
-   // register element and make available its constructor as "create()"
-   var maker = <any> Polymer(polymer.prepareForRegistration(element));   
-   element["create"] = function () {      
-      var newOb = Object.create(maker.prototype);      
-      return maker.apply(newOb, arguments); 
-   };
-   return maker;
-}
-
-function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
-   if(polymer.isRegistered(element)) {
-      throw "element already registered in Polymer";
-   }
-   if ((<any> element.prototype).template !== undefined || (<any>element.prototype).style !== undefined) {
-      polymer.injectTemplateAndStyle(element);
-   }
-   return <any> Polymer.Class(polymer.prepareForRegistration(<Function> element));
-}
 

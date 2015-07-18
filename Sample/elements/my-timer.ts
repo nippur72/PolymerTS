@@ -23,5 +23,7 @@ class MyTimer extends polymer.Base
    }
 }
 
+MyTimer.register();
+
 
  

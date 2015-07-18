@@ -97,4 +97,5 @@ class MyElement extends polymer.Base
    */
 }
 
- 
+MyElement.register();
+

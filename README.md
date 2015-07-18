@@ -47,10 +47,9 @@ You'll get the following files in `bower_components/polymer-ts`:
    - `@listen(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
    - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
 - Registration functions
-   - `className.register()` register in Polymer and in `document.registerElement()`
-   - `className.create()` manually create an element
-   - `createElement(className)` same as `className.register()`
-   - `createClass(className)` register in Polymer without creating the element
+   - `className.register()` registers in Polymer 
+   - `className.register(true)` registers in Polymer but not in `document.registerElement()`   
+   - `className.create()` creates an instance of the element
 - Other
    - class constructor mapped to factory constructor (`factoryImpl()`) 
 
@@ -321,7 +320,7 @@ class MyExample extends polymer.Base
    // ...
 }
 ```
-Registration is done with `createElement` but be sure to call it after the `WebComponentsReady` event has been fired:
+Registration is done with `register()` but be sure to call it after the `WebComponentsReady` event has been fired:
 ```JavaScript
    <script>
    window.addEventListener('WebComponentsReady', function (e) {
@@ -469,6 +468,8 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
+- v0.1.5 (Jul 18, 2015)
+  - global functions `createElement()` and `createClass()` deprecated, use `Element.resgister()` instead
 - v0.1.4 (Jul 17, 2015)
   - register elements with `className.register()`
 - v0.1.3 (Jul 16, 2015)
