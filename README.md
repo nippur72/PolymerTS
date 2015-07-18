@@ -322,7 +322,7 @@ or by the use of Mixins.
 
 # Writing elements only with code <a name="imperatively"></a>
 
-**Eperimental feature**: It's also possible to create elements using TypeScript code only, 
+It's also possible to create elements using TypeScript code only, 
 without having any external .html. That can be useful if you want to keep template and logic in the same
 TypeScript file.
 
@@ -340,15 +340,8 @@ class MyExample extends polymer.Base
 {
    // ...
 }
-```
-Registration is done with `register()` but be sure to call it after the `WebComponentsReady` event has been fired:
-```JavaScript
-   <script>
-   window.addEventListener('WebComponentsReady', function (e) {
-      MyExample.register();   
-   });
-   </script>
-```
+
+MyExample.register();   
 
 # Writing elements without using decorators <a name="decoratorless"></a>
 
@@ -405,6 +398,8 @@ class MyTimer extends polymer.Base
       clearInterval(this.timerHandle);
    }
 }
+
+MyTimer.register();
 ```
 
 ```HTML
@@ -416,11 +411,6 @@ class MyTimer extends polymer.Base
 </dom-module>
 ```
 
-To register the element:
-
-```TypeScript
-MyTimer.register();;   
-```
 To use the element
 ```HTML
 <my-timer start="42"></my-timer>
