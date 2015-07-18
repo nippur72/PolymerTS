@@ -22,6 +22,7 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
    - [Using computed properties](#computed_example)  
    - [Using custom constructor](#custom_constructor_example)
 - [Running the repo example](#repoexample)
+- [What it does, in short](#details)
 - [Contributing](#contributing)
 - [Changelog](#changelog)
 
@@ -474,12 +475,27 @@ document.body.appendChild(el);
 
 # Running the example <a name="repoexample"></a>
 
-To run the very small example contained in this repo:
+To run the "Test" project containing the Jasmine specs:
 
-- clone the repo `nippur72/PolymerTS`
+- clone this repo `nippur72/PolymerTS`
 - go to the `Test` directory
 - run `bower update`
-- Open the solution in Visual Studio and run the Test project.
+- Open the solution in Visual Studio and run the "Test" project.
+
+# What it does<a name="details"></a>
+
+In short, PolymerTS:
+
+- provides a class named `polymer.Base` that all your elements can extend
+- provides a suite of decorators to easily implement elements
+- injects the method `register()` in your element-class (to allow registration it in Polymer)
+
+in turn, the `register()` method:
+
+- process decorators translating them in its Polymer counterpart
+- connects the `constructor()` before of the `attached` event so that properties are correctly initialized
+- connects the `constructor(args)` to the `factoryImpl()` callback so that custom constructor is processed correctly
+- registers the element in Polymer, saving the constructor function and making it available as the `create()` method
 
 # Contributing <a name="contributing"></a>
 
