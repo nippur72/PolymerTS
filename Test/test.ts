@@ -223,6 +223,8 @@ function RunSpecs()
          expect((<ObserverTest>el).nbar_changed).toBe(0);
          expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
       });
+
+      // TODO check path, deep path, array mutation
    });
 
    describe("@behavior decorator", () => {
@@ -270,9 +272,40 @@ function RunSpecs()
       });
    });
 
-   // TODO add tests for hostAttributes
-   // TODO add tests for mixins
-   // TODO add tests for ineritance
+   describe("@hostAttributes decorator", () => {
+      var el;
 
+      beforeEach(() => {
+         el=HostAttributesTest.create();
+         querySelector("#put_test_elements_here").appendChild(el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar=="mybar"));
+
+      it("sets attributes on the host element", () => {
+         expect(el.style.color).toBe("red");
+      });
+   });
+
+   describe("element class", () => {
+      var el: ExtendedElementTest;
+
+      beforeEach(() => {
+         el = <any> ExtendedElementTest.create();
+         querySelector("#put_test_elements_here").appendChild(<any> el);
+      });
+
+      // wait for the 'attached' event
+      waitFor(() => (el.bar=="mybar"));
+
+      it("can be extended with 'extends'", () => {
+         expect(el.prop).toBe("AB");
+      });
+
+      it("can be mixed with TypeScript mixins", () => {
+         expect(el.pmix).toBe("C");
+      });
+   });
 }
 

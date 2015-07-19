@@ -183,3 +183,63 @@ class TemplateTest extends polymer.Base
 
 TemplateTest.register();
 
+@component("base-element-test")
+@template("")
+class BaseElementTest extends polymer.Base
+{
+   @property() prop="mybar";   
+
+   attached()
+   {
+      this.prop = "A";
+   }
+
+   doSomething: ()=> string;
+}
+
+class DoSomethingClass
+{
+   doSomething()
+   {
+      return "C";
+   }
+}
+
+@component("extended-element-test")
+class ExtendedElementTest extends BaseElementTest
+{
+   @property() bar="mybar";   
+
+   @property() pmix="";
+         
+   attached() {
+      super.attached();
+      this.prop+="B";
+      this.pmix = this.doSomething();
+   }
+}
+
+applyMixins(ExtendedElementTest, [DoSomethingClass]);
+
+ExtendedElementTest.register();
+
+function applyMixins(derivedCtor: any, baseCtors: any[]) {
+   baseCtors.forEach(baseCtor => {
+      Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+         derivedCtor.prototype[name]=baseCtor.prototype[name];
+      })
+   });
+}
+
+@component("host-attributes-test")
+
+@template("<div>testing host attributes</div>")
+
+@hostAttributes({ style: "color: red;" })
+
+class HostAttributesTest extends polymer.Base
+{
+   @property() bar="mybar";      
+}
+
+HostAttributesTest.register();
