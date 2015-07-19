@@ -23,6 +23,7 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
    - [Using custom constructor](#custom_constructor_example)
 - [Running the repo example](#repoexample)
 - [What it does, in short](#details)
+- [Known issues](#knownissues)
 - [Contributing](#contributing)
 - [Changelog](#changelog)
 
@@ -490,6 +491,13 @@ in turn, the `register()` method:
 - connects the `constructor()` before of the `attached` event so that properties are correctly initialized
 - connects the `constructor(args)` to the `factoryImpl()` callback so that custom constructor is processed correctly
 - registers the element in Polymer, saving the constructor function and making it available as the `create()` method
+
+# Known issues <a name="knownissues"></a>
+
+- can't use property defined with `get` and `set` (Polymer's issue)
+- can't include elements using `<script>` on the main .html page (WebComponent's issue)
+- `polymer.Base` doesn't explicitly expose the `HTMLElement` interface (TypeScript issue, fixed in next release)
+- in Internet Explorer, using `@template` and `@style` requires the inclusion of `webcomponents.js` in place of `webcomponents-lite.js` (Polymer's issue)
 
 # Contributing <a name="contributing"></a>
 
