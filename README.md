@@ -8,13 +8,16 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
 - [Supported features](#features)
 - [How to write elements](#howtowrite)
 - [How to correctly reference in markup](#howtoreference)
+- [Starting the application](#start")
 - [Decorators explained](#decorators)
    - [@component](#component)
+   - [@extend](#extend)
    - [@property](#property)
    - [@observe](#observe)
    - [@computed](#computed)
    - [@listen](#listen)
    - [@behaviour](#behaviour)
+   - [@hostAttributes](#hostattributes)
 - [Writing elements only with code: @template and @style](#imperatively)
 - [Writing elements without using decorators](#decoratorless)
 - [Examples](#examples)
@@ -68,6 +71,7 @@ A class-element:
 - can have private properties/fields
 - can use class constructor (rendered as `factoryImpl()`)
 - can use inherited properties and methods
+- can use TypeScript Mixins
 
 # How to correctly reference in markup<a name="howtoreference"></a>
 
@@ -118,9 +122,17 @@ The above example loads in the following order:
 - Your custom elements
 - Your app 
 
-Do not use the `<script>` tag on the main page to load PolymerTS or custom elements, 
-always use the `<link rel="import">` syntax. This will make sure that scripts will be loaded
-in the correct order.
+Note: due to an [issue in WebComponents](https://github.com/webcomponents/webcomponentsjs/issues/347), 
+you can't use the `<script>` tag on the main page to load PolymerTS or custom elements, 
+you have always to use the `<link rel="import">` syntax. 
+
+This will make sure that scripts will be loaded in the correct order in all browsers.
+
+If for some reason you want to use script inclusion for your elements, you have to load 
+Polymer and PolymerTS via script too. Polymer doesn't have a `polymer.js` file (it's shipped as `.html` only),
+but you can get one from [greenify/polymer-js](https://github.com/greenify/polymer-js).
+
+# Starting the application <a name="start"></a>
 
 Any global code in your app that depends on Polymer should be started only after the event 
 `WebComponentsReady` has been fired:
@@ -136,7 +148,9 @@ window.addEventListener('WebComponentsReady', (e) =>
 
 ## @component(tagName) <a name="component"></a>
 
-Sets the tag name of the custom component. The decorator is applied to the TypeScript `class` keyword. Notice that tag names must include a `-` as per WebComponents specs. Example of a `<my-element>`:
+Sets the tag name of the custom component. The decorator is applied on the `class` keyword. Tag names must include a `-` as per WebComponents specs. 
+
+Example of a `<my-element>`:
  
 ```TypeScript
 @component("my-element")
@@ -145,7 +159,7 @@ class MyElement extends polymer.Base
 }
 ```
 
-If the component extends a native HTML tag, pass it as second argument or use the `@extend` decorator:
+If the component extends a native HTML tag, pass the "base" tag name as second argument (alternatively, use the `@extend` decorator)
 
 ```TypeScript
 @component("my-button","button")
@@ -153,9 +167,14 @@ class MyButton extends polymer.Base
 {
 }
 ```
-or
+
+## @extend(tagName) <a name="extend"></a>
+
+Specifies that the element is an extension of a native HTML element. 
+
 ```TypeScript
-@component("my-button") @extend("button")
+@component("my-button") 
+@extend("button")
 class MyButton extends polymer.Base
 {
 }
@@ -283,7 +302,7 @@ In the following example the function `resetCounter()` is called whenever the ev
 
 ## @behaviour(className) <a name="behaviour"></a>
 
-Incorporate behaviours from another element (defined with PolymerTS). 
+Incorporates behaviours from another element (defined with PolymerTS). 
 
 A behaviour is firstly defined in a separate class, declaring it normally as any other Polymer element, 
 and then its behaviours are "imported" with the `@behaviour` decorator. 
@@ -347,6 +366,20 @@ MyExample.register();
 
 Note: due [this issue](https://github.com/Polymer/polymer/issues/2114), using this feature requires
 the inclusion of the full `webcomponent.js` in place of the lighter `webcomponent-lite.js`.
+
+## @hostAttributes(attributesObject) <a name="hostattributes"></a>
+
+Sets attributes on the host element. 
+
+In the following example, the `style` attribute of the host element is changed:
+
+```TypeScript
+@component("my-element")
+@hostAttributes({ style: "color: red;" })
+class MyElement extends polymer.Base
+{   
+}
+```
 
 # Writing elements without using decorators <a name="decoratorless"></a>
 
