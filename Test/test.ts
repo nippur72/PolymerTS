@@ -13,7 +13,7 @@ window.addEventListener('WebComponentsReady', (e) =>
    startJasmine(null);
 });
 
-// mimics the old Jasmine 1.3 waitsFor()
+// simulates the old Jasmine 1.3 waitsFor()
 function waitFor(F)
 {
    beforeEach((done) => {
@@ -119,15 +119,15 @@ function RunSpecs()
 
       beforeEach(() =>
       {
-         // create the element         
-         el = CustomConstructorTest.create("42");
-
+         // create the element                  
+         el = CustomConstructorTest.create("42");         
+         
          // connect it to DOM         
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
       // wait for the 'attached' event
-      waitFor(() => (el.bar == "42") );
+      waitFor(() => (el.bar == "42"));
 
       it("provides custom initialization", () =>
       {

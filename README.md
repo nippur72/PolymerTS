@@ -364,9 +364,6 @@ class MyExample extends polymer.Base
 MyExample.register();   
 ```
 
-Note: due [this issue](https://github.com/Polymer/polymer/issues/2114), using this feature requires
-the inclusion of the full `webcomponent.js` in place of the lighter `webcomponent-lite.js`.
-
 ## @hostAttributes(attributesObject) <a name="hostattributes"></a>
 
 Sets attributes on the host element. 
@@ -530,7 +527,6 @@ in turn, the `register()` method:
 - can't use property defined with `get` and `set` (Polymer's issue)
 - can't include elements using `<script>` on the main .html page (WebComponent's issue)
 - `polymer.Base` doesn't explicitly expose the `HTMLElement` interface (TypeScript issue, fixed in next release)
-- in Internet Explorer, using `@template` and `@style` requires the inclusion of `webcomponents.js` in place of `webcomponents-lite.js` (Polymer's issue)
 
 # Contributing <a name="contributing"></a>
 
@@ -539,6 +535,9 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
+- v0.1.6 (Jul 21, 2015)
+  - provided `polymer-ts.d.ts` to reference from external projects
+  - no longer need to include `webcomponents.js` (non-lite) in IE
 - v0.1.5 (Jul 18, 2015)
   - BREAKING CHANGE: global functions `createElement()` and `createClass()` deprecated, use `Element.resgister()` instead
   - BREAKING CHANGE: use `<link rel="import">` to load PolymerTS and custom elements
