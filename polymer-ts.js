@@ -69,7 +69,36 @@ var polymer;
         return preparedElement;
     }
     polymer.prepareForRegistration = prepareForRegistration;
+    /*
+    // correct version, to uncomment when // temporary version until https://github.com/Polymer/polymer/issues/2114 will be fixed
+    export function createDomModule(definition: polymer.Element) {
+       var domModule: any = document.createElement('dom-module');
+ 
+       var proto = <any> definition.prototype;
+ 
+       domModule.id = proto.is;
+ 
+       // attaches style
+       if (proto.style !== undefined) {
+          var elemStyle = (<any> document).createElement('style', 'custom-style');
+          domModule.appendChild(elemStyle);
+          elemStyle.textContent = proto.style;
+       }
+ 
+       // attaches template
+       if (proto.template !== undefined) {
+          var elemTemplate = document.createElement('template');
+          domModule.appendChild(elemTemplate);
+          elemTemplate.innerHTML = proto.template;
+       }
+ 
+       // tells polymer the element has been created
+       domModule.createdCallback();
+    }
+    */
+    // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed
     function createDomModule(definition) {
+        var contentDoc = document.implementation.createHTMLDocument('template');
         var domModule = document.createElement('dom-module');
         var proto = definition.prototype;
         domModule.id = proto.is;
@@ -83,7 +112,10 @@ var polymer;
         if (proto.template !== undefined) {
             var elemTemplate = document.createElement('template');
             domModule.appendChild(elemTemplate);
-            elemTemplate.innerHTML = proto.template;
+            contentDoc.body.innerHTML = proto.template;
+            while (contentDoc.body.firstChild) {
+                elemTemplate.content.appendChild(contentDoc.body.firstChild);
+            }
         }
         // tells polymer the element has been created
         domModule.createdCallback();
