@@ -38,7 +38,7 @@ bower install -save polymer-ts
 ```
 You'll get the following files in `bower_components/polymer-ts`:
 - `polymer-ts.js` the JavaScript file to add in your app (via `<script src="">`)
-- `polymer-ts.ts` the file to reference in your TypeScript code (via `/// <reference path="...">`)
+- `polymer-ts.d.ts` the file to reference in your TypeScript code (via `/// <reference path="...">`)
 
 # Supported features <a name="features"></a>
 
@@ -104,7 +104,7 @@ In your custom element (e.g. `elements/my-element.html`):
 
 In your element typescript code (e.g. `elements/my-element.ts`):
 ```TypeScript
-/// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
+/// <reference path="../bower_components/polymer-ts/polymer-ts.d.ts" />
 
 @component("my-element")
 class MyElement extends polymer.Base
