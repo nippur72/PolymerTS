@@ -37,8 +37,11 @@ Install via bower:
 bower install -save polymer-ts
 ```
 You'll get the following files in `bower_components/polymer-ts`:
-- `polymer-ts.js` the JavaScript file to add in your app (via `<script src="">`)
-- `polymer-ts.d.ts` the file to reference in your TypeScript code (via `/// <reference path="...">`)
+- `polymer-ts.html` the html file to include via `<link rel="import">` that loads PolymerTS
+- `polymer-ts.min.html` the html file to include via `<link rel="import">` that loads PolymerTS (minified version)
+- `polymer-ts.d.ts` the file to reference in your TypeScript code (`/// <reference path="...">`)
+- `polymer-ts.ts` the source TypeScript file for debugging purposes
+- `polymer-ts.js` or `polymer-ts.min.js` the JavaScript file if you want to include PolymerTS via `<script src="">`
 
 # Supported features <a name="features"></a>
 
