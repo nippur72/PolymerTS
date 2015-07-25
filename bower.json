@@ -29,5 +29,7 @@
     "tsconfig.json",
     "web.*"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "polymer": ">=1.0.8"
+  }
 }
