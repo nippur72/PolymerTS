@@ -1,5 +1,5 @@
 {
-  "name": "polymer-ts",  
+  "name": "polymer-ts",
   "homepage": "https://github.com/nippur72/PolymerTS",
   "authors": [
     "Antonino Porcino <nino.porcino@gmail.com>"
@@ -29,7 +29,5 @@
     "tsconfig.json",
     "web.*"
   ],
-  "dependencies": {
-    "polymer": ">=1.0.4"
-  }
+  "dependencies": {}
 }
