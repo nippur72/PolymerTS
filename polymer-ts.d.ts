@@ -34,7 +34,7 @@ declare module polymer {
         linkPaths(to: string, from: string): void;
         listen(node: Element, eventName: string, methodName: string): void;
         mixin(target: Object, source: Object): void;
-        notifyPath(path: string, value: any, fromAbove: any): void;
+        notifyPath(path: string, value: any, fromAbove?: any): void;
         pop(path: string): any;
         push(path: string, value: any): any;
         reflectPropertyToAttribute(name: string): void;
