@@ -21,7 +21,7 @@ declare module polymer {
         distributeContent(): void;
         domHost(): void;
         elementMatches(selector: string, node: Element): any;
-        fire(type: string, detail?: Object, options?: Object): any;
+        fire(type: string, detail?: Object, options?: FireOptions): any;
         flushDebouncer(jobName: string): void;
         get(path: string | Array<string | number>): any;
         getContentChildNodes(slctr: string): any;
@@ -53,6 +53,11 @@ declare module polymer {
         unlinkPaths(path: string): void;
         unshift(path: string, value: any): any;
         updateStyles(): void;
+    }
+    interface FireOptions {
+        node?: HTMLElement | polymer.Base;
+        bubbles?: boolean;
+        cancelable?: boolean;
     }
     interface Element {
         properties?: Object;
