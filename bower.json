@@ -12,22 +12,10 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "bower.json",
-    "Test",
-    "Sample",
-    "bin",
-    "obj",
-    "*.bat",
-    "*.sln",
-    "*.suo",
-    "*.csproj",
-    "*.csproj.user",
-    "README.md",
-    "tsconfig.json",
-    "web.*"
+    "/*",
+    "!polymer-ts.*",
+    "!LICENSE.txt",
+    "!README.md"
   ],
   "dependencies": {
     "polymer": ">=1.0.8"

@@ -8,7 +8,7 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
 - [Supported features](#features)
 - [How to write elements](#howtowrite)
 - [How to correctly reference in markup](#howtoreference)
-- [Starting the application](#start")
+- [Starting the application](#start)
 - [Decorators explained](#decorators)
    - [@component](#component)
    - [@extend](#extend)
