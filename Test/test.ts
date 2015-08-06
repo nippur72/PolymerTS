@@ -1,4 +1,5 @@
 ﻿/// <reference path="typings/jasmine/jasmine.d.ts" />
+/// <reference path="bower_components/polymer-ts/polymer-ts.d.ts" />
 
 var polymerReady=false;
 
@@ -224,7 +225,13 @@ function RunSpecs()
          expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
       });
 
-      // TODO check path, deep path, array mutation
+      it("observes subproperties (path) changes", () => {
+         //expect((<ObserverTest>el).nmanager_changed).toBe(0);         
+         el.set("user.manager", "42");                  
+         expect((<ObserverTest>el).user.manager).toBe("42");
+         //expect((<ObserverTest>el).nmanager_changed).toBe(1);         
+         expect((<ObserverTest>el).nmanager_changed).toBeGreaterThan(0);         
+      });
    });
 
    describe("@behavior decorator", () => {

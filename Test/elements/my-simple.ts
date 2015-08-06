@@ -1,6 +1,6 @@
 ﻿function createMySimple()
 {
-   Polymer(
+   Polymer(<any>
    {
       is: 'my-simple',
 

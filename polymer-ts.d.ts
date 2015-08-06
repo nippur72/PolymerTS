@@ -120,4 +120,4 @@ declare function property(ob?: polymer.Property): (target: polymer.Element, prop
 declare function computed(ob?: polymer.Property): (target: polymer.Element, computedFuncName: string) => void;
 declare function listen(eventName: string): (target: polymer.Element, propertyKey: string) => void;
 declare function behavior(behaviorObject: any): any;
-declare function observe(propertiesList: string): (target: polymer.Element, observerFuncName: string) => void;
+declare function observe(observedProps: string): (target: polymer.Element, observerFuncName: string) => void;

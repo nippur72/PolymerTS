@@ -22,39 +22,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\jasmine\images\jasmine-horizontal.png" />
-    <Content Include="bower_components\jasmine\images\jasmine-horizontal.svg" />
-    <Content Include="bower_components\jasmine\images\jasmine_favicon.png" />
-    <Content Include="bower_components\jasmine\lib\console\console.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\boot.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\example\node_example\lib\jasmine_examples\Player.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\example\node_example\lib\jasmine_examples\Song.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine-html.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine.css" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\json2.js" />
-    <Content Include="bower_components\jasmine\lib\jasmine-core\node_boot.js" />
-    <Content Include="bower_components\jasmine\requirements.txt" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.html" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.js" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.min.html" />
-    <Content Include="bower_components\polymer\LICENSE.txt" />
-    <Content Include="bower_components\polymer\polymer-micro.html" />
-    <Content Include="bower_components\polymer\polymer-mini.html" />
-    <Content Include="bower_components\polymer\polymer.html" />
-    <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
-    <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
-    <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />
-    <Content Include="bower_components\webcomponentsjs\HTMLImports.min.js" />
-    <Content Include="bower_components\webcomponentsjs\MutationObserver.js" />
-    <Content Include="bower_components\webcomponentsjs\MutationObserver.min.js" />
-    <Content Include="bower_components\webcomponentsjs\ShadowDOM.js" />
-    <Content Include="bower_components\webcomponentsjs\ShadowDOM.min.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.min.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
     <Content Include="elements\test_components.html" />
     <Content Include="elements\polymer_register.html" />
     <Content Include="elements\my-simple.html" />
@@ -62,7 +29,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="elements\test_components.ts" />
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="elements\my-inline.ts" />
@@ -71,29 +37,8 @@
     <TypeScriptCompile Include="typings\tsd.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\polymer\.bower.json" />
-    <Content Include="bower_components\polymer\bower.json" />
-    <Content Include="bower_components\polymer\build.log" />
-    <Content Include="bower_components\webcomponentsjs\.bower.json" />
-    <Content Include="bower_components\webcomponentsjs\bower.json" />
-    <Content Include="bower_components\webcomponentsjs\build.log" />
-    <Content Include="bower_components\webcomponentsjs\package.json" />
-    <Content Include="bower_components\webcomponentsjs\README.md" />
     <Content Include="packages.config" />
-    <Content Include="bower_components\jasmine\.bower.json" />
-    <Content Include="bower_components\jasmine\bower.json" />
-    <Content Include="bower_components\jasmine\CONTRIBUTING.md" />
-    <Content Include="bower_components\jasmine\GOALS_2.0.md" />
-    <Content Include="bower_components\jasmine\MANIFEST.in" />
-    <Content Include="bower_components\jasmine\MIT.LICENSE" />
-    <Content Include="bower_components\jasmine\package.json" />
-    <Content Include="bower_components\jasmine\README.md" />
-    <Content Include="bower_components\jasmine\RELEASE.md" />
     <TypeScriptCompile Include="elements\polymer_register_test.ts" />
-    <Content Include="bower_components\polymer-ts\.bower.json" />
-    <Content Include="bower_components\polymer-ts\bower.json" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
-    <Content Include="bower_components\polymer-ts\tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -135,8 +80,18 @@
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

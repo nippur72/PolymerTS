@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
@@ -22,24 +22,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\polymer-ts\polymer-ts.html" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.js" />
-    <Content Include="bower_components\polymer\LICENSE.txt" />
-    <Content Include="bower_components\polymer\polymer-micro.html" />
-    <Content Include="bower_components\polymer\polymer-mini.html" />
-    <Content Include="bower_components\polymer\polymer.html" />
-    <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
-    <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
-    <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />
-    <Content Include="bower_components\webcomponentsjs\HTMLImports.min.js" />
-    <Content Include="bower_components\webcomponentsjs\MutationObserver.js" />
-    <Content Include="bower_components\webcomponentsjs\MutationObserver.min.js" />
-    <Content Include="bower_components\webcomponentsjs\ShadowDOM.js" />
-    <Content Include="bower_components\webcomponentsjs\ShadowDOM.min.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.min.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
-    <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
     <Content Include="elements\my-element.html" />
     <Content Include="elements\my-simple.html" />
     <Content Include="elements\my-timer.html" />
@@ -49,24 +31,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="elements\my-element.ts" />
     <TypeScriptCompile Include="elements\my-inline.ts" />
     <TypeScriptCompile Include="elements\my-simple.ts" />
     <TypeScriptCompile Include="elements\my-timer.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\polymer\.bower.json" />
-    <Content Include="bower_components\polymer\bower.json" />
-    <Content Include="bower_components\polymer\build.log" />
-    <Content Include="bower_components\webcomponentsjs\.bower.json" />
-    <Content Include="bower_components\webcomponentsjs\bower.json" />
-    <Content Include="bower_components\webcomponentsjs\build.log" />
-    <Content Include="bower_components\webcomponentsjs\package.json" />
-    <Content Include="bower_components\webcomponentsjs\README.md" />
-    <Content Include="bower_components\polymer-ts\.bower.json" />
-    <Content Include="bower_components\polymer-ts\bower.json" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
     <Content Include="packages.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>

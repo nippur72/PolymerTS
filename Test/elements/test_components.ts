@@ -111,6 +111,9 @@ class ObserverTest extends polymer.Base {
    @property() foo="myfoo";
    @property() nbar_changed = 0;
    @property() nbar_foo_changed = 0;
+   @property() nmanager_changed = 0;
+
+   @property({type: Object}) user = { manager: "64" }; 
 
    @observe("bar")
    changedBar() {
@@ -120,6 +123,11 @@ class ObserverTest extends polymer.Base {
    @observe("bar,foo")
    changedBarAndFoo() {
       this.nbar_foo_changed++;
+   }
+
+   @observe("user.manager")
+   changedManager(newVal) {            
+      this.nmanager_changed++;
    }
 }
 

@@ -1,6 +1,4 @@
-﻿/// <reference path="../bower_components/polymer-ts/polymer-ts.ts" />
-
-class MyBehaviour extends polymer.Base 
+﻿class MyBehaviour extends polymer.Base 
 {
    @listen("behave")
    onBehave() {

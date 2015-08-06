@@ -249,20 +249,20 @@ function behavior(behaviorObject) {
     };
 }
 // @observe decorator
-function observe(propertiesList) {
-    if (propertiesList.indexOf(",") > 0) {
-        // observing multiple properties
+function observe(observedProps) {
+    if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
+        // observing multiple properties or path      
         return function (target, observerFuncName) {
             target.observers = target.observers || [];
-            target.observers.push(observerFuncName + "(" + propertiesList + ")");
+            target.observers.push(observerFuncName + "(" + observedProps + ")");
         };
     }
     else {
         // observing single property
         return function (target, observerName) {
             target.properties = target.properties || {};
-            target.properties[propertiesList] = target.properties[propertiesList] || {};
-            target.properties[propertiesList].observer = observerName;
+            target.properties[observedProps] = target.properties[observedProps] || {};
+            target.properties[observedProps].observer = observerName;
         };
     }
 }

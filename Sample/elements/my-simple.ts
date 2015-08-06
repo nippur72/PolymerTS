@@ -2,7 +2,7 @@
 
 function createMySimple()
 {
-   MySimpleFactory = Polymer(
+   MySimpleFactory = Polymer(<any>
    {
       is: 'my-simple',
 
