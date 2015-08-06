@@ -16,7 +16,7 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
    - [@observe](#observe)
    - [@computed](#computed)
    - [@listen](#listen)
-   - [@behaviour](#behaviour)
+   - [@behavior](#behavior)
    - [@hostAttributes](#hostattributes)
 - [Writing elements only with code: @template and @style](#imperatively)
 - [Writing elements without using decorators](#decoratorless)
@@ -53,7 +53,7 @@ You'll get the following files in `bower_components/polymer-ts`:
    - `@observe(propList)` sets an observer function on single or multiple properties (equivalent to `observers:` in PolymerJS)
    - `@computed()` defines a computed property
    - `@listen(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
-   - `@behaviour(className)` gets the behavious of the class (equivalent to `behaviours:` in PolymerJS)
+   - `@behavior(className)` gets the behaviors of the class (equivalent to `behaviors:` in PolymerJS)
 - Registration functions
    - `className.register()` registers in Polymer 
    - `className.register(true)` registers in Polymer but not in `document.registerElement()`   
@@ -303,19 +303,19 @@ In the following example the function `resetCounter()` is called whenever the ev
    }
 ```
 
-## @behaviour(className) <a name="behaviour"></a>
+## @behavior(className) <a name="behavior"></a>
 
-Incorporates behaviours from another element (defined with PolymerTS). 
+Incorporates behaviors from another element (defined with PolymerTS). 
 
-A behaviour is firstly defined in a separate class, declaring it normally as any other Polymer element, 
-and then its behaviours are "imported" with the `@behaviour` decorator. 
+A behavior is firstly defined in a separate class, declaring it normally as any other Polymer element, 
+and then its behaviors are "imported" with the `@behavior` decorator. 
 
-The `@behaviour` decorator can decorate the `class` keyword or it can be put within the class itself.
+The `@behavior` decorator can decorate the `class` keyword or it can be put within the class itself.
 
 Examples: 
 
 ```TypeScript
-class MyBehaviour extends polymer.Base 
+class MyBehavior extends polymer.Base 
 {
    @listen("something_has_happened")
    onBehave() {
@@ -325,7 +325,7 @@ class MyBehaviour extends polymer.Base
 ```
 ```TypeScript
 @component("my-element")
-@behavior(MyBehaviour)
+@behavior(MyBehavior)
 class MyElement extends polymer.Base
 {
   // ...
@@ -336,11 +336,11 @@ or
 @component("my-element")
 class MyElement extends polymer.Base
 {
-	@behavior(MyBehaviour)  
+	@behavior(MyBehavior)  
 	// ...
 }
 ```
-Note: a functionality similar to `@behaviour` can be also obtained by plain class inheritance 
+Note: a functionality similar to `@behavior` can be also obtained by plain class inheritance 
 or by the use of Mixins.
 
 # Writing elements only with code <a name="imperatively"></a>
