@@ -140,6 +140,11 @@ class BehaviorBaseTest extends polymer.Base {
    onBaseCalled() {
       this.hasfired = true;   
    }
+
+   methodInBase()
+   {
+      return "this method is defined in BehaviorBaseTest";
+   }
 }
 
 @component("behavior-test1")
@@ -154,6 +159,13 @@ class BehaviorTest1 extends polymer.Base
    {
       this.fire("base-called");
    }
+
+   methodInBase: ()=> void;
+
+   methodInChild()
+   {
+      return this.methodInBase();
+   }
 }
 
 BehaviorTest1.register();
@@ -167,6 +179,13 @@ class BehaviorTest2 extends polymer.Base {
 
    attached() {
       this.fire("base-called");
+   }
+
+   methodInBase: ()=> void;
+
+   methodInChild()
+   {
+      return this.methodInBase();
    }
 }
 

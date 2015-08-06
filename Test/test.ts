@@ -249,6 +249,8 @@ function RunSpecs()
 
       it("mixes code from another class (decorating the 'class' keyword)", () => {
          expect(el1.hasfired).toBe(true);
+         expect(el1.methodInBase()).toBe("this method is defined in BehaviorBaseTest");
+         expect(el1.methodInChild()).toBe("this method is defined in BehaviorBaseTest");
       });
 
       // wait for the 'attached' event
@@ -256,6 +258,8 @@ function RunSpecs()
 
       it("mixes code from another class (decorator inside the class body)", () => {
          expect(el2.hasfired).toBe(true);
+         expect(el1.methodInBase()).toBe("this method is defined in BehaviorBaseTest");
+         expect(el1.methodInChild()).toBe("this method is defined in BehaviorBaseTest");
       });
    });
 
