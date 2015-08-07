@@ -9,6 +9,7 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
 - [How to write elements](#howtowrite)
 - [How to correctly reference in markup](#howtoreference)
 - [Starting the application](#start)
+- [Using the yeoman generator to create new elements](#generator)
 - [Decorators explained](#decorators)
    - [@component](#component)
    - [@extend](#extend)
@@ -145,6 +146,21 @@ window.addEventListener('WebComponentsReady', (e) =>
 {           
    // any code that depends on polymer here
 });
+```
+
+# Using the yeoman generator to create new elements <a name="generator"></a>
+
+New elements can be quickly scaffolded using the `polymerts:el` yeoman 
+generator available with the package [generator-polymerts](https://www.npmjs.com/package/generator-polymerts).
+
+First install `yeoman` and `generator-polymerts`:
+```
+npm install -g yo
+npm install -g generator-polymerts
+```
+then use the `polymerts:el` generator to create a new element:
+```
+yo polymerts:el my-element
 ```
 
 # Decorators explained <a name="decorators"></a>
