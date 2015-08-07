@@ -63,6 +63,13 @@ module polymer {
       updateStyles(): void;
    }
 
+   export interface dom
+   {
+      (node: HTMLElement): HTMLElement;
+      (node: polymer.Base): HTMLElement;
+      flush();
+   }
+
    // options for the fire method
    export interface FireOptions
    {
@@ -292,18 +299,16 @@ module polymer {
 // modifies Polymer.Base and makes it available as an ES6 class named polymer.Base 
 polymer.createEs6PolymerBase();
 
+
 // Polymer object
 declare var Polymer: {
    (prototype: polymer.Element): FunctionConstructor;
    Class(prototype: polymer.Element): Function;
-   dom(node: HTMLElement): HTMLElement;
-   dom(node: polymer.Base): HTMLElement;
-
+   dom: polymer.dom;
    appendChild(node): HTMLElement;
    insertBefore(node, beforeNode): HTMLElement;
    removeChild(node): HTMLElement;
-   updateStyles(): void; 
-   flush();   
+   updateStyles(): void;  
    
    Base: any;     
 }

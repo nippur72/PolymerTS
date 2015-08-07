@@ -54,6 +54,11 @@ declare module polymer {
         unshift(path: string, value: any): any;
         updateStyles(): void;
     }
+    interface dom {
+        (node: HTMLElement): HTMLElement;
+        (node: polymer.Base): HTMLElement;
+        flush(): any;
+    }
     interface FireOptions {
         node?: HTMLElement | polymer.Base;
         bubbles?: boolean;
@@ -102,13 +107,11 @@ declare module polymer {
 declare var Polymer: {
     (prototype: polymer.Element): FunctionConstructor;
     Class(prototype: polymer.Element): Function;
-    dom(node: HTMLElement): HTMLElement;
-    dom(node: polymer.Base): HTMLElement;
+    dom: polymer.dom;
     appendChild(node): HTMLElement;
     insertBefore(node, beforeNode): HTMLElement;
     removeChild(node): HTMLElement;
     updateStyles(): void;
-    flush();
     Base: any;
 };
 declare function component(tagname: string, extendsTag?: string): (target: Function) => void;

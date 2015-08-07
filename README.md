@@ -554,6 +554,8 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
+- v0.1.7 (Aug 7, 2015)
+  - Corrected signature for `Polymer.dom.flush()`
 - v0.1.6 (Jul 21, 2015)
   - provided `polymer-ts.d.ts` to reference from external projects
   - no longer need to include `webcomponents.js` (non-lite) in IE
