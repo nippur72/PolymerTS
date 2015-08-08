@@ -198,8 +198,8 @@ module polymer {
       return preparedElement;
    }
 
-   /*
-   // correct version, to uncomment when // temporary version until https://github.com/Polymer/polymer/issues/2114 will be fixed
+   
+   // correct version, to uncomment when https://github.com/Polymer/polymer/issues/2114 will be fixed
    export function createDomModule(definition: polymer.Element) {
       var domModule: any = document.createElement('dom-module');
 
@@ -223,10 +223,10 @@ module polymer {
 
       // tells polymer the element has been created
       domModule.createdCallback();
-   }
-   */
-
-   // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed
+   }   
+   
+   /*
+   // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed   
    export function createDomModule(definition: polymer.Element) {
       var contentDoc = document.implementation.createHTMLDocument('template');
 
@@ -255,7 +255,8 @@ module polymer {
      
       // tells polymer the element has been created
       domModule.createdCallback();
-   }
+   }   
+   */
       
    export function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
       if(polymer.isRegistered(element)) {

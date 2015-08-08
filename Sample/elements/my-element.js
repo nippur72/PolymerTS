@@ -30,6 +30,7 @@ var MyElement = (function (_super) {
     function MyElement() {
         _super.apply(this, arguments);
         this.test = "4096";
+        this.propArray = [1, 2, 3, 4, 5, 6];
     }
     //@behavior(MyBehaviour)
     /*
@@ -91,6 +92,9 @@ var MyElement = (function (_super) {
     __decorate([
         property()
     ], MyElement.prototype, "dummy_property");
+    __decorate([
+        property()
+    ], MyElement.prototype, "propArray");
     Object.defineProperty(MyElement.prototype, "testChanged",
         __decorate([
             observe("test")
@@ -105,7 +109,8 @@ var MyElement = (function (_super) {
         ], MyElement.prototype, "fullname", Object.getOwnPropertyDescriptor(MyElement.prototype, "fullname")));
     MyElement = __decorate([
         component("my-element"),
-        behavior(MyBehaviour)
+        behavior(MyBehaviour),
+        template("\n\n      <p>I'm a DOM element. This is my local DOM!</p>\n      <p>And this is a test property: <span>{{test}}</span></p>\n      <p><button on-click=\"handleClick\">click me</button></p>\n      <p>The full name is <span>{{fullname}}</span></p>\n\n    <template is=\"dom-repeat\" items=\"{{propArray}}\">\n        <div>{{item}}</div>        \n    </template>\n")
     ], MyElement);
     return MyElement;
 })(polymer.Base);

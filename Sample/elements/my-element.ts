@@ -8,6 +8,19 @@
 
 @component("my-element")
 @behavior(MyBehaviour)
+
+@template(`
+
+      <p>I'm a DOM element. This is my local DOM!</p>
+      <p>And this is a test property: <span>{{test}}</span></p>
+      <p><button on-click="handleClick">click me</button></p>
+      <p>The full name is <span>{{fullname}}</span></p>
+
+    <template is="dom-repeat" items="{{propArray}}">
+        <div>{{item}}</div>        
+    </template>
+`)
+
 class MyElement extends polymer.Base 
 {
    @property({ type: String, value: "1024" /*, observer: "testChanged" */})
@@ -18,6 +31,8 @@ class MyElement extends polymer.Base
 
    @property()
    dummy_property: any; 
+
+   @property() propArray = [1,2,3,4,5,6];
                                  
    //@behavior(MyBehaviour)
    
