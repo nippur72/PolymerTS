@@ -198,8 +198,8 @@ module polymer {
       return preparedElement;
    }
 
-   
-   // correct version, to uncomment when https://github.com/Polymer/polymer/issues/2114 will be fixed
+   /*
+   // see https://github.com/Polymer/polymer/issues/2114 
    export function createDomModule(definition: polymer.Element) {
       var domModule: any = document.createElement('dom-module');
 
@@ -224,7 +224,25 @@ module polymer {
       // tells polymer the element has been created
       domModule.createdCallback();
    }   
-   
+   */
+
+   // a version that works in IE11 too
+   export function createDomModule(definition: polymer.Element) {
+      var domModule = document.createElement('dom-module');
+
+      var proto = <any> definition.prototype;
+
+      domModule.id = proto.is;
+
+      var html = "";
+      if (proto.style !== undefined)    html += `<style>${proto.style}</style>`;
+      if (proto.template !== undefined) html += `<template>${proto.template}</template>`;      
+
+      domModule.innerHTML = html;
+            
+      (domModule as any).createdCallback();
+   }   
+
    /*
    // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed   
    export function createDomModule(definition: polymer.Element) {
