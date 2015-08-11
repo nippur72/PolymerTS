@@ -240,7 +240,7 @@ module polymer {
 
       domModule.innerHTML = html;
             
-      (domModule as any).createdCallback();
+      (<any> domModule).createdCallback();
    }   
 
    /*
