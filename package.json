@@ -1,0 +1,27 @@
+{
+  "name": "polymer-ts",
+  "version": "0.1.14",
+  "description": "Polymer 1.0 for TypeScript",
+  "main": "polymer-ts.js",
+  "scripts": {
+    "prepublish": "tsc && uglifyjs -o polymer-ts.min.js --in-source-map polymer-ts.js.map --source-map polymer-ts.min.js.map --screw-ie8 --mangle --compress --keep-names polymer-ts.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nippur72/PolymerTS.git"
+  },
+  "keywords": [
+    "polymer",
+    "typescript"
+  ],
+  "author": "Antonino Porcino <nino.porcino@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nippur72/PolymerTS/issues"
+  },
+  "homepage": "https://github.com/nippur72/PolymerTS#readme",
+  "devDependencies": {
+    "typescript": "^1.5.3",
+    "uglifyjs": "^2.4.10"
+  }
+}
