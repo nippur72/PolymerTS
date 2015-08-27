@@ -3,23 +3,20 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "declaration": false,
+        "declaration": true,
         "noImplicitAny": false,
         "removeComments": false,
         "noLib": false,
         "sourceMap": true,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "experimentalDecorators": true
     },
     "filesGlob": [
         "./**/*.ts",
         "!./node_modules/**/*.ts"
     ],
     "files": [
-        "./Test/app.ts",
-        "./Test/elements/my-element.ts",
-        "./Test/elements/my-inline.ts",
-        "./Test/elements/my-timer.ts",
         "./polymer-ts.ts"
     ]
 }

@@ -324,9 +324,9 @@ declare var Polymer: {
    (prototype: polymer.Element): FunctionConstructor;
    Class(prototype: polymer.Element): Function;
    dom: polymer.dom;
-   appendChild(node): HTMLElement;
-   insertBefore(node, beforeNode): HTMLElement;
-   removeChild(node): HTMLElement;
+   appendChild(node: HTMLElement): HTMLElement;
+   insertBefore(node: HTMLElement, beforeNode: HTMLElement): HTMLElement;
+   removeChild(node: HTMLElement): HTMLElement;
    updateStyles(): void;  
    
    Base: any;     
