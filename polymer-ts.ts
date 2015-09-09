@@ -152,15 +152,9 @@ module polymer {
       {
          var proto = elementClass.prototype;
          var instance = new (<any>elementClass)();
-         proto.is             = instance.is;
-         proto.extends        = instance.extends;
-         proto.properties     = instance.properties;
-         proto.listeners      = instance.listeners;
-         proto.observers      = instance.observers;
-         proto.behaviors      = instance.behaviors;
-         proto.hostAttributes = instance.hostAttributes;
-         proto.style          = instance.style;
-         proto.template       = instance.template;
+         for (var propName in instance) {
+            proto[propName] = instance[propName];
+         }
       }
       
       var preparedElement = elementClass.prototype;
