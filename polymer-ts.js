@@ -8,7 +8,8 @@ var polymer;
     // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"   
     function createEs6PolymerBase() {
         // create a placeholder class 
-        var pb = function () { };
+        var pb = function () {
+        };
         // make it available as polymer.Base
         window["polymer"]["Base"] = pb;
         // add a default create method()
@@ -29,15 +30,9 @@ var polymer;
         if (elementClass.prototype.is === undefined) {
             var proto = elementClass.prototype;
             var instance = new elementClass();
-            proto.is = instance.is;
-            proto.extends = instance.extends;
-            proto.properties = instance.properties;
-            proto.listeners = instance.listeners;
-            proto.observers = instance.observers;
-            proto.behaviors = instance.behaviors;
-            proto.hostAttributes = instance.hostAttributes;
-            proto.style = instance.style;
-            proto.template = instance.template;
+            for (var propName in instance) {
+                proto[propName] = instance[propName];
+            }
         }
         var preparedElement = elementClass.prototype;
         // artificial constructor: call constructor() and copies members
@@ -287,4 +282,3 @@ function observe(observedProps) {
         };
     }
 }
-//# sourceMappingURL=polymer-ts.js.map
