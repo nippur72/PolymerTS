@@ -210,6 +210,21 @@ class TemplateTest extends polymer.Base
 
 TemplateTest.register();
 
+@component("host-attributes-test")
+
+@template("<div>testing host attributes</div>")
+
+@hostAttributes({ style: "color: red;" })
+
+class HostAttributesTest extends polymer.Base
+{
+   @property() bar="mybar";      
+}
+
+HostAttributesTest.register();
+
+
+
 @component("base-element-test")
 @template("")
 class BaseElementTest extends polymer.Base
@@ -222,6 +237,11 @@ class BaseElementTest extends polymer.Base
    }
 
    doSomething: ()=> string;
+
+   doSomethingElse()
+   {
+      return "1";
+   }
 }
 
 class DoSomethingClass
@@ -232,17 +252,27 @@ class DoSomethingClass
    }
 }
 
+class ExtendedElementTestIntermediate extends BaseElementTest
+{
+   doSomethingIntermediate()
+   {
+      return "2";
+   }
+}
+
 @component("extended-element-test")
-class ExtendedElementTest extends BaseElementTest
+class ExtendedElementTest extends ExtendedElementTestIntermediate
 {
    @property() bar="mybar";   
 
    @property() pmix="";
+   @property() qmix="";
          
    attached() {
       super.attached();
       this.prop+="B";
       this.pmix = this.doSomething();
+      this.qmix = this.doSomethingElse()+this.doSomethingIntermediate();
    }
 }
 
@@ -258,15 +288,3 @@ function applyMixins(derivedCtor: any, baseCtors: any[]) {
    });
 }
 
-@component("host-attributes-test")
-
-@template("<div>testing host attributes</div>")
-
-@hostAttributes({ style: "color: red;" })
-
-class HostAttributesTest extends polymer.Base
-{
-   @property() bar="mybar";      
-}
-
-HostAttributesTest.register();

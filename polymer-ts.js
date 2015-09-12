@@ -8,8 +8,7 @@ var polymer;
     // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"   
     function createEs6PolymerBase() {
         // create a placeholder class 
-        var pb = function () {
-        };
+        var pb = function () { };
         // make it available as polymer.Base
         window["polymer"]["Base"] = pb;
         // add a default create method()
@@ -26,13 +25,30 @@ var polymer;
     }
     polymer.createEs6PolymerBase = createEs6PolymerBase;
     function prepareForRegistration(elementClass) {
+        // copies members from inheritance chain to Polymer object
+        function copyMembers(dest, source) {
+            if (source === undefined || source === null)
+                return;
+            Object.keys(source).map(function (member) {
+                // copy only if has not been defined
+                if (!dest.hasOwnProperty(member))
+                    dest[member] = source[member];
+            });
+            copyMembers(dest, source.__proto__);
+        }
         // backward compatibility with TypeScript 1.4 (no decorators)
         if (elementClass.prototype.is === undefined) {
             var proto = elementClass.prototype;
             var instance = new elementClass();
-            for (var propName in instance) {
-                proto[propName] = instance[propName];
-            }
+            proto.is = instance.is;
+            proto.extends = instance.extends;
+            proto.properties = instance.properties;
+            proto.listeners = instance.listeners;
+            proto.observers = instance.observers;
+            proto.behaviors = instance.behaviors;
+            proto.hostAttributes = instance.hostAttributes;
+            proto.style = instance.style;
+            proto.template = instance.template;
         }
         var preparedElement = elementClass.prototype;
         // artificial constructor: call constructor() and copies members
@@ -61,6 +77,8 @@ var polymer;
             if (oldFunction !== undefined)
                 oldFunction.apply(this);
         };
+        // copy inherited class members
+        copyMembers(preparedElement, elementClass.prototype.__proto__);
         return preparedElement;
     }
     polymer.prepareForRegistration = prepareForRegistration;
@@ -282,3 +300,4 @@ function observe(observedProps) {
         };
     }
 }
+//# sourceMappingURL=polymer-ts.js.map
