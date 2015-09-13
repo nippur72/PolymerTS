@@ -27,7 +27,16 @@ var MyInline = (function (_super) {
         _super.apply(this, arguments);
     }
     MyInline = __decorate([
-        component("my-inline"),
+        /*
+        class MyAbstract extends polymer.Base
+        {
+           makeSomeNoise()
+           {
+              console.log("argh!");
+              this.fire("noise-made");
+           }
+        }
+        */ component("my-inline"),
         template("\n   <div>\n      This element has been created completely from code\n      <br>The prop is: <span>{{prop}}</span>\n      <br>And the marker is <span>{{marker}}</span>\n   </div>\n"),
         style("\n   :host { \n      display: block; \n   } \n\n   div { \n      color: red; \n   }\n")
     ], MyInline);
