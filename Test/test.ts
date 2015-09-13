@@ -323,6 +323,11 @@ function RunSpecs()
       it("can be mixed with TypeScript mixins", () => {
          expect(el.pmix).toBe("C");
       });
+
+      it("can be extended with multiple level inheritance", () => {
+         expect(el.qmix).toBe("12");
+         expect((el as any).is).toEqual("extended-element-test");
+      });
    });
 }
 

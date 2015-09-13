@@ -145,7 +145,19 @@ module polymer {
       }
    }
 
-   export function prepareForRegistration(elementClass: Function): polymer.Element {
+   export function prepareForRegistration(elementClass: Function): polymer.Element 
+   {
+      // copies members from inheritance chain to Polymer object
+      function copyMembers(dest: Object, source)
+      {
+         if(source===undefined || source===null) return;
+         Object.keys(source).map((member)=>
+         {           
+            // copy only if has not been defined
+            if(!dest.hasOwnProperty(member)) dest[member] = source[member];
+         });
+         copyMembers(dest, source.__proto__);
+      }
 
       // backward compatibility with TypeScript 1.4 (no decorators)
       if(elementClass.prototype.is === undefined)
@@ -194,6 +206,9 @@ module polymer {
          this.$custom_cons();
          if (oldFunction !== undefined) oldFunction.apply(this);
       };
+
+      // copy inherited class members
+      copyMembers(preparedElement, elementClass.prototype.__proto__);
 
       return preparedElement;
    }
