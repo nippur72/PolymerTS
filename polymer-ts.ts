@@ -7,7 +7,7 @@
 module polymer {   
 
    // this is the original Polymer.Base
-   export declare class PolymerBase /* extends HTMLElement */ {   // commented as not yet supported by TypeScript
+   export declare class PolymerBase extends HTMLElement {   
 	   $: any;
 	   $$: any;
 
@@ -122,6 +122,7 @@ module polymer {
    export declare class Base extends polymer.PolymerBase implements polymer.Element {
       static create<T extends polymer.Base>(...args: any[]): T;
       static register(): void;
+      is: string;
    }    
 
    // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"   
