@@ -165,15 +165,34 @@ module polymer {
       {
          var proto = elementClass.prototype;
          var instance = new (<any>elementClass)();
-         proto.is             = instance.is;
-         proto.extends        = instance.extends;
-         proto.properties     = instance.properties;
-         proto.listeners      = instance.listeners;
-         proto.observers      = instance.observers;
-         proto.behaviors      = instance.behaviors;
-         proto.hostAttributes = instance.hostAttributes;
-         proto.style          = instance.style;
-         proto.template       = instance.template;
+		 if (!instance.is) {
+			throw new Error("no name for " + elementClass);
+		 }
+         proto.is                = instance.is;
+		 if  (instance.extends) {
+			proto.extends        = instance.extends;
+		 }
+		 if  (instance.properties) {
+			proto.properties     = instance.properties;
+		 }
+		 if  (instance.listeners) {
+			proto.listeners      = instance.listeners;
+		 }
+		 if  (instance.observers) {
+			proto.observers      = instance.observers;
+		 }
+		 if  (instance.behaviors) {
+			proto.behaviors      = instance.behaviors;
+		 }
+		 if  (instance.hostAttributes) {
+			proto.hostAttributes = instance.hostAttributes;
+		 }
+		 if  (instance.style) {
+			proto.style          = instance.style;
+		 }
+		 if  (instance.template) {
+			proto.template       = instance.template;
+		 }
       }
       
       var preparedElement = elementClass.prototype;
