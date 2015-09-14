@@ -545,7 +545,6 @@ in turn, the `register()` method:
 
 - can't use property defined with `get` and `set` (Polymer's issue)
 - can't include elements using `<script>` on the main .html page (WebComponent's issue)
-- `polymer.Base` doesn't explicitly expose the `HTMLElement` interface (TypeScript issue, fixed in next release)
 
 # Contributing <a name="contributing"></a>
 
