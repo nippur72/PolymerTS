@@ -545,7 +545,6 @@ in turn, the `register()` method:
 
 - can't use property defined with `get` and `set` (Polymer's issue)
 - can't include elements using `<script>` on the main .html page (WebComponent's issue)
-- `polymer.Base` doesn't explicitly expose the `HTMLElement` interface (TypeScript issue, fixed in next release)
 
 # Contributing <a name="contributing"></a>
 
@@ -554,6 +553,9 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
+- v0.1.17 (Sep 14, 2015)
+  - BREAKING CHANGE: (mostly harmless) Polymer.Base is now an extension of HTMLElement
+  - Added `is` to Element's interface
 - v0.1.7 (Aug 7, 2015)
   - Corrected signature for `Polymer.dom.flush()`
 - v0.1.6 (Jul 21, 2015)

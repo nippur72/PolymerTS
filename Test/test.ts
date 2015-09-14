@@ -61,9 +61,9 @@ function RunSpecs()
 
    describe("@component decorator", () => {
       it('registers regular elements', () => {
-         var el:any = querySelector('#testElement');
+         var el = <TestElement> querySelector('#testElement');
          expect(implements(el, TestElement)).toBe(true);
-         expect(el["is"]).toBe(TestElement.prototype["is"]);         
+         expect(el.is).toBe(TestElement.prototype["is"]);         
          expect(el.$.inner.innerHTML).toBe("innerelement");
       });
 
@@ -73,12 +73,12 @@ function RunSpecs()
       });
 
       it("sets 'is:' correctly", () => {
-         var el1 = querySelector('#testElement');
-         var el2 = querySelector('#testInput1');
-         var el3 = querySelector('#testInput2');
-         expect(el1["is"]).toBe(TestElement.prototype["is"]);
-         expect(el2["is"]).toBe(TestInput1.prototype["is"]);
-         expect(el3["is"]).toBe(TestInput2.prototype["is"]);
+         var el1 = <TestElement> querySelector('#testElement');
+         var el2 = <TestInput1>  querySelector('#testInput1');
+         var el3 = <TestInput2>  querySelector('#testInput2');
+         expect(el1.is).toBe(TestElement.prototype["is"]);
+         expect(el2.is).toBe(TestInput1.prototype["is"]);
+         expect(el3.is).toBe(TestInput2.prototype["is"]);
       });
    });
 
@@ -92,7 +92,7 @@ function RunSpecs()
    describe("a computed property", () =>
    {      
       it('can be set with @computed decorator', () => {
-         var element = <ComputedPropertiesTest> <any> querySelector('#computedProperties1');
+         var element = <ComputedPropertiesTest> querySelector('#computedProperties1');
 
          expect(element.computed1).toBe(2);
          element.set('first', 2);
@@ -104,7 +104,7 @@ function RunSpecs()
       });
 
       it('can be set with @property decorator', () => {
-         var element=<ComputedPropertiesTest> <any> querySelector('#computedProperties2');
+         var element = <ComputedPropertiesTest> querySelector('#computedProperties2');
 
          expect(element.computed2).toBe(2);
          element.set('first', 2);
@@ -116,12 +116,12 @@ function RunSpecs()
 
    describe("custom constructor", () =>
    {
-      var elementConstructor, el;
+      var el: CustomConstructorTest;
 
       beforeEach(() =>
       {
          // create the element                  
-         el = CustomConstructorTest.create("42");         
+         el = <any> CustomConstructorTest.create("42");         
          
          // connect it to DOM         
          querySelector("#put_custom_constructor_here").appendChild(el);
@@ -137,11 +137,11 @@ function RunSpecs()
    });
 
    describe("constructor()", () => {
-      var el;
+      var el: PropertyInitializationTest;
 
       beforeEach(() => {
          // create the element
-         el = PropertyInitializationTest.create();
+         el = <any> PropertyInitializationTest.create();
 
          // connect it to DOM
          querySelector("#put_custom_constructor_here").appendChild(el);
@@ -183,10 +183,10 @@ function RunSpecs()
    });
 
    describe("@listen decorator", () => {
-      var el;
+      var el: ListenerTest;
 
       beforeEach(() => {
-         el=ListenerTest.create();
+         el = <any> ListenerTest.create();
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
@@ -199,10 +199,10 @@ function RunSpecs()
    });
 
    describe("@observe decorator", () => {      
-      var el;
+      var el: ObserverTest;
 
       beforeEach(() => {         
-         el = ObserverTest.create();         
+         el = <any> ObserverTest.create();         
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
@@ -241,11 +241,12 @@ function RunSpecs()
    });
 
    describe("@behavior decorator", () => {
-      var el1, el2;
+      var el1: BehaviorTest1, 
+          el2: BehaviorTest2;
 
       beforeEach(() => {
-         el1=BehaviorTest1.create();                  
-         el2=BehaviorTest2.create();         
+         el1 = <any> BehaviorTest1.create();                  
+         el2 = <any> BehaviorTest2.create();         
          querySelector("#put_custom_constructor_here").appendChild(el1);
          querySelector("#put_custom_constructor_here").appendChild(el2);
       });
@@ -270,10 +271,10 @@ function RunSpecs()
    });
 
    describe("@template/@style decorators", () => {
-      var el;
+      var el: TemplateTest;
 
       beforeEach(() => {         
-         el = TemplateTest.create();         
+         el = <any> TemplateTest.create();         
          querySelector("#put_test_elements_here").appendChild(el);
       });
 
@@ -290,10 +291,10 @@ function RunSpecs()
    });
 
    describe("@hostAttributes decorator", () => {
-      var el;
+      var el: HostAttributesTest;
 
       beforeEach(() => {
-         el=HostAttributesTest.create();
+         el = <any> HostAttributesTest.create();
          querySelector("#put_test_elements_here").appendChild(el);
       });
 
@@ -310,7 +311,7 @@ function RunSpecs()
 
       beforeEach(() => {
          el = <any> ExtendedElementTest.create();
-         querySelector("#put_test_elements_here").appendChild(<any> el);
+         querySelector("#put_test_elements_here").appendChild(el);
       });
 
       // wait for the 'attached' event
@@ -326,7 +327,7 @@ function RunSpecs()
 
       it("can be extended with multiple level inheritance", () => {
          expect(el.qmix).toBe("12");
-         expect((el as any).is).toEqual("extended-element-test");
+         expect(el.is).toEqual("extended-element-test");
       });
    });
 }
