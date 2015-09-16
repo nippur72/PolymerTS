@@ -154,13 +154,33 @@ class BehaviorBaseTest extends polymer.Base {
    }
 }
 
+var PojoBehaviour1 =
+{
+   methodInPojo1: function()
+   {
+      return "pojo";
+   }
+};
+
+var PojoBehaviour2 =
+{
+   methodInPojo2: function()
+   {
+      return "pojo";
+   }
+};
+
+
 @component("behavior-test1")
 @template("")            
 @behavior(BehaviorBaseTest)
+@behavior(PojoBehaviour1)
 class BehaviorTest1 extends polymer.Base
 {
    @property() bar="mybar";
    @property() hasfired=false;
+
+   @behavior(PojoBehaviour2)
 
    attached()
    {
@@ -168,6 +188,9 @@ class BehaviorTest1 extends polymer.Base
    }
 
    methodInBase: ()=> void;
+
+   methodInPojo1: ()=> string;
+   methodInPojo2: ()=> string;
 
    methodInChild()
    {

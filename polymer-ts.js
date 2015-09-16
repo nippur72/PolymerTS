@@ -292,12 +292,14 @@ function behavior(behaviorObject) {
         if (typeof (target) === "function") {
             // decorator applied externally, target is the class object
             target.prototype["behaviors"] = target.prototype["behaviors"] || [];
-            target.prototype["behaviors"].push(behaviorObject.prototype);
+            var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+            target.prototype["behaviors"].push(beObject);
         }
         else {
             // decorator applied internally, target is class.prototype
             target.behaviors = target.behaviors || [];
-            target.behaviors.push(behaviorObject.prototype);
+            var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+            target.behaviors.push(beObject);
         }
     };
 }

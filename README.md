@@ -321,10 +321,9 @@ In the following example the function `resetCounter()` is called whenever the ev
 
 ## @behavior(className) <a name="behavior"></a>
 
-Incorporates behaviors from another element (defined with PolymerTS). 
+Incorporates behaviors from another object. 
 
-A behavior is firstly defined in a separate class, declaring it normally as any other Polymer element, 
-and then its behaviors are "imported" with the `@behavior` decorator. 
+The object can be either a class (not necessarily a PolymerTS element) or a plain JavaScript object. 
 
 The `@behavior` decorator can decorate the `class` keyword or it can be put within the class itself.
 
@@ -553,6 +552,8 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
+- v0.1.19 (Sep 16, 2015)
+  - Extended `@behavior` to work with plain JavaScript objects (in addition to TypeScript classes)
 - v0.1.17 (Sep 14, 2015)
   - BREAKING CHANGE: (mostly harmless) Polymer.Base is now an extension of HTMLElement
   - Added `is` to Element's interface

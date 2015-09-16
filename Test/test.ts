@@ -268,6 +268,14 @@ function RunSpecs()
          expect(el1.methodInBase()).toBe("this method is defined in BehaviorBaseTest");
          expect(el1.methodInChild()).toBe("this method is defined in BehaviorBaseTest");
       });
+
+      it("mixes code from a plain javascript object (decorating the 'class' keyword)", () => {
+         expect(el1.methodInPojo1()).toEqual("pojo");
+      });
+
+      it("mixes code from a plain javascript object (decorator inside the class body)", () => {
+         expect(el1.methodInPojo2()).toEqual("pojo");
+      });
    });
 
    describe("@template/@style decorators", () => {
