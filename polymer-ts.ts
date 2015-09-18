@@ -141,6 +141,7 @@ module polymer {
 
       // add a default create method()
       pb["register"]=function(dontRegister?: boolean) {
+         if(polymer.isRegistered(this)) return;
          if(dontRegister===true) polymer.createClass(this);
          else polymer.createElement(this);
       }
