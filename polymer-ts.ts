@@ -112,7 +112,7 @@ module polymer {
       type?: any;
       value?: any;
       reflectToAttribute?: boolean;
-      readonly?: boolean;
+      readOnly?: boolean;
       notify?: boolean;
       computed?: string;
       observer?: string;
