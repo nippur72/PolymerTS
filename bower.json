@@ -20,5 +20,8 @@
   "dependencies": {
     "polymer": ">=1.0.8",
     "webcomponentsjs": ">=0.7.10"
+  },
+  "typescript": {
+    "definition": "polymer-ts.d.ts"
   }
 }
