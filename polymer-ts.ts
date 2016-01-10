@@ -53,7 +53,7 @@ module polymer {
 	   set(path: string, value: any, root?: Object):any;
 	   setScrollDirection(direction: string, node: HTMLElement):void;
 	   shift(path: string, value: any):any;
-	   splice(path: string, start: number, deleteCount: number):any;
+	   splice(path: string, start: number, deleteCount: number, ...items):any;
 	   toggleAttribute(name: string, bool: boolean, node?: HTMLElement):void;
 	   toggleClass(name: string, bool: boolean, node?: HTMLElement):void;
 	   transform(transform: string, node?: HTMLElement):void;
