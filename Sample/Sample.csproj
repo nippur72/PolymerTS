@@ -62,7 +62,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1693</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1694/</IISUrl>
+          <IISUrl>http://localhost:2148/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
