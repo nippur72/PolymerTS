@@ -1,6 +1,6 @@
 # PolymerTS
 
-Write Polymer 1.0 elements as TypeScript @decorated classes! 
+Write Polymer 1.0 elements as TypeScript @decorated classes.
 
 # Table of contents
 
@@ -22,8 +22,8 @@ Write Polymer 1.0 elements as TypeScript @decorated classes!
 - [Writing elements only with code: @template and @style](#imperatively)
 - [Writing elements without using decorators](#decoratorless)
 - [Examples](#examples)
-   - [A timer-based counter element](#timer_example)   
-   - [Using computed properties](#computed_example)  
+   - [A timer-based counter element](#timer_example)
+   - [Using computed properties](#computed_example)
    - [Using custom constructor](#custom_constructor_example)
 - [Running the repo example](#repoexample)
 - [What it does, in short](#details)
@@ -56,11 +56,11 @@ You'll get the following files in `bower_components/polymer-ts`:
    - `@listen(eventName)` sets an event listener function (equivalent to `listeners:` in PolymerJS)
    - `@behavior(className)` gets the behaviors of the class (equivalent to `behaviors:` in PolymerJS)
 - Registration functions
-   - `className.register()` registers in Polymer 
-   - `className.register(true)` registers in Polymer but not in `document.registerElement()`   
+   - `className.register()` registers in Polymer
+   - `className.register(true)` registers in Polymer but not in `document.registerElement()`
    - `className.create()` creates an instance of the element
 - Other
-   - class constructor mapped to factory constructor (`factoryImpl()`) 
+   - class constructor mapped to factory constructor (`factoryImpl()`)
 
 Unsupported:
    - property defined with getter/setter
@@ -68,8 +68,8 @@ Unsupported:
 # How to write elements <a name="howtowrite"></a>
 
 1. Write elements as TypeScript classes
-2. Extend the `polymer.Base` class 
-3. Use @decorators as needed 
+2. Extend the `polymer.Base` class
+3. Use @decorators as needed
 
 A class-element:
 - can have private properties/fields
@@ -84,15 +84,15 @@ In the `head` section of your main .html file:
 ```HTML
 <head>
    <!-- webcomponents, polymer standard, polymer-ts -->
-   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>   
+   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
    <link rel="import" href="bower_components/polymer/polymer.html">
-   <link rel="import" href="bower_components/polymer-ts/polymer-ts.html"> 
-   
+   <link rel="import" href="bower_components/polymer-ts/polymer-ts.html">
+
    <!-- your custom elements -->
-   <link rel="import" href="elements/my-element.html">   
+   <link rel="import" href="elements/my-element.html">
 
    <!-- your application -->
-   <script src="myapp.js"></script>            
+   <script src="myapp.js"></script>
 </head>
 ```
 
@@ -102,7 +102,7 @@ In your custom element (e.g. `elements/my-element.html`):
    <!-- ... your custom element here... -->
 </dom-module>
 
-<!-- your element code typescript transpiled file --> 
+<!-- your element code typescript transpiled file -->
 <script type="text/javascript" src="my-element.js"></script>
 ```
 
@@ -124,33 +124,33 @@ The above example loads in the following order:
 - Polymer
 - PolymerTS
 - Your custom elements
-- Your app 
+- Your app
 
-Note: due to an [issue in WebComponents](https://github.com/webcomponents/webcomponentsjs/issues/347), 
-you can't use the `<script>` tag on the main page to load PolymerTS or custom elements, 
-you have always to use the `<link rel="import">` syntax. 
+Note: due to an [issue in WebComponents](https://github.com/webcomponents/webcomponentsjs/issues/347),
+you can't use the `<script>` tag on the main page to load PolymerTS or custom elements,
+you have always to use the `<link rel="import">` syntax.
 
 This will make sure that scripts will be loaded in the correct order in all browsers.
 
-If for some reason you want to use script inclusion for your elements, you have to load 
+If for some reason you want to use script inclusion for your elements, you have to load
 Polymer and PolymerTS via script too. Polymer doesn't have a `polymer.js` file (it's shipped as `.html` only),
 but you can get one from [greenify/polymer-js](https://github.com/greenify/polymer-js).
 
 # Starting the application <a name="start"></a>
 
-Any global code in your app that depends on Polymer should be started only after the event 
+Any global code in your app that depends on Polymer should be started only after the event
 `WebComponentsReady` has been fired:
 
 ```TypeScript
 window.addEventListener('WebComponentsReady', (e) =>
-{           
+{
    // any code that depends on polymer here
 });
 ```
 
 # Using the yeoman generator to create new elements <a name="generator"></a>
 
-New elements can be quickly scaffolded using the `polymerts:el` yeoman 
+New elements can be quickly scaffolded using the `polymerts:el` yeoman
 generator available with the package [generator-polymerts](https://www.npmjs.com/package/generator-polymerts).
 
 First install `yeoman` and `generator-polymerts`:
@@ -167,13 +167,13 @@ yo polymerts:el my-element
 
 ## @component(tagName) <a name="component"></a>
 
-Sets the tag name of the custom component. The decorator is applied on the `class` keyword. Tag names must include a `-` as per WebComponents specs. 
+Sets the tag name of the custom component. The decorator is applied on the `class` keyword. Tag names must include a `-` as per WebComponents specs.
 
 Example of a `<my-element>`:
- 
+
 ```TypeScript
 @component("my-element")
-class MyElement extends polymer.Base 
+class MyElement extends polymer.Base
 {
 }
 ```
@@ -189,10 +189,10 @@ class MyButton extends polymer.Base
 
 ## @extend(tagName) <a name="extend"></a>
 
-Specifies that the element is an extension of a native HTML element. 
+Specifies that the element is an extension of a native HTML element.
 
 ```TypeScript
-@component("my-button") 
+@component("my-button")
 @extend("button")
 class MyButton extends polymer.Base
 {
@@ -201,7 +201,7 @@ class MyButton extends polymer.Base
 
 ## @property(def) <a name="property"></a>
 
-Creates a Polymer property. It can be applied to a member field or a function. 
+Creates a Polymer property. It can be applied to a member field or a function.
 When applied to a function, the property becomes a computed property.
 
 The parameter `def` is a map object that sets the options for the property:
@@ -220,18 +220,18 @@ The parameter `def` is a map object that sets the options for the property:
 
 Examples:
 ```TypeScript
-@property({ type: number, value: 42 });
+@property({ type: number, value: 42 })
 initialValue: number;
 ```
 
 The default value for a property is optional as long as the property is initialized:
 ```TypeScript
-@property();
+@property()
 myprop = 42;  // direct initialization
 ```
 or
 ```TypeScript
-@property({ type: number });
+@property({ type: number })
 myprop: number;
 
 constructor() {
@@ -239,8 +239,8 @@ constructor() {
 }
 ```
 
-While you can specify `computed` and `observer` in a property definition, 
-there are the specific decorators `@computed` and `@observe` that are easier to use. 
+While you can specify `computed` and `observer` in a property definition,
+there are the specific decorators `@computed` and `@observe` that are easier to use.
 
 ## @observe(propList) <a name="observe"></a>
 
@@ -249,23 +249,23 @@ Sets an observer function for a single property or a list of properties.
 If observing a single property, the function must be of the type `function(newVal,OldVal)`.
 
 If observing multiple properties (comma separated), the function receives only the new values,
-in the same order of the list. 
+in the same order of the list.
 
 ```TypeScript
 // single property observer
-@observe("name");
+@observe("name")
 nameChanged(newName,oldName)
 {
-   // ... 
+   // ...
 }
 ```
 
 ```TypeScript
 // multiple property observer
-@observe("firstname,lastname");
+@observe("firstname,lastname")
 fullnameChanged(newFirstName,newLastName)
 {
-   // ... 
+   // ...
 }
 ```
 
@@ -273,7 +273,7 @@ fullnameChanged(newFirstName,newLastName)
 
 Creates a computed property or sets the function for a computed property.
 
-The easiest way is to decorate a function that takes as arguments the properties that are involved in the computed property. 
+The easiest way is to decorate a function that takes as arguments the properties that are involved in the computed property.
 
 In the following example, a computed property named "fullname" is created, based on the properties "firstName" and "lastName":
 
@@ -290,19 +290,19 @@ The decorator accepts also a map object for setting options on the property, e.g
 @computed({ type: String })
 fullname(firstName,lastName)
 {
-   return firstName+" "+lastName; 
+   return firstName+" "+lastName;
 }
 ```
 
 The `@computed` decorator is a shortcut for `@property`:
- 
+
 ```TypeScript
 @property({computed: 'computefullname(firstName,lastName)'})
 fullname: string;
 
 computefullname(firstName,lastName)
 {
-   return firstName+" "+lastName; 
+   return firstName+" "+lastName;
 }
 ```
 
@@ -321,16 +321,16 @@ In the following example the function `resetCounter()` is called whenever the ev
 
 ## @behavior(className) <a name="behavior"></a>
 
-Incorporates behaviors from another object. 
+Incorporates behaviors from another object.
 
-The object can be either a class (not necessarily a PolymerTS element) or a plain JavaScript object. 
+The object can be either a class (not necessarily a PolymerTS element) or a plain JavaScript object.
 
 The `@behavior` decorator can decorate the `class` keyword or it can be put within the class itself.
 
-Examples: 
+Examples:
 
 ```TypeScript
-class MyBehavior extends polymer.Base 
+class MyBehavior extends polymer.Base
 {
    @listen("something_has_happened")
    onBehave() {
@@ -351,20 +351,20 @@ or
 @component("my-element")
 class MyElement extends polymer.Base
 {
-	@behavior(MyBehavior)  
+	@behavior(MyBehavior)
 	// ...
 }
 ```
-Note: a functionality similar to `@behavior` can be also obtained by plain class inheritance 
+Note: a functionality similar to `@behavior` can be also obtained by plain class inheritance
 or by the use of Mixins.
 
 # Writing elements only with code <a name="imperatively"></a>
 
-It's also possible to create elements using TypeScript code only, 
+It's also possible to create elements using TypeScript code only,
 without having any external .html. That can be useful if you want to keep template and logic in the same
 TypeScript file.
 
-Use the tags `@template` and `@style` to specify the element's template and style, as in the following example: 
+Use the tags `@template` and `@style` to specify the element's template and style, as in the following example:
 ```TypeScript
 @component("my-example")
 
@@ -374,17 +374,17 @@ Use the tags `@template` and `@style` to specify the element's template and styl
 // pass as argument what would be within <style> and </style>
 @style(`:host { display: block; } div { color: red; }`)
 
-class MyExample extends polymer.Base 
+class MyExample extends polymer.Base
 {
    // ...
 }
 
-MyExample.register();   
+MyExample.register();
 ```
 
 ## @hostAttributes(attributesObject) <a name="hostattributes"></a>
 
-Sets attributes on the host element. 
+Sets attributes on the host element.
 
 In the following example, the `style` attribute of the host element is changed:
 
@@ -392,7 +392,7 @@ In the following example, the `style` attribute of the host element is changed:
 @component("my-element")
 @hostAttributes({ style: "color: red;" })
 class MyElement extends polymer.Base
-{   
+{
 }
 ```
 
@@ -421,9 +421,9 @@ class MyElement extends polymer.Base
 class MyTimer extends polymer.Base
 {
    @property({ type: Number, value: 0 })
-   public start: number;   
-   
-   public count: number;   
+   public start: number;
+
+   public count: number;
 
    private timerHandle: number;
 
@@ -431,7 +431,7 @@ class MyTimer extends polymer.Base
       this.count = this.start;
       this.timerHandle = setInterval(() => {
          this.count++;
-      }, 1000);      
+      }, 1000);
    }
 
    @observe("count")
@@ -458,7 +458,7 @@ MyTimer.register();
 ```HTML
 <dom-module id="my-timer">
    <template>
-      <p>This is a timer element, and the count which started 
+      <p>This is a timer element, and the count which started
       from <span>{{start}}</span> is now: <span>{{count}}</span></p>
    </template>
 </dom-module>
@@ -477,26 +477,26 @@ There are several (almost equivalent) ways of defining a computed property:
 // classic way
 @property({name: "fullname", computed: "computeFullName(first,last)"});
 fullname: string;
-computeFullName(f,l) { 
-   return f+" "+l; 
+computeFullName(f,l) {
+   return f+" "+l;
 }
 
 // by decorating a function
 @property({computed: "first,last"});
 fullname(f,l) {
-   return f+" "+l; 
+   return f+" "+l;
 }
 
 // by using @computed, name and parameters extracted from the function
 @computed
 fullname(first,last) {
-   return first+" "+last; 
+   return first+" "+last;
 }
 ```
 
 ### Using custom constructor <a name="custom_constructor_example"></a>
 
-Elements can be instantiated by using a custom constructor:  
+Elements can be instantiated by using a custom constructor:
 
 ```TypeScript
 @component("my-info")
@@ -568,17 +568,17 @@ If you find bugs or want to improve it, just send a pull request.
 - v0.1.4 (Jul 17, 2015)
   - register elements with `className.register()`
 - v0.1.3 (Jul 16, 2015)
-  - polymer.Base is now seen as a full ES6 inheritable class 
+  - polymer.Base is now seen as a full ES6 inheritable class
 - v0.1.2 (Jul 13, 2015)
   - Improved the way objects are instatiated
-  - support for static method `create()` on the element class 
+  - support for static method `create()` on the element class
 - v0.1.1 (Jul 10, 2015)
-  - Added support for constructor() with parameters. 
+  - Added support for constructor() with parameters.
   - `constructor()` is now a replacement of `factoryImpl()`.
   - preamble `implements polymer.Element` no longer required
-- v0.1.0 (Jul 10, 2015) 
+- v0.1.0 (Jul 10, 2015)
   - Added support for class inheritance
   - Added support for use of `constructor()`
   - Added support for decorator-less syntax
-- v0.0.1 to v0.0.9 
+- v0.0.1 to v0.0.9
   - early experimental versions
