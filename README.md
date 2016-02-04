@@ -24,7 +24,8 @@ Write Polymer 1.0 elements as TypeScript @decorated classes.
 - [Examples](#examples)
    - [A timer-based counter element](#timer_example)
    - [Using computed properties](#computed_example)
-   - [Using custom constructor](#custom_constructor_example)
+   - [Using custom constructor](#custom_constructor_example)   
+   - [Using behaviors defined externally](#paperexample)
 - [Running the repo example](#repoexample)
 - [What it does, in short](#details)
 - [Known issues](#knownissues)
@@ -514,6 +515,32 @@ var el = MyInfo.create("hello world");
 
 // and attach in some way to the DOM
 document.body.appendChild(el);
+```
+
+# Using behavior defined in paper elements<a name="paperexample"></a>
+
+This example shows how to use a behavior defined in an external library (Polymer paper elements).
+
+```typescript
+/// <reference path="typings/polymer/paper/PaperRippleBehavior.d.ts"/>
+
+@component('ts-element')
+@behavior(Polymer['PaperRippleBehavior'])
+class TsElement extends polymer.Base implements Polymer.PaperRippleBehavior
+{   
+   // stand-in properties for behavior mixins 
+   noink: boolean = false;
+   ensureRipple: (optTriggeringEvent?: Event) => void;
+   getRipple: () => paper.PaperRipple;
+   hasRipple: () => boolean;
+
+   handleClick(e:Event)
+   {
+      this.greet = "Holà";      
+      this.fire("greet-event");
+      this.ensureRipple(e);
+   }
+}
 ```
 
 # Running the example <a name="repoexample"></a>
