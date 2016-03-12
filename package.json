@@ -1,10 +1,13 @@
 {
   "name": "polymer-ts",
-  "version": "0.1.14",
+  "version": "0.1.23",
   "description": "Polymer 1.0 for TypeScript",
   "main": "polymer-ts.js",
   "scripts": {
-    "prepublish": "tsc && uglifyjs -o polymer-ts.min.js --in-source-map polymer-ts.js.map --source-map polymer-ts.min.js.map --screw-ie8 --mangle --compress --keep-names polymer-ts.js"
+    "uglifyjs": "uglify-js",
+    "minify": "uglifyjs -o polymer-ts.min.js --in-source-map polymer-ts.js.map --source-map polymer-ts.min.js.map --screw-ie8 --mangle --compress --keep-names polymer-ts.js",
+    "updatesubprojects": "cp polymer-ts.min.* Sample/bower_components/polymer-ts && cp polymer-ts.min.* Test/bower_components/polymer-ts",
+    "build": "tsc && npm run minify && npm run updatesubprojects"
   },
   "repository": {
     "type": "git",
@@ -19,9 +22,9 @@
   "bugs": {
     "url": "https://github.com/nippur72/PolymerTS/issues"
   },
-  "homepage": "https://github.com/nippur72/PolymerTS#readme",
+  "homepage": "https://github.com/nippur72/PolymerTS",
   "devDependencies": {
-    "typescript": "^1.5.3",
-    "uglifyjs": "^2.4.10"
-  }
+    "uglify-js": "^2.6.2"
+  },
+  "dependencies": {}
 }
