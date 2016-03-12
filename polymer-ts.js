@@ -5,9 +5,9 @@
 // Antonino Porcino, nino.porcino@gmail.com
 var polymer;
 (function (polymer) {
-    // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"   
+    // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"
     function createEs6PolymerBase() {
-        // create a placeholder class 
+        // create a placeholder class
         var pb = function () { };
         // make it available as polymer.Base
         window["polymer"]["Base"] = pb;
@@ -169,7 +169,7 @@ var polymer;
             (<any>elemTemplate).content.appendChild(contentDoc.body.firstChild);
           }
        }
-      
+ 
        // tells polymer the element has been created
        domModule.createdCallback();
     }
@@ -211,7 +211,7 @@ var polymer;
     }
     polymer.isRegistered = isRegistered;
 })(polymer || (polymer = {})); // end module
-// modifies Polymer.Base and makes it available as an ES6 class named polymer.Base 
+// modifies Polymer.Base and makes it available as an ES6 class named polymer.Base
 polymer.createEs6PolymerBase();
 // @component decorator
 function component(tagname, extendsTag) {
@@ -251,7 +251,7 @@ function property(ob) {
     return function (target, propertyKey) {
         target.properties = target.properties || {};
         if (typeof (target[propertyKey]) === "function") {
-            // property is function, treat it as a computed property         
+            // property is function, treat it as a computed property
             var params = ob["computed"];
             var getterName = "get_computed_" + propertyKey;
             ob["computed"] = getterName + "(" + params + ")";
@@ -306,7 +306,7 @@ function behavior(behaviorObject) {
 // @observe decorator
 function observe(observedProps) {
     if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
-        // observing multiple properties or path      
+        // observing multiple properties or path
         return function (target, observerFuncName) {
             target.observers = target.observers || [];
             target.observers.push(observerFuncName + "(" + observedProps + ")");

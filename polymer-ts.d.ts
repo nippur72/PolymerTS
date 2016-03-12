@@ -15,7 +15,7 @@ declare module polymer {
         cancelAsync(handle: number): void;
         cancelDebouncer(jobName: string): void;
         classFollows(name: string, toElement: HTMLElement, fromElement: HTMLElement): void;
-        create(tag: string, props: Object): any;
+        create(tag: string, props?: Object): HTMLElement;
         debounce(jobName: string, callback: Function, wait?: number): void;
         deserialize(value: string, type: any): any;
         distributeContent(): void;
@@ -42,7 +42,7 @@ declare module polymer {
         scopeSubtree(container: Element, shouldObserve: boolean): void;
         serialize(value: string): any;
         serializeValueToAttribute(value: any, attribute: string, node: Element): void;
-        set(path: string, value: any, root?: Object): any;
+        set(path: string | Array<string | number>, value: any, root?: Object): any;
         setScrollDirection(direction: string, node: HTMLElement): void;
         shift(path: string, value: any): any;
         splice(path: string, start: number, deleteCount: number, ...items: any[]): any;
