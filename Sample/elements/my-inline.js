@@ -1,11 +1,11 @@
 /*
 class MyAbstract extends polymer.Base
 {
-   makeSomeNoise()
-   {
-      console.log("argh!");
-      this.fire("noise-made");
-   }
+  makeSomeNoise()
+  {
+     console.log("argh!");
+     this.fire("noise-made");
+  }
 }
 */
 var __extends = (this && this.__extends) || function (d, b) {
@@ -14,12 +14,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-    switch (arguments.length) {
-        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-    }
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var MyInline = (function (_super) {
     __extends(MyInline, _super);
@@ -28,20 +26,20 @@ var MyInline = (function (_super) {
     }
     MyInline = __decorate([
         /*
-        class MyAbstract extends polymer.Base
-        {
-           makeSomeNoise()
-           {
-              console.log("argh!");
-              this.fire("noise-made");
-           }
-        }
-        */ component("my-inline"),
+       class MyAbstract extends polymer.Base
+       {
+          makeSomeNoise()
+          {
+             console.log("argh!");
+             this.fire("noise-made");
+          }
+       }
+       */ component("my-inline"),
         template("\n   <div>\n      This element has been created completely from code\n      <br>The prop is: <span>{{prop}}</span>\n      <br>And the marker is <span>{{marker}}</span>\n   </div>\n"),
         style("\n   :host { \n      display: block; \n   } \n\n   div { \n      color: red; \n   }\n")
     ], MyInline);
     return MyInline;
-})(polymer.Base);
+}(polymer.Base));
 MyInline.register();
 /*
 class MyMixin extends polymer.Base implements polymer.Element
