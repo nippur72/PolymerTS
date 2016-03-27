@@ -28,7 +28,7 @@ declare module polymer {
         getContentChildren(slctr: string): any;
         getNativePrototype(tag: string): any;
         getPropertyInfo(property: string): any;
-        importHref(href: string, onload?: Function, onerror?: Function): any;
+        importHref(href: string, onload?: Function, onerror?: Function, optAsync?: boolean): any;
         instanceTemplate(template: any): any;
         isDebouncerActive(jobName: string): any;
         linkPaths(to: string, from: string): void;
