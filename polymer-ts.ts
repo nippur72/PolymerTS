@@ -43,6 +43,7 @@ module polymer {
       listen(node: Element, eventName: string, methodName: string):void;
       mixin(target: Object, source: Object):void;
       notifyPath(path: string, value: any, fromAbove?: any):void;
+      notifySplices(path: string, splices: {index: number, removed: Array<any>, addedCount: number, object: Array<any>, type: "splice" }): void;
       pop(path: string):any;
       push(path: string, value: any):any;
       reflectPropertyToAttribute(name: string):void;
