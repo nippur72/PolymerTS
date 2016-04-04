@@ -41,7 +41,7 @@ declare module polymer {
             addedCount: number;
             object: Array<any>;
             type: "splice";
-        }): void;
+        }[]): void;
         pop(path: string): any;
         push(path: string, value: any): any;
         reflectPropertyToAttribute(name: string): void;

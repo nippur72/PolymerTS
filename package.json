@@ -1,6 +1,6 @@
 {
   "name": "polymer-ts",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "Polymer 1.0 for TypeScript",
   "main": "polymer-ts.js",
   "scripts": {
