@@ -240,6 +240,13 @@ constructor() {
 }
 ```
 
+NOTE: If you use direct initialization, the property will be set _after_ the `ready()` method is called. If you use the `value` attribute of the `@property` decorator, it will be called before `ready()`:
+
+```TypeScript
+@property({type: number, value: 42})
+myprop: number;  // will be initialized with value before ready() is called
+```
+
 While you can specify `computed` and `observer` in a property definition,
 there are the specific decorators `@computed` and `@observe` that are easier to use.
 
