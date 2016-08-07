@@ -60,6 +60,7 @@ module polymer {
       transform(transform: string, node?: HTMLElement):void;
       translate3d(x, y, z, node?: HTMLElement):void;
       unlinkPaths(path: string):void;
+      unlisten(node: Element, eventName: string, methodName: string): void;
       unshift(path: string, value: any):any;
       updateStyles(): void;
    }
