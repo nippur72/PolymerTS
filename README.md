@@ -586,7 +586,7 @@ Contributions are welcome.
 If you find bugs or want to improve it, just send a pull request.
 
 # Change log <a name="changelog"></a>
-- v0.1.28 (Aug 8, 2015)
+- v0.1.28 (Aug 8, 2016)
   - Added `unlisten()` to API
 - v0.1.19 (Sep 16, 2015)
   - Extended `@behavior` to work with plain JavaScript objects (in addition to TypeScript classes)
