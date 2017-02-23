@@ -134,10 +134,11 @@ var polymer;
         var proto = definition.prototype;
         domModule.id = proto.is;
         var html = "";
+        var style = "";
         if (proto.style !== undefined)
-            html += "<style>" + proto.style + "</style>";
+            style = "<style>" + proto.style + "</style>";
         if (proto.template !== undefined)
-            html += "<template>" + proto.template + "</template>";
+            html = "<template>" + style + proto.template + "</template>";
         domModule.innerHTML = html;
         domModule.createdCallback();
     }
