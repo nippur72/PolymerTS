@@ -272,8 +272,9 @@ module polymer {
       domModule.id = proto.is;
 
       var html = "";
-      if (proto.style !== undefined)    html += `<style>${proto.style}</style>`;
-      if (proto.template !== undefined) html += `<template>${proto.template}</template>`;
+      let style = "";
+      if (proto.style !== undefined)    style = `<style>${proto.style}</style>`;
+      if (proto.template !== undefined) html = `<template>${style}${proto.template}</template>`;
 
       domModule.innerHTML = html;
 
