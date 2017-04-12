@@ -98,6 +98,9 @@ var polymer;
         };
         // copy inherited class members
         copyMembers(preparedElement, elementClass.prototype.__proto__);
+        //putting string in prototype.style in decorator style makes it impossible to access and modify css styles of created elements
+        //so it needs to be deleted in order to access and modify styles
+        delete preparedElement["style"];
         return preparedElement;
     }
     polymer.prepareForRegistration = prepareForRegistration;
@@ -134,10 +137,11 @@ var polymer;
         var proto = definition.prototype;
         domModule.id = proto.is;
         var html = "";
+        var style = "";
         if (proto.style !== undefined)
-            html += "<style>" + proto.style + "</style>";
+            style = "<style>" + proto.style + "</style>";
         if (proto.template !== undefined)
-            html += "<template>" + proto.template + "</template>";
+            html = "<template>" + style + proto.template + "</template>";
         domModule.innerHTML = html;
         domModule.createdCallback();
     }
