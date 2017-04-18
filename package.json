@@ -1,6 +1,6 @@
 {
-  "name": "@fat_crienturu/polymer-ts",
-  "version": "0.1.30-2",
+  "name": "polymer-ts",
+  "version": "0.1.31",
   "description": "Polymer 1.0 for TypeScript",
   "main": "polymer-ts.js",
   "scripts": {
