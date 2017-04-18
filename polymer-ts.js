@@ -98,6 +98,9 @@ var polymer;
         };
         // copy inherited class members
         copyMembers(preparedElement, elementClass.prototype.__proto__);
+        //putting string in prototype.style in decorator style makes it impossible to access and modify css styles of created elements
+        //so it needs to be deleted in order to access and modify styles
+        delete preparedElement["style"];
         return preparedElement;
     }
     polymer.prepareForRegistration = prepareForRegistration;
