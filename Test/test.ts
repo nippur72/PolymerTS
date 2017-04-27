@@ -11,7 +11,7 @@ window.addEventListener('WebComponentsReady', (e) =>
 {           
    polymerReady = true;     
    RunSpecs();   
-   startJasmine(null);
+   startJasmine.call(window, null);
 });
 
 // simulates the old Jasmine 1.3 waitsFor()
@@ -215,12 +215,6 @@ function RunSpecs()
          el.set("bar", "42");
          expect((<ObserverTest>el).nbar_changed).toBe(1);
          expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
-      });
-
-      it("observes a single property changes as a lambda function", () => {
-         expect((<ObserverTest>el).nbaz_changed).toBe(0);         
-         el.set("baz", "42");
-         expect((<ObserverTest>el).nbaz_changed).toBe(1);         
       });
 
       it("observes more than one property changes", () => {

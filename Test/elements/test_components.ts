@@ -122,11 +122,6 @@ class ObserverTest extends polymer.Base {
       this.nbar_changed++;
    }
 
-   @observe("baz")
-   changedBaz = (newVal, OldVal) => {
-      this.nbaz_changed++;
-   }
-
    @observe("bar,foo")
    changedBarAndFoo() {
       this.nbar_foo_changed++;
