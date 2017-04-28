@@ -13,9 +13,7 @@
     },
     "filesGlob": [
         "./**/*.ts",
-        "!./node_modules/**/*.ts"
-    ],
-    "files": [
-        "./polymer-ts.ts"
+        "!./node_modules/**/*.ts",
+        "!./bower_components/**/*.ts"
     ]
 }

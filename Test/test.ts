@@ -3,15 +3,15 @@
 
 var polymerReady=false;
 
-// jasmine boot.js links to window.onload 
+// jasmine boot.js links to window.onload
 var startJasmine = window.onload;
 window.onload = null;
 
 window.addEventListener('WebComponentsReady', (e) =>
-{           
-   polymerReady = true;     
-   RunSpecs();   
-   startJasmine(null);
+{
+   polymerReady = true;
+   RunSpecs();
+   startJasmine.call(window, null);
 });
 
 // simulates the old Jasmine 1.3 waitsFor()
@@ -21,7 +21,7 @@ function waitFor(F)
       setInterval(() => {
          if(F()) done();
       }, 250);
-   });        
+   });
 }
 
 function querySelector(s)
@@ -29,7 +29,7 @@ function querySelector(s)
    return document.querySelector(s);
 }
 
-// quickly checks if instance implements the class 
+// quickly checks if instance implements the class
 function implements(instance: Object, classFunction: Function)
 {
    var instanceMembers = {};
@@ -44,7 +44,7 @@ function implements(instance: Object, classFunction: Function)
       {
          return false;
       }
-   }   
+   }
    return true;
 }
 
@@ -54,7 +54,7 @@ function RunSpecs()
       waitFor( () => polymerReady );
 
       it("fires the event 'WebComponentsReady'", () =>
-      {         
+      {
          expect(polymerReady).toBe(true);
       });
    });
@@ -63,7 +63,7 @@ function RunSpecs()
       it('registers regular elements', () => {
          var el = <TestElement> querySelector('#testElement');
          expect(implements(el, TestElement)).toBe(true);
-         expect(el.is).toBe(TestElement.prototype["is"]);         
+         expect(el.is).toBe(TestElement.prototype["is"]);
          expect(el.$.inner.innerHTML).toBe("innerelement");
       });
 
@@ -90,7 +90,7 @@ function RunSpecs()
    });
 
    describe("a computed property", () =>
-   {      
+   {
       it('can be set with @computed decorator', () => {
          var element = <ComputedPropertiesTest> querySelector('#computedProperties1');
 
@@ -120,10 +120,10 @@ function RunSpecs()
 
       beforeEach(() =>
       {
-         // create the element                  
-         el = <any> CustomConstructorTest.create("42");         
-         
-         // connect it to DOM         
+         // create the element
+         el = <any> CustomConstructorTest.create("42");
+
+         // connect it to DOM
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
@@ -133,7 +133,7 @@ function RunSpecs()
       it("provides custom initialization", () =>
       {
          expect(el.bar).toBe("42");
-      });         
+      });
    });
 
    describe("constructor()", () => {
@@ -164,11 +164,11 @@ function RunSpecs()
 
       it("doesn't allow an element to be registered twice", () => {
          expect(() => DoubleInitializationTest.register() ).not.toThrow();
-         expect(() => DoubleInitializationTest.register() ).toThrow("element already registered in Polymer");                  
+         expect(() => DoubleInitializationTest.register() ).toThrow("element already registered in Polymer");
       });
 
-      it("create elements that are extensions of HTMLElement", () => { 
-         var el = DoubleInitializationTest.create();                 
+      it("create elements that are extensions of HTMLElement", () => {
+         var el = DoubleInitializationTest.create();
          expect(implements(el, HTMLElement)).toBe(true);
       });
 
@@ -179,7 +179,7 @@ function RunSpecs()
 
       it("does not allow to redefine factoryImpl()", () => {
          expect(() => NoFactoryImplTest.register()).toThrow("do not use factoryImpl() use constructor() instead");
-      });      
+      });
    });
 
    describe("@listen decorator", () => {
@@ -192,22 +192,22 @@ function RunSpecs()
 
       // wait for the 'attached' event
       waitFor(() => (el.bar=="foo"));
-                      
+
       it("sets an event listener function", () => {
          expect(el.bar).toBe("foo");
       });
    });
 
-   describe("@observe decorator", () => {      
+   describe("@observe decorator", () => {
       var el: ObserverTest;
 
-      beforeEach(() => {         
-         el = <any> ObserverTest.create();         
+      beforeEach(() => {
+         el = <any> ObserverTest.create();
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
       // wait for the 'attached' event
-      waitFor(() => (el.bar=="mybar"));           
+      waitFor(() => (el.bar=="mybar"));
 
       it("observes a single property changes", () => {
          expect((<ObserverTest>el).nbar_changed).toBe(0);
@@ -218,41 +218,41 @@ function RunSpecs()
       });
 
       it("observes a single property changes as a lambda function", () => {
-         expect((<ObserverTest>el).nbaz_changed).toBe(0);         
-         el.set("baz", "42");
-         expect((<ObserverTest>el).nbaz_changed).toBe(1);         
+          expect((<ObserverTest>el).nbaz_changed).toBe(0);
+          el.set("baz", "42");
+          expect((<ObserverTest>el).nbaz_changed).toBe(1);
       });
 
       it("observes more than one property changes", () => {
          expect((<ObserverTest>el).nbar_changed).toBe(0);
          expect((<ObserverTest>el).nbar_foo_changed).toBe(0);
-         el.set("foo", "42");         
+         el.set("foo", "42");
          expect((<ObserverTest>el).nbar_changed).toBe(0);
          expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
       });
 
       it("observes subproperties (path) changes", () => {
-         //expect((<ObserverTest>el).nmanager_changed).toBe(0);         
-         el.set("user.manager", "42");                  
+         //expect((<ObserverTest>el).nmanager_changed).toBe(0);
+         el.set("user.manager", "42");
          expect((<ObserverTest>el).user.manager).toBe("42");
-         //expect((<ObserverTest>el).nmanager_changed).toBe(1);         
-         expect((<ObserverTest>el).nmanager_changed).toBeGreaterThan(0);         
+         //expect((<ObserverTest>el).nmanager_changed).toBe(1);
+         expect((<ObserverTest>el).nmanager_changed).toBeGreaterThan(0);
       });
    });
 
    describe("@behavior decorator", () => {
-      var el1: BehaviorTest1, 
+      var el1: BehaviorTest1,
           el2: BehaviorTest2;
 
       beforeEach(() => {
-         el1 = <any> BehaviorTest1.create();                  
-         el2 = <any> BehaviorTest2.create();         
+         el1 = <any> BehaviorTest1.create();
+         el2 = <any> BehaviorTest2.create();
          querySelector("#put_custom_constructor_here").appendChild(el1);
          querySelector("#put_custom_constructor_here").appendChild(el2);
       });
 
       // wait for the 'attached' event
-      waitFor(() => (el1.bar=="mybar")); 
+      waitFor(() => (el1.bar=="mybar"));
 
       it("mixes code from another class (decorating the 'class' keyword)", () => {
          expect(el1.hasfired).toBe(true);
@@ -281,19 +281,19 @@ function RunSpecs()
    describe("@template/@style decorators", () => {
       var el: TemplateTest;
 
-      beforeEach(() => {         
-         el = <any> TemplateTest.create();         
+      beforeEach(() => {
+         el = <any> TemplateTest.create();
          querySelector("#put_test_elements_here").appendChild(el);
       });
 
       // wait for the 'attached' event
       waitFor(() => (el.bar=="mybar"));
 
-      it("provide a template for the element", () => {         
+      it("provide a template for the element", () => {
          expect(el.$.inner.innerHTML).toBe("inner text");
       });
-      
-      it("provide a style for the element", () => {        
+
+      it("provide a style for the element", () => {
          expect(el.$.inner.clientWidth).toBe(50);
       });
    });
