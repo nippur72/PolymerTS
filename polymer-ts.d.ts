@@ -106,12 +106,6 @@ declare module polymer {
         static register(): void;
         is: string;
     }
-    function createEs6PolymerBase(): void;
-    function prepareForRegistration(elementClass: Function): polymer.Element;
-    function createDomModule(definition: polymer.Element): void;
-    function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T;
-    function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T;
-    function isRegistered(element: polymer.Element): boolean;
 }
 declare var Polymer: {
     (prototype: polymer.Element): FunctionConstructor;
@@ -123,13 +117,3 @@ declare var Polymer: {
     updateStyles(): void;
     Base: any;
 };
-declare function component(tagname: string, extendsTag?: string): (target: Function) => void;
-declare function extend(tagname: string): (target: Function) => void;
-declare function template(templateString: string): (target: Function) => void;
-declare function style(styleString: string): (target: Function) => void;
-declare function hostAttributes(attributes: Object): (target: Function) => void;
-declare function property(ob?: polymer.Property): (target: polymer.Element, propertyKey: string) => void;
-declare function computed(ob?: polymer.Property): (target: polymer.Element, computedFuncName: string) => void;
-declare function listen(eventName: string): (target: polymer.Element, propertyKey: string) => void;
-declare function behavior(behaviorObject: any): any;
-declare function observe(observedProps: string): (target: polymer.Element, observerFuncName: string) => void;

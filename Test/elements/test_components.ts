@@ -1,21 +1,21 @@
 @component("computed-properties-test")
 class ComputedPropertiesTest extends polymer.Base
 {
-   @property() first  = 1;   
+   @property() first  = 1;
    @property() second = 1;
-   
+
    @computed() computed1(first, second)
    {
       return first + second;
-   }     
-                  
+   }
+
    @property({ computed: 'getcomputed2(first,second)' })
    computed2: number;
 
    getcomputed2()
    {
       return this.first + this.second;
-   }                    
+   }
 }
 
 ComputedPropertiesTest.register();
@@ -50,7 +50,7 @@ class PropertyInitializationTest extends polymer.Base {
    }
 }
 
-PropertyInitializationTest.register();        
+PropertyInitializationTest.register();
 
 @component("double-initialization-test")
 @template("")
@@ -79,7 +79,7 @@ class UnInitializedTest extends polymer.Base
 class NoFactoryImplTest extends polymer.Base
 {
    factoryImpl()
-   {      
+   {
       return null;
    }
 }
@@ -90,9 +90,9 @@ class ListenerTest extends polymer.Base
 {
    @property() bar="mybar";
 
-   constructor() {      
+   constructor() {
       super();
-      this.fire("change-bar");      
+      this.fire("change-bar");
    }
 
    @listen("change-bar")
@@ -115,11 +115,16 @@ class ObserverTest extends polymer.Base {
    @property() nbar_foo_changed = 0;
    @property() nmanager_changed = 0;
 
-   @property({type: Object}) user = { manager: "64" }; 
+   @property({type: Object}) user = { manager: "64" };
 
    @observe("bar")
    changedBar() {
       this.nbar_changed++;
+   }
+
+   @observe("baz")
+   changedBaz = (newVal, OldVal) => {
+      this.nbaz_changed++;
    }
 
    @observe("bar,foo")
@@ -128,7 +133,7 @@ class ObserverTest extends polymer.Base {
    }
 
    @observe("user.manager")
-   changedManager(newVal) {            
+   changedManager(newVal) {
       this.nmanager_changed++;
    }
 }
@@ -140,7 +145,7 @@ class BehaviorBaseTest extends polymer.Base {
 
    @listen("base-called")
    onBaseCalled() {
-      this.hasfired = true;   
+      this.hasfired = true;
    }
 
    methodInBase()
@@ -167,7 +172,7 @@ var PojoBehaviour2 =
 
 
 @component("behavior-test1")
-@template("")            
+@template("")
 @behavior(BehaviorBaseTest)
 @behavior(PojoBehaviour1)
 class BehaviorTest1 extends polymer.Base
@@ -230,7 +235,7 @@ BehaviorTest2.register();
 
 class TemplateTest extends polymer.Base
 {
-   @property() bar="mybar";   
+   @property() bar="mybar";
 }
 
 TemplateTest.register();
@@ -243,7 +248,7 @@ TemplateTest.register();
 
 class HostAttributesTest extends polymer.Base
 {
-   @property() bar="mybar";      
+   @property() bar="mybar";
 }
 
 HostAttributesTest.register();
@@ -254,7 +259,7 @@ HostAttributesTest.register();
 @template("")
 class BaseElementTest extends polymer.Base
 {
-   @property() prop="mybar";   
+   @property() prop="mybar";
 
    attached()
    {
@@ -288,11 +293,11 @@ class ExtendedElementTestIntermediate extends BaseElementTest
 @component("extended-element-test")
 class ExtendedElementTest extends ExtendedElementTestIntermediate
 {
-   @property() bar="mybar";   
+   @property() bar="mybar";
 
    @property() pmix="";
    @property() qmix="";
-         
+
    attached() {
       super.attached();
       this.prop+="B";
