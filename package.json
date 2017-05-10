@@ -1,6 +1,6 @@
 {
   "name": "polymer-ts",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Polymer 1.0 for TypeScript",
   "main": "polymer-ts.js",
   "scripts": {
@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/nippur72/PolymerTS",
   "devDependencies": {
-    "typescript": "^1.8.10",
+    "typescript": "^2.3.2",
     "uglify-js": "^2.6.2"
   },
   "dependencies": {},
-	"typings": "polymer-ts.d.ts "
+  "typings": "polymer-ts.d.ts "
 }

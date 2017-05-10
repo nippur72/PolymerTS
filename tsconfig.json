@@ -11,9 +11,14 @@
         "suppressImplicitAnyIndexErrors": true,
         "experimentalDecorators": true
     },
-    "filesGlob": [
-        "./**/*.ts",
-        "!./node_modules/**/*.ts",
-        "!./bower_components/**/*.ts"
-    ]
+    "exclude": [
+        "./Sample/bower_components/**/*.ts",
+        "./Test/bower_components/**/*.ts",
+        "./node_modules/**/*.ts",
+        "./bower_components/**/*.ts",
+        "./**/*.d.ts"
+    ],
+    "include": [
+        "polymer-ts.ts"
+    ]    
 }
