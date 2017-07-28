@@ -317,4 +317,3 @@ function applyMixins(derivedCtor: any, baseCtors: any[]) {
       })
    });
 }
-

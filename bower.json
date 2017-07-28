@@ -18,7 +18,7 @@
     "!README.md"
   ],
   "dependencies": {
-    "polymer": ">=1.0.8",
+    "polymer": "^1.0",
     "webcomponentsjs": ">=0.7.10"
   },
   "typescript": {

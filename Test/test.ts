@@ -1,7 +1,4 @@
-﻿/// <reference path="typings/jasmine/jasmine.d.ts" />
-/// <reference path="bower_components/polymer-ts/polymer-ts.d.ts" />
-
-var polymerReady=false;
+﻿var polymerReady=false;
 
 // jasmine boot.js links to window.onload
 var startJasmine = window.onload;
