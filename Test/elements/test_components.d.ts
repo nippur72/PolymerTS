@@ -36,6 +36,7 @@ declare class ObserverTest extends polymer.Base {
     bar: string;
     foo: string;
     baz: string;
+    baz_old: any;
     nbar_changed: number;
     nbaz_changed: number;
     nbar_foo_changed: number;
@@ -43,8 +44,8 @@ declare class ObserverTest extends polymer.Base {
     user: {
         manager: string;
     };
-    changedBar(): void;
-    changedBaz: (newVal: any, OldVal: any) => void;
+    changedBar(newVal: any, oldVal: any): void;
+    changedBaz: (newVal: any, oldVal: any) => void;
     changedBarAndFoo(): void;
     changedManager(newVal: any): void;
 }

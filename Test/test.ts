@@ -208,16 +208,22 @@ function RunSpecs()
 
       it("observes a single property changes", () => {
          expect((<ObserverTest>el).nbar_changed).toBe(0);
-         expect((<ObserverTest>el).nbar_foo_changed).toBe(0);
-         el.set("bar", "42");
-         expect((<ObserverTest>el).nbar_changed).toBe(1);
-         expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
+         el.set("baz", "42");
+         expect((<ObserverTest>el).nbaz_changed).toBe(1);
+         expect((<ObserverTest>el).baz_old).toBe(undefined);
+         el.set("baz", "1024");
+         expect((<ObserverTest>el).nbaz_changed).toBe(2);
+         expect((<ObserverTest>el).baz_old).toBe(42);
       });
 
       it("observes a single property changes as a lambda function", () => {
           expect((<ObserverTest>el).nbaz_changed).toBe(0);
           el.set("baz", "42");
           expect((<ObserverTest>el).nbaz_changed).toBe(1);
+          expect((<ObserverTest>el).baz_old).toBe(undefined);
+          el.set("baz", "1024");
+          expect((<ObserverTest>el).nbaz_changed).toBe(2);
+          expect((<ObserverTest>el).baz_old).toBe(42);
       });
 
       it("observes more than one property changes", () => {
