@@ -35,7 +35,9 @@ declare class ListenerTest extends polymer.Base {
 declare class ObserverTest extends polymer.Base {
     bar: string;
     bar_old: any;
+    observed_bar: any;
     foo: string;
+    observed_foo: any;
     baz: any;
     baz_old: any;
     nbar_changed: number;
@@ -47,7 +49,7 @@ declare class ObserverTest extends polymer.Base {
     };
     changedBar(newVal: any, oldVal: any): void;
     changedBaz: (newVal: any, oldVal: any) => void;
-    changedBarAndFoo(): void;
+    changedBarAndFoo(observedBar: any, observedFoo: any): void;
     changedManager(newVal: any): void;
 }
 declare class BehaviorBaseTest extends polymer.Base {

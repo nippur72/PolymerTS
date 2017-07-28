@@ -231,7 +231,9 @@ function RunSpecs()
          expect((<ObserverTest>el).nbar_foo_changed).toBe(0);
          el.set("foo", "42");
          expect((<ObserverTest>el).nbar_changed).toBe(0);
-         expect((<ObserverTest>el).nbar_foo_changed).toBe(42);
+         expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
+         expect((<ObserverTest>el).observed_bar).toBe("mybar");
+         expect((<ObserverTest>el).observed_foo).toBe("42");
       });
 
       it("observes subproperties (path) changes", () => {
