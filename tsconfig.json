@@ -12,13 +12,10 @@
         "experimentalDecorators": true
     },
     "exclude": [
-        "./Sample/bower_components/**/*.ts",
+        "./Sample/**/*.ts",
         "./Test/bower_components/**/*.ts",
         "./node_modules/**/*.ts",
         "./bower_components/**/*.ts",
-        "./**/*.d.ts"
-    ],
-    "include": [
-        "polymer-ts.ts"
-    ]    
+        "*.d.ts"
+    ]
 }
