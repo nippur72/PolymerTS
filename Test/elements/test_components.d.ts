@@ -34,8 +34,9 @@ declare class ListenerTest extends polymer.Base {
 }
 declare class ObserverTest extends polymer.Base {
     bar: string;
+    bar_old: any;
     foo: string;
-    baz: string;
+    baz: any;
     baz_old: any;
     nbar_changed: number;
     nbaz_changed: number;
