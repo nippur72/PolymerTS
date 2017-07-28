@@ -11,6 +11,7 @@ Test/*.js
 Test/elements/*.map
 Test/elements/*.js
 .vs/
+.idea/
 
 packages/
 
