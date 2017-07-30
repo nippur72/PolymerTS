@@ -62,7 +62,7 @@ module polymer {
       unlinkPaths(path: string):void;
       unlisten(node: Element, eventName: string, methodName: string): void;
       unshift(path: string, value: any):any;
-      updateStyles(): void;
+      updateStyles(properties: Object): void;
    }
 
    export interface dom
