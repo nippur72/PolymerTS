@@ -264,7 +264,12 @@ function property(ob) {
         }
         else {
             // normal property
+            var previousProperty = target.properties[propertyKey];
             target.properties[propertyKey] = ob || {};
+            // make sure we grab the observer, just in case the observe decorator was called first
+            if (previousProperty && previousProperty.observer) {
+                target.properties[propertyKey].observer = previousProperty.observer;
+            }
         }
     };
 }

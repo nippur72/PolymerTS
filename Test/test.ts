@@ -199,49 +199,77 @@ function RunSpecs()
       var el: ObserverTest;
 
       beforeEach(() => {
-         el = <any> ObserverTest.create();
+         el = <ObserverTest> ObserverTest.create();
          querySelector("#put_custom_constructor_here").appendChild(el);
       });
 
       // wait for the 'attached' event
       waitFor(() => (el.bar=="mybar"));
 
-      it("observes a single property changes", () => {
-         expect((<ObserverTest>el).nbar_changed).toBe(0);
+      it("observes a single property change", () => {
+         expect((el).nbar_changed).toBe(0);
+
          el.set("bar", "42");
-         expect((<ObserverTest>el).nbar_changed).toBe(1);
-         expect((<ObserverTest>el).bar_old).toBe("mybar");
+         expect((el).nbar_changed).toBe(1);
+         expect((el).bar2_old).toBe("mybar");
+
          el.set("bar", "1024");
-         expect((<ObserverTest>el).nbar_changed).toBe(2);
-         expect((<ObserverTest>el).bar_old).toBe("42");
+         expect((el).nbar_changed).toBe(2);
+         expect((el).bar2_old).toBe("42");
       });
 
       it("observes a single property changes as a lambda function", () => {
-          expect((<ObserverTest>el).nbaz_changed).toBe(0);
+          expect((el).nbaz_changed).toBe(0);
+
           el.set("baz", "42");
-          expect((<ObserverTest>el).nbaz_changed).toBe(1);
-          expect((<ObserverTest>el).baz_old).toBe(undefined);
+          expect((el).nbaz_changed).toBe(1);
+          expect((el).baz_old).toBe(undefined);
+
           el.set("baz", "1024");
-          expect((<ObserverTest>el).nbaz_changed).toBe(2);
-          expect((<ObserverTest>el).baz_old).toBe("42");
+          expect((el).nbaz_changed).toBe(2);
+          expect((el).baz_old).toBe("42");
       });
 
       it("observes more than one property changes", () => {
-         expect((<ObserverTest>el).nbar_changed).toBe(0);
-         expect((<ObserverTest>el).nbar_foo_changed).toBe(0);
+         expect((el).nbar_changed).toBe(0);
+         expect((el).nbar_foo_changed).toBe(0);
+
          el.set("foo", "42");
-         expect((<ObserverTest>el).nbar_changed).toBe(0);
-         expect((<ObserverTest>el).nbar_foo_changed).toBe(1);
-         expect((<ObserverTest>el).observed_bar).toBe("mybar");
-         expect((<ObserverTest>el).observed_foo).toBe("42");
+         expect((el).nbar_changed).toBe(0);
+         expect((el).nbar_foo_changed).toBe(1);
+         expect((el).observed_bar).toBe("mybar");
+         expect((el).observed_foo).toBe("42");
+      });
+
+      it("supports multiple observers for a single property", () => {
+         expect((el).nbar_changed).toBe(0);
+
+         el.set("bar", "42");
+         expect((el).nbar_changed).toBe(2);
+         expect((el).bar_old).toBe(undefined);
+         expect((el).bar2_old).toBe(undefined);
+
+         el.set("bar", "blue");
+         expect((el).nbar_changed).toBe(4);
+         expect((el).bar_old).toBe("42");
+         expect((el).bar2_old).toBe("42");
+      });
+
+      it("works properly when @observe decorators are called before @property decorators", () => {
+         expect((el).nblah_changed).toBe(0);
+
+         el.set("blah", "42");
+         expect((el).nblah_changed).toBe(1);
+         expect((el).blah_new_val).toBe("42");
+         expect((el).blah_old_val).toBe("myblah");
       });
 
       it("observes subproperties (path) changes", () => {
-         //expect((<ObserverTest>el).nmanager_changed).toBe(0);
+         //expect((el).nmanager_changed).toBe(0);
          el.set("user.manager", "42");
-         expect((<ObserverTest>el).user.manager).toBe("42");
-         //expect((<ObserverTest>el).nmanager_changed).toBe(1);
-         expect((<ObserverTest>el).nmanager_changed).toBeGreaterThan(0);
+         expect((el).user.manager).toBe("42");
+         //expect((el).nmanager_changed).toBe(1);
+         expect((el).nmanager_changed).toBeGreaterThan(0);
       });
    });
 
