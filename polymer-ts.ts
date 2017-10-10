@@ -81,7 +81,7 @@ module polymer {
    }
 
    // members that can be optionally implemented in an element
-   export interface Element {
+   export interface Element extends PolymerBase {
       properties?: Object;
       listeners?: Object;
       behaviors?: Object[];
