@@ -550,15 +550,6 @@ class TsElement extends polymer.Base implements Polymer.PaperRippleBehavior
 }
 ```
 
-# Running the example <a name="repoexample"></a>
-
-To run the "Test" project containing the Jasmine specs:
-
-- clone this repo `nippur72/PolymerTS`
-- go to the `Test` directory
-- run `bower update`
-- Open the solution in Visual Studio and run the "Test" project.
-
 # What it does<a name="details"></a>
 
 In short, PolymerTS:
@@ -584,6 +575,27 @@ in turn, the `register()` method:
 Contributions are welcome.
 
 If you find bugs or want to improve it, just send a pull request.
+
+
+## Getting Started
+
+1. Clone this repo
+1. Make sure you have node and bower installed.
+1. Run `npm install && bower install`
+1. To build, just run `npm run build`
+
+## Building
+
+## Testing
+
+PolymerTS uses [Jasmine](https://jasmine.github.io/) for unit tests. Currently there isn't a test runner like Karma setup, so you'll need to manually run the tests in different browsers.
+
+All of the tests are in the `Test` folder; the entry point is `tests.ts`.
+
+In order to run the tests, you need a local HTTP server. If you don't have one installed, you can install [http-server](https://www.npmjs.com/package/http-server) with the command `npm install http-server -g`.
+ 
+Next, just point your browser to `http://localhost:<port>/Test/`). `http-server` defaults to port 8080. 
+
 
 # Change log <a name="changelog"></a>
 - v0.2.0 (Apr 18, 2017)

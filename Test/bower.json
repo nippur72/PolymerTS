@@ -15,6 +15,6 @@
   ],
   "dependencies": {
     "polymer": "^1.0",
-    "jasmine": "~2.3.4"
+    "jasmine": "~2.6.2"
   }
 }
