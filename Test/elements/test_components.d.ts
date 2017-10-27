@@ -76,10 +76,10 @@ declare class BehaviorTest1 extends polymer.Base {
     bar: string;
     hasfired: boolean;
     attached(): void;
-    methodInBase: () => void;
+    methodInBase: () => string;
     methodInPojo1: () => string;
     methodInPojo2: () => string;
-    methodInChild(): void;
+    methodInChild(): string;
 }
 declare class BehaviorTest2 extends polymer.Base {
     bar: string;

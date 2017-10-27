@@ -214,12 +214,12 @@ class BehaviorTest1 extends polymer.Base {
         this.fire("base-called");
     }
 
-    methodInBase: () => void;
+    methodInBase: () => string;
 
     methodInPojo1: () => string;
     methodInPojo2: () => string;
 
-    methodInChild() {
+    methodInChild(): string {
         return this.methodInBase();
     }
 }
