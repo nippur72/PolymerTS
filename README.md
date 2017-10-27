@@ -582,9 +582,7 @@ If you find bugs or want to improve it, just send a pull request.
 1. Clone this repo
 1. Make sure you have node and bower installed.
 1. Run `npm install && bower install`
-1. To build, just run `npm run build`
-
-## Building
+1. To build, just run `npm run build`. During development, using the TypeScript compiler settings in your editor should work fine, as long as it points to `./tsconfig.json` and uses the version of `tsc` installed in `node_modules`.
 
 ## Testing
 
@@ -596,6 +594,9 @@ In order to run the tests, you need a local HTTP server. If you don't have one i
  
 Next, just point your browser to `http://localhost:<port>/Test/`). `http-server` defaults to port 8080. 
 
+# Samples
+
+There is a `Samples` folder with some examples, but these are not currently built or maintained.
 
 # Change log <a name="changelog"></a>
 - v0.2.0 (Apr 18, 2017)
