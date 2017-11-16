@@ -125,14 +125,18 @@ class ObserverTest extends polymer.Base {
 
     @observe("bar")
     changedBar(newVal, oldVal) {
+        console.debug('changedBar', newVal, oldVal);
         this.nbar_changed++;
         this.bar_old = oldVal;
+        console.debug('changedBar', 'nbar_changed', this.nbar_changed, 'bar_old', this.bar_old);
     }
 
     @observe("bar")
     changedBarAgain(newVal, oldVal) {
+        console.debug('changedBarAgain', newVal, oldVal);
         this.nbar_changed++;
         this.bar2_old = oldVal;
+        console.debug('changedBarAgain', 'nbar_changed', this.nbar_changed, 'bar2_old', this.bar2_old);
     }
 
     @observe("baz")

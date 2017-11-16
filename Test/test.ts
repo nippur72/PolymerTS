@@ -241,7 +241,7 @@ function RunSpecs()
          expect((el).observed_foo).toBe("42");
       });
 
-      it("supports multiple observers for a single property", () => {
+      it("does not support multiple simple observers for a single property", () => {
          expect((el).nbar_changed).toBe(0);
 
          el.set("bar", "42");
@@ -255,7 +255,7 @@ function RunSpecs()
          expect((el).bar2_old).toBe("42");
       });
 
-      it("works properly when @observe decorators are called before @property decorators", () => {
+      it("work properly when called before @property decorators", () => {
          expect((el).nblah_changed).toBe(0);
 
          el.set("blah", "42");
