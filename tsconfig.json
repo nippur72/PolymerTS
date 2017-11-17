@@ -1,5 +1,4 @@
 {
-    "version": "1.5.0-alpha",
     "compilerOptions": {
         "target": "es5",
         "declaration": true,
@@ -12,13 +11,9 @@
         "experimentalDecorators": true
     },
     "exclude": [
-        "./Sample/bower_components/**/*.ts",
-        "./Test/bower_components/**/*.ts",
+        "./Sample/**/*.ts",
         "./node_modules/**/*.ts",
         "./bower_components/**/*.ts",
-        "./**/*.d.ts"
-    ],
-    "include": [
-        "polymer-ts.ts"
-    ]    
+        "*.d.ts"
+    ]
 }

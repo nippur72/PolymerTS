@@ -6,7 +6,7 @@
   "scripts": {
     "uglifyjs": "uglify-js",
     "minify": "uglifyjs -o polymer-ts.min.js --in-source-map polymer-ts.js.map --source-map polymer-ts.min.js.map --screw-ie8 --mangle --compress --keep-names polymer-ts.js",
-    "updatesubprojects": "cp polymer-ts.min.* Sample/bower_components/polymer-ts && cp polymer-ts.min.* Test/bower_components/polymer-ts",
+    "updatesubprojects": "cp polymer-ts.min.* Sample/bower_components/polymer-ts",
     "build": "node node_modules/typescript/bin/tsc && npm run minify && npm run updatesubprojects"
   },
   "repository": {
@@ -24,9 +24,10 @@
   },
   "homepage": "https://github.com/nippur72/PolymerTS",
   "devDependencies": {
-    "typescript": "^2.3.2",
+    "@types/jasmine": "^2.6.2",
+    "typescript": "~2.3.2",
     "uglify-js": "^2.6.2"
   },
   "dependencies": {},
-  "typings": "polymer-ts.d.ts "
+  "typings": "polymer-ts.d.ts"
 }

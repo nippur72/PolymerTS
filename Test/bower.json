@@ -14,8 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": ">=1.0.4",
-    "polymer-ts": "~0.1.0",
-    "jasmine": "~2.3.4"
+    "polymer": "^1.0",
+    "jasmine": "~2.6.2"
   }
 }

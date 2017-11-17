@@ -264,7 +264,12 @@ function property(ob) {
         }
         else {
             // normal property
+            var previousProperty = target.properties[propertyKey];
             target.properties[propertyKey] = ob || {};
+            // make sure we grab the observer, just in case the observe decorator was called first
+            if (previousProperty && previousProperty.observer) {
+                target.properties[propertyKey].observer = previousProperty.observer;
+            }
         }
     };
 }
@@ -309,9 +314,20 @@ function behavior(behaviorObject) {
 }
 // @observe decorator
 function observe(observedProps) {
-    return function (target, observerFuncName) {
-        target.observers = target.observers || [];
-        target.observers.push(observerFuncName + "(" + observedProps + ")");
-    };
+    if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
+        // observing multiple properties or path
+        return function (target, observerFuncName) {
+            target.observers = target.observers || [];
+            target.observers.push(observerFuncName + "(" + observedProps + ")");
+        };
+    }
+    else {
+        // observing single property
+        return function (target, observerName) {
+            target.properties = target.properties || {};
+            target.properties[observedProps] = target.properties[observedProps] || {};
+            target.properties[observedProps].observer = observerName;
+        };
+    }
 }
 //# sourceMappingURL=polymer-ts.js.map
