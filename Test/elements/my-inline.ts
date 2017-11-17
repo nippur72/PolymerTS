@@ -1,10 +1,8 @@
-﻿class MyAbstract extends polymer.Base 
-{
-   makeSomeNoise()
-   {
-      console.log("argh!");
-      this.fire("noise-made");
-   }
+﻿class MyAbstract extends polymer.Base {
+    makeSomeNoise() {
+        console.log("argh!");
+        this.fire("noise-made");
+    }
 }
 
 @component("my-inline")
@@ -29,77 +27,77 @@
    }
 `)
 
-class MyInline extends MyAbstract implements MyMixin
-{
-   @property() public prop   = "hello world";  
-   @property() public marker = "default marker";  
-   
-   //is = "my-inline"; 
+class MyInline extends MyAbstract implements MyMixin {
+    @property() public prop = "hello world";
+    @property() public marker = "default marker";
 
-   private myprivate = [1,2,3,4,5];
+    //is = "my-inline";
 
-   constructor(marker: string)
-   {
-      super();            
-      console.log(`constructor("${marker}")`);
-      this.prop = "hello world and all the rest";
-      //console.log(this.myprivate);      
+    private myprivate = [1, 2, 3, 4, 5];
 
-      if(marker!==undefined) this.marker = marker;
-   }
-   
-   /*
-   factoryImpl(foo, bar)
-   {
-      console.log(`factoryImpl called with foo=${foo} bar=${bar}`);
-   }   
-   */
+    constructor(marker: string) {
+        super();
+        console.log(`constructor("${marker}")`);
+        this.prop = "hello world and all the rest";
+        //console.log(this.myprivate);
 
-   created()
-   {
-      //this.prop = "hello";
-      console.log("created()");
-      /*console.log(this.myprivate);      */
-   }
+        if (marker !== undefined) this.marker = marker;
+    }
 
-   ready()
-   {
-      console.log("ready()");
-      /*
-      console.log(this.myprivate);
+    /*
+    factoryImpl(foo, bar)
+    {
+       console.log(`factoryImpl called with foo=${foo} bar=${bar}`);
+    }
+    */
 
-      if (this.myprivate[0] == 1) console.log("correct value preserved");
-      else console.log("correct value NOT preserved");
+    created() {
+        //this.prop = "hello";
+        console.log("created()");
+        /*console.log(this.myprivate);      */
+    }
 
-      this.myprivate[0] = 5;
+    ready() {
+        console.log("ready()");
+        /*
+        console.log(this.myprivate);
 
-      this.makeSomeNoise();
+        if (this.myprivate[0] == 1) console.log("correct value preserved");
+        else console.log("correct value NOT preserved");
 
-      this.prop = "64"; */
+        this.myprivate[0] = 5;
 
-      this.makeSomeNoise();
-   }
+        this.makeSomeNoise();
 
-   attached()
-   {
-      console.log("attached()");
-   }
+        this.prop = "64"; */
 
-   @observe("prop")
-   hiChanged(newVal, oldVal)
-   {
-      console.log(`prop changed from ${oldVal} to ${newVal}`);
-   }
+        this.makeSomeNoise();
+    }
 
-   noiseMade: ()=>void;
+    attached() {
+        console.log("attached()");
+    }
+
+    @observe("prop")
+    hiChanged(newVal, oldVal) {
+        console.log(`prop changed from ${oldVal} to ${newVal}`);
+    }
+
+    noiseMade: () => void;
 }
 
-class MyMixin extends polymer.Base 
-{
-   @listen("noise-made")
-   noiseMade() {
-      console.log("someone made noise!");
-   }
+class MyMixin extends polymer.Base {
+
+    properties?: Object;
+    listeners?: Object;
+    behaviors?: Object[];
+    observers?: String[];
+    prototype?: Object;
+
+    @listen("noise-made")
+    noiseMade() {
+        console.log("someone made noise!");
+    }
 }
 
 /*

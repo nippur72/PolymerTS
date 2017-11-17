@@ -13,5 +13,10 @@ declare class MyInline extends MyAbstract implements MyMixin {
     noiseMade: () => void;
 }
 declare class MyMixin extends polymer.Base {
+    properties?: Object;
+    listeners?: Object;
+    behaviors?: Object[];
+    observers?: String[];
+    prototype?: Object;
     noiseMade(): void;
 }

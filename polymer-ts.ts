@@ -6,355 +6,415 @@
 
 module polymer {
 
-   // this is the original Polymer.Base
-   export declare class PolymerBase extends HTMLElement {
-      $: any;
-      $$: any;
+    // this is the original Polymer.Base
+    export declare class PolymerBase extends HTMLElement {
+        $: any;
+        $$: any;
 
-      root:HTMLElement;
-      shadyRoot:HTMLElement;
-      style:CSSStyleDeclaration;
-      customStyle:{[property:string]:string;};
+        root: HTMLElement;
+        shadyRoot: HTMLElement;
+        style: CSSStyleDeclaration;
+        customStyle: { [property: string]: string; };
 
-      arrayDelete(path: string, item: string|any):any;
-      async(callback: Function, waitTime?: number):any;
-      attachedCallback():void;
-      attributeFollows(name: string, toElement: HTMLElement, fromElement: HTMLElement):void;
-      cancelAsync(handle: number):void;
-      cancelDebouncer(jobName: string):void;
-      classFollows(name: string, toElement: HTMLElement, fromElement: HTMLElement):void;
-      create(tag: string, props?: Object): HTMLElement;
-      debounce(jobName: string, callback: Function, wait?: number):void;
-      deserialize(value: string, type: any):any;
-      distributeContent():void;
-      domHost():void;
-      elementMatches(selector: string, node: Element):any;
-      fire(type: string, detail?: Object, options?: FireOptions):any;
-      flushDebouncer(jobName: string):void;
-      get(path: string|Array<string|number>):any;
-      getContentChildNodes(slctr: string):any;
-      getContentChildren(slctr: string):any;
-      getNativePrototype(tag: string):any;
-      getPropertyInfo(property: string):any;
-      importHref(href: string, onload?: Function, onerror?: Function, optAsync?: boolean):any;
-      instanceTemplate(template: any):any;
-      isDebouncerActive(jobName: string):any;
-      linkPaths(to: string, from: string):void;
-      listen(node: Element, eventName: string, methodName: string):void;
-      mixin(target: Object, source: Object):void;
-      notifyPath(path: string, value: any, fromAbove?: any):void;
-      notifySplices(path: string, splices: {index: number, removed: Array<any>, addedCount: number, object: Array<any>, type: "splice" }[]): void;
-      pop(path: string):any;
-      push(path: string, value: any):any;
-      reflectPropertyToAttribute(name: string):void;
-      resolveUrl(url: string):any;
-      scopeSubtree(container: Element, shouldObserve: boolean):void;
-      serialize(value: string):any;
-      serializeValueToAttribute(value: any, attribute: string, node: Element):void;
-      set(path: string|Array<string|number>, value: any, root?: Object): any;
-      setScrollDirection(direction: string, node: HTMLElement):void;
-      shift(path: string, value: any):any;
-      splice(path: string, start: number, deleteCount: number, ...items):any;
-      toggleAttribute(name: string, bool: boolean, node?: HTMLElement):void;
-      toggleClass(name: string, bool: boolean, node?: HTMLElement):void;
-      transform(transform: string, node?: HTMLElement):void;
-      translate3d(x, y, z, node?: HTMLElement):void;
-      unlinkPaths(path: string):void;
-      unlisten(node: Element, eventName: string, methodName: string): void;
-      unshift(path: string, value: any):any;
-      updateStyles(): void;
-   }
+        arrayDelete(path: string, item: string | any): any;
 
-   export interface dom
-   {
-      (node: HTMLElement): HTMLElement;
-      (node: polymer.Base): HTMLElement;
-      flush();
-   }
+        async(callback: Function, waitTime?: number): any;
 
-   // options for the fire method
-   export interface FireOptions
-   {
-      node?: HTMLElement|polymer.Base;
-      bubbles?: boolean;
-      cancelable?: boolean;
-   }
+        attachedCallback(): void;
 
-   // members that can be optionally implemented in an element
-   export interface Element {
-      properties?: Object;
-      listeners?: Object;
-      behaviors?: Object[];
-      observers?: String[];
+        attributeFollows(name: string, toElement: HTMLElement, fromElement: HTMLElement): void;
 
-      // lifecycle
-      factoryImpl?(...args): void;
-      ready?(): void;
-      created?(): void;
-      attached?(): void;
-      detached?(): void;
-      attributeChanged?(attrName: string, oldVal: any, newVal: any): void;
+        cancelAsync(handle: number): void;
 
-      //
-      prototype?: Object;
-   }
+        cancelDebouncer(jobName: string): void;
 
-   // members set by PolymerTS
-   export interface PolymerTSElement
-   {
-      $custom_cons?: FunctionConstructor;
-      $custom_cons_args?: any[];
-      template?: string;
-      style?: string;
-   }
+        classFollows(name: string, toElement: HTMLElement, fromElement: HTMLElement): void;
 
-   // property definition interface
-   export interface Property {
-      /** @deprecated This is not used by either PolymerTS or Polymer */
-      name?: string;
-      type?: any;
-      value?: any;
-      reflectToAttribute?: boolean;
-      readOnly?: boolean;
-      notify?: boolean;
-      computed?: string;
-      observer?: string;
-   }
+        create(tag: string, props?: Object): HTMLElement;
 
-   // the ES6-inheritable version of Polymer.Base
-   export declare class Base extends polymer.PolymerBase implements polymer.Element {
-      static create<T extends polymer.Base>(...args: any[]): T;
-      static register(): void;
-      is: string;
-   }
+        debounce(jobName: string, callback: Function, wait?: number): void;
 
-   // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"
-   export function createEs6PolymerBase()
-   {
-      // create a placeholder class
-      var pb = function () { };
+        deserialize(value: string, type: any): any;
 
-      // make it available as polymer.Base
-      window["polymer"]["Base"] = pb;
+        distributeContent(): void;
 
-      // add a default create method()
-      pb["create"] = function () {
-         throw "element not yet registered in Polymer";
-      }
+        domHost(): void;
 
-      // add a default create method()
-      pb["register"]=function(dontRegister?: boolean) {
-         if(dontRegister===true) polymer.createClass(this);
-         else polymer.createElement(this);
-      }
-   }
+        elementMatches(selector: string, node: Element): any;
 
-   export function prepareForRegistration(elementClass: Function): polymer.Element
-   {
-      // copies members from inheritance chain to Polymer object
-      function copyMembers(dest: Object, source)
-      {
-         if(source===undefined || source===null) return;
-         Object.keys(source).map((member)=>
-         {
-            // copy only if has not been defined
-            if(!dest.hasOwnProperty(member)) dest[member] = source[member];
-         });
-         copyMembers(dest, source.__proto__);
-      }
+        fire(type: string, detail?: Object, options?: FireOptions): any;
 
-      // backward compatibility with TypeScript 1.4 (no decorators)
-      if(elementClass.prototype.is === undefined)
-      {
-         var proto = elementClass.prototype;
-         var instance = new (<any>elementClass)();
-		 if (!instance.is) {
-			throw new Error("no name for " + elementClass);
-		 }
-         proto.is                = instance.is;
-		 if  (instance.extends) {
-			proto.extends        = instance.extends;
-		 }
-		 if  (instance.properties) {
-			proto.properties     = instance.properties;
-		 }
-		 if  (instance.listeners) {
-			proto.listeners      = instance.listeners;
-		 }
-		 if  (instance.observers) {
-			proto.observers      = instance.observers;
-		 }
-		 if  (instance.behaviors) {
-			proto.behaviors      = instance.behaviors;
-		 }
-		 if  (instance.hostAttributes) {
-			proto.hostAttributes = instance.hostAttributes;
-		 }
-		 if  (instance.style) {
-			proto.style          = instance.style;
-		 }
-		 if  (instance.template) {
-			proto.template       = instance.template;
-		 }
-      }
+        flushDebouncer(jobName: string): void;
 
-      var preparedElement = elementClass.prototype;
+        get(path: string | Array<string | number>): any;
 
-      // artificial constructor: call constructor() and copies members
-      preparedElement["$custom_cons"] = function () {
-         // reads arguments coming from factoryImpl
-         var args = this.$custom_cons_args;
+        getContentChildNodes(slctr: string): any;
 
-         // applies class constructor on the polymer element (this)
-         elementClass.apply(this, args);
-      };
+        getContentChildren(slctr: string): any;
 
-      // arguments for artifical constructor
-      preparedElement["$custom_cons_args"] = [];
+        getNativePrototype(tag: string): any;
 
-      // modify "factoryImpl"
-      if (preparedElement["factoryImpl"] !== undefined) {
-         throw "do not use factoryImpl() use constructor() instead";
-      }
-      else {
-         preparedElement["factoryImpl"] = function () {
-            this.$custom_cons_args = arguments;
-         };
-      }
+        getPropertyInfo(property: string): any;
 
-      // modify "attached" event function
-      var attachToFunction = "attached";
-      var oldFunction = preparedElement[attachToFunction];
-      preparedElement[attachToFunction] = function () {
-         this.$custom_cons();
-         if (oldFunction !== undefined) oldFunction.apply(this);
-      };
+        importHref(href: string, onload?: Function, onerror?: Function, optAsync?: boolean): any;
 
-      // copy inherited class members
-      copyMembers(preparedElement, elementClass.prototype.__proto__);
+        instanceTemplate(template: any): any;
 
-      //putting string in prototype.style in decorator style makes it impossible to access and modify css styles of created elements
-      //so it needs to be deleted in order to access and modify styles
-      delete preparedElement["style"];
+        isDebouncerActive(jobName: string): any;
 
-      return preparedElement;
-   }
+        linkPaths(to: string, from: string): void;
 
-   /*
-   // see https://github.com/Polymer/polymer/issues/2114
-   export function createDomModule(definition: polymer.Element) {
-      var domModule: any = document.createElement('dom-module');
+        listen(node: Element, eventName: string, methodName: string): void;
 
-      var proto = <any> definition.prototype;
+        mixin(target: Object, source: Object): void;
 
-      domModule.id = proto.is;
+        notifyPath(path: string, value: any, fromAbove?: any): void;
 
-      // attaches style
-      if (proto.style !== undefined) {
-         var elemStyle = (<any> document).createElement('style', 'custom-style');
-         domModule.appendChild(elemStyle);
-         elemStyle.textContent = proto.style;
-      }
+        notifySplices(path: string, splices: { index: number, removed: Array<any>, addedCount: number, object: Array<any>, type: "splice" }[]): void;
 
-      // attaches template
-      if (proto.template !== undefined) {
-         var elemTemplate = document.createElement('template');
-         domModule.appendChild(elemTemplate);
-         elemTemplate.innerHTML = proto.template;
-      }
+        pop(path: string): any;
 
-      // tells polymer the element has been created
-      domModule.createdCallback();
-   }
-   */
+        push(path: string, value: any): any;
 
-   // a version that works in IE11 too
-   export function createDomModule(definition: polymer.Element) {
-      var domModule = document.createElement('dom-module');
+        reflectPropertyToAttribute(name: string): void;
 
-      var proto = <any> definition.prototype;
+        resolveUrl(url: string): any;
 
-      domModule.id = proto.is;
+        scopeSubtree(container: Element, shouldObserve: boolean): void;
 
-      var html = "";
-      let style = "";
-      if (proto.style !== undefined)    style = `<style>${proto.style}</style>`;
-      if (proto.template !== undefined) html = `<template>${style}${proto.template}</template>`;
+        serialize(value: string): any;
 
-      domModule.innerHTML = html;
+        serializeValueToAttribute(value: any, attribute: string, node: Element): void;
 
-      (<any> domModule).createdCallback();
-   }
+        set(path: string | Array<string | number>, value: any, root?: Object): any;
 
-   /*
-   // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed
-   export function createDomModule(definition: polymer.Element) {
-      var contentDoc = document.implementation.createHTMLDocument('template');
+        setScrollDirection(direction: string, node: HTMLElement): void;
 
-      var domModule: any = document.createElement('dom-module');
+        shift(path: string, value: any): any;
 
-      var proto = <any> definition.prototype;
+        splice(path: string, start: number, deleteCount: number, ...items): any;
 
-      domModule.id = proto.is;
+        toggleAttribute(name: string, bool: boolean, node?: HTMLElement): void;
 
-      // attaches style
-      if (proto.style !== undefined) {
-         var elemStyle = (<any> document).createElement('style', 'custom-style');
-         domModule.appendChild(elemStyle);
-         elemStyle.textContent = proto.style;
-      }
+        toggleClass(name: string, bool: boolean, node?: HTMLElement): void;
 
-      // attaches template
-      if (proto.template !== undefined) {
-         var elemTemplate = document.createElement('template');
-         domModule.appendChild(elemTemplate);
-         contentDoc.body.innerHTML = proto.template;
-         while (contentDoc.body.firstChild) {
-           (<any>elemTemplate).content.appendChild(contentDoc.body.firstChild);
-         }
-      }
+        transform(transform: string, node?: HTMLElement): void;
 
-      // tells polymer the element has been created
-      domModule.createdCallback();
-   }
-   */
+        translate3d(x, y, z, node?: HTMLElement): void;
 
-   export function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
-      if(polymer.isRegistered(element)) {
-         throw "element already registered in Polymer";
-      }
-      if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
-         polymer.createDomModule(element);
-      }
-      // register element and make available its constructor as "create()"
-      var maker=<any> Polymer(polymer.prepareForRegistration(element));
-      element["create"]=function() {
-         var newOb=Object.create(maker.prototype);
-         return maker.apply(newOb, arguments);
-      };
-      return maker;
-   }
+        unlinkPaths(path: string): void;
 
-   export function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T {
-      if(polymer.isRegistered(element)) {
-         throw "element already registered in Polymer";
-      }
-      if((<polymer.PolymerTSElement>(element.prototype)).template!==undefined||(<polymer.PolymerTSElement>(element.prototype)).style!==undefined) {
-         polymer.createDomModule(element);
-      }
-      // register element and make available its constructor as "create()"
-      var maker=<any> Polymer.Class(polymer.prepareForRegistration(element));
-      element["create"]=function() {
-         var newOb=Object.create(maker.prototype);
-         return maker.apply(newOb, arguments);
-      };
-      return maker;
-   }
+        unlisten(node: Element, eventName: string, methodName: string): void;
 
-   export function isRegistered(element: polymer.Element)
-   {
-      return (<polymer.PolymerTSElement>(element.prototype)).$custom_cons!==undefined;
-   }
+        unshift(path: string, value: any): any;
+
+        updateStyles(): void;
+    }
+
+    export interface dom {
+        (node: HTMLElement): HTMLElement;
+
+        (node: polymer.Base): HTMLElement;
+
+        flush();
+    }
+
+    // options for the fire method
+    export interface FireOptions {
+        node?: HTMLElement | polymer.Base;
+        bubbles?: boolean;
+        cancelable?: boolean;
+    }
+
+    // members that can be optionally implemented in an element
+    export interface Element {
+        properties?: Object;
+        listeners?: Object;
+        behaviors?: Object[];
+        observers?: String[];
+
+        // lifecycle
+        factoryImpl?(...args): void;
+
+        ready?(): void;
+
+        created?(): void;
+
+        attached?(): void;
+
+        detached?(): void;
+
+        attributeChanged?(attrName: string, oldVal: any, newVal: any): void;
+
+        //
+        prototype?: Object;
+    }
+
+    // members set by PolymerTS
+    export interface PolymerTSElement {
+        $custom_cons?: FunctionConstructor;
+        $custom_cons_args?: any[];
+        template?: string;
+        style?: string;
+    }
+
+    // property definition interface
+    export interface Property {
+        /** @deprecated This is not used by either PolymerTS or Polymer */
+        name?: string;
+        type?: any;
+        value?: any;
+        reflectToAttribute?: boolean;
+        readOnly?: boolean;
+        notify?: boolean;
+        computed?: string;
+        observer?: string;
+    }
+
+    // the ES6-inheritable version of Polymer.Base
+    export declare class Base extends polymer.PolymerBase implements polymer.Element {
+        static create<T extends polymer.Base>(...args: any[]): T;
+
+        static register(): void;
+
+        is: string;
+
+        // From polymer.Element
+        properties?: Object;
+        listeners?: Object;
+        behaviors?: Object[];
+        observers?: String[];
+        prototype?: Object;
+    }
+
+    // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"
+    export function createEs6PolymerBase() {
+        // create a placeholder class
+        var pb = function () {
+        };
+
+        // make it available as polymer.Base
+        window["polymer"]["Base"] = pb;
+
+        // add a default create method()
+        pb["create"] = function () {
+            throw "element not yet registered in Polymer";
+        };
+
+        // add a default create method()
+        pb["register"] = function (dontRegister?: boolean) {
+            if (dontRegister === true) polymer.createClass(this);
+            else polymer.createElement(this);
+        }
+    }
+
+    export function prepareForRegistration(elementClass: Function): polymer.Element {
+        // copies members from inheritance chain to Polymer object
+        function copyMembers(dest: Object, source) {
+            if (source === undefined || source === null) return;
+            Object.keys(source).map((member) => {
+                // copy only if has not been defined
+                if (!dest.hasOwnProperty(member)) dest[member] = source[member];
+            });
+            copyMembers(dest, source.__proto__);
+        }
+
+        // backward compatibility with TypeScript 1.4 (no decorators)
+        if (elementClass.prototype.is === undefined) {
+            var proto = elementClass.prototype;
+            var instance = new (<any>elementClass)();
+            if (!instance.is) {
+                throw new Error("no name for " + elementClass);
+            }
+            proto.is = instance.is;
+            if (instance.extends) {
+                proto.extends = instance.extends;
+            }
+            if (instance.properties) {
+                proto.properties = instance.properties;
+            }
+            if (instance.listeners) {
+                proto.listeners = instance.listeners;
+            }
+            if (instance.observers) {
+                proto.observers = instance.observers;
+            }
+            if (instance.behaviors) {
+                proto.behaviors = instance.behaviors;
+            }
+            if (instance.hostAttributes) {
+                proto.hostAttributes = instance.hostAttributes;
+            }
+            if (instance.style) {
+                proto.style = instance.style;
+            }
+            if (instance.template) {
+                proto.template = instance.template;
+            }
+        }
+
+        var preparedElement = elementClass.prototype;
+
+        // artificial constructor: call constructor() and copies members
+        preparedElement["$custom_cons"] = function () {
+            // reads arguments coming from factoryImpl
+            var args = this.$custom_cons_args;
+
+            // applies class constructor on the polymer element (this)
+            elementClass.apply(this, args);
+        };
+
+        // arguments for artifical constructor
+        preparedElement["$custom_cons_args"] = [];
+
+        // modify "factoryImpl"
+        if (preparedElement["factoryImpl"] !== undefined) {
+            throw "do not use factoryImpl() use constructor() instead";
+        }
+        else {
+            preparedElement["factoryImpl"] = function () {
+                this.$custom_cons_args = arguments;
+            };
+        }
+
+        // modify "attached" event function
+        var attachToFunction = "attached";
+        var oldFunction = preparedElement[attachToFunction];
+        preparedElement[attachToFunction] = function () {
+            this.$custom_cons();
+            if (oldFunction !== undefined) oldFunction.apply(this);
+        };
+
+        // copy inherited class members
+        copyMembers(preparedElement, elementClass.prototype.__proto__);
+
+        //putting string in prototype.style in decorator style makes it impossible to access and modify css styles of created elements
+        //so it needs to be deleted in order to access and modify styles
+        delete preparedElement["style"];
+
+        return preparedElement;
+    }
+
+    /*
+    // see https://github.com/Polymer/polymer/issues/2114
+    export function createDomModule(definition: polymer.Element) {
+       var domModule: any = document.createElement('dom-module');
+
+       var proto = <any> definition.prototype;
+
+       domModule.id = proto.is;
+
+       // attaches style
+       if (proto.style !== undefined) {
+          var elemStyle = (<any> document).createElement('style', 'custom-style');
+          domModule.appendChild(elemStyle);
+          elemStyle.textContent = proto.style;
+       }
+
+       // attaches template
+       if (proto.template !== undefined) {
+          var elemTemplate = document.createElement('template');
+          domModule.appendChild(elemTemplate);
+          elemTemplate.innerHTML = proto.template;
+       }
+
+       // tells polymer the element has been created
+       domModule.createdCallback();
+    }
+    */
+
+    // a version that works in IE11 too
+    export function createDomModule(definition: polymer.Element) {
+        var domModule = document.createElement('dom-module');
+
+        var proto = <any> definition.prototype;
+
+        domModule.id = proto.is;
+
+        var html = "";
+        let style = "";
+        if (proto.style !== undefined) style = `<style>${proto.style}</style>`;
+        if (proto.template !== undefined) html = `<template>${style}${proto.template}</template>`;
+
+        domModule.innerHTML = html;
+
+        (<any> domModule).createdCallback();
+    }
+
+    /*
+    // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed
+    export function createDomModule(definition: polymer.Element) {
+       var contentDoc = document.implementation.createHTMLDocument('template');
+
+       var domModule: any = document.createElement('dom-module');
+
+       var proto = <any> definition.prototype;
+
+       domModule.id = proto.is;
+
+       // attaches style
+       if (proto.style !== undefined) {
+          var elemStyle = (<any> document).createElement('style', 'custom-style');
+          domModule.appendChild(elemStyle);
+          elemStyle.textContent = proto.style;
+       }
+
+       // attaches template
+       if (proto.template !== undefined) {
+          var elemTemplate = document.createElement('template');
+          domModule.appendChild(elemTemplate);
+          contentDoc.body.innerHTML = proto.template;
+          while (contentDoc.body.firstChild) {
+            (<any>elemTemplate).content.appendChild(contentDoc.body.firstChild);
+          }
+       }
+
+       // tells polymer the element has been created
+       domModule.createdCallback();
+    }
+    */
+
+    /**
+     * @deprecated
+     */
+    export function createElement(element: polymer.Base) {
+        if (polymer.isRegistered(element)) {
+            throw "element already registered in Polymer";
+        }
+        if ((<polymer.PolymerTSElement>(element.prototype)).template !== undefined || (<polymer.PolymerTSElement>(element.prototype)).style !== undefined) {
+            polymer.createDomModule(element);
+        }
+        // register element and make available its constructor as "create()"
+        var maker = <any> Polymer(polymer.prepareForRegistration(<any>element));
+        element["create"] = function () {
+            var newOb = Object.create(maker.prototype);
+            return maker.apply(newOb, arguments);
+        };
+        return maker;
+    }
+
+    /**
+     * @deprecated
+     */
+    export function createClass(element: polymer.Base) {
+        if (polymer.isRegistered(element)) {
+            throw "element already registered in Polymer";
+        }
+        if ((<polymer.PolymerTSElement>(element.prototype)).template !== undefined || (<polymer.PolymerTSElement>(element.prototype)).style !== undefined) {
+            polymer.createDomModule(element);
+        }
+        // register element and make available its constructor as "create()"
+        var maker = <any> Polymer.Class(polymer.prepareForRegistration(<any>element));
+        element["create"] = function () {
+            var newOb = Object.create(maker.prototype);
+            return maker.apply(newOb, arguments);
+        };
+        return maker;
+    }
+
+    export function isRegistered(element: polymer.Element) {
+        return (<polymer.PolymerTSElement>(element.prototype)).$custom_cons !== undefined;
+    }
 
 } // end module
 
@@ -364,143 +424,142 @@ polymer.createEs6PolymerBase();
 
 // Polymer object
 declare var Polymer: {
-   (prototype: polymer.Element): FunctionConstructor;
-   Class(prototype: polymer.Element): Function;
-   dom: polymer.dom;
-   appendChild(node: HTMLElement): HTMLElement;
-   insertBefore(node: HTMLElement, beforeNode: HTMLElement): HTMLElement;
-   removeChild(node: HTMLElement): HTMLElement;
-   updateStyles(): void;
+    (prototype: polymer.Element): FunctionConstructor;
+    Class(prototype: polymer.Element): Function;
+    dom: polymer.dom;
+    appendChild(node: HTMLElement): HTMLElement;
+    insertBefore(node: HTMLElement, beforeNode: HTMLElement): HTMLElement;
+    removeChild(node: HTMLElement): HTMLElement;
+    updateStyles(): void;
 
-   Base: any;
+    Base: any;
 }
 
 // @component decorator
 function component(tagname: string, extendsTag?: string) {
-	return function(target: Function) {
-      target.prototype["is"] = tagname;
-      if (extendsTag !== undefined)
-      {
-         target.prototype["extends"] = extendsTag;
-      }
-	}
+    return function (target: Function) {
+        target.prototype["is"] = tagname;
+        if (extendsTag !== undefined) {
+            target.prototype["extends"] = extendsTag;
+        }
+    }
 }
 
 // @extend decorator
 function extend(tagname: string) {
-	return (target: Function) => {
-		target.prototype["extends"] = tagname;
-	}
+    return (target: Function) => {
+        target.prototype["extends"] = tagname;
+    }
 }
 
 // @template decorator
 function template(templateString: string) {
-   return (target: Function) => {
-      target.prototype["template"] = templateString;
-   }
+    return (target: Function) => {
+        target.prototype["template"] = templateString;
+    }
 }
 
 // @style decorator
 function style(styleString: string) {
-   return (target: Function) => {
-      target.prototype["style"] = styleString;
-   }
+    return (target: Function) => {
+        target.prototype["style"] = styleString;
+    }
 }
 
 // @hostAttributes decorator
 function hostAttributes(attributes: Object) {
-	return (target: Function) => {
-		target.prototype["hostAttributes"] = attributes;
-	}
+    return (target: Function) => {
+        target.prototype["hostAttributes"] = attributes;
+    }
 }
 
 // @property decorator with automatic name for computed props
 function property(ob?: polymer.Property) {
-   return (target: polymer.Element, propertyKey: string) => {
-      target.properties = target.properties || {};
-      if (typeof (target[propertyKey]) === "function") {
-         // property is function, treat it as a computed property
-         var params = ob["computed"];
-         var getterName = "get_computed_" + propertyKey;
-         ob["computed"] = getterName + "(" + params + ")";
-         target.properties[propertyKey] = ob;
-         target[getterName] = target[propertyKey];
-      }
-      else {
-         // normal property
-         const previousProperty: polymer.Property = target.properties[propertyKey];
-         target.properties[propertyKey] = ob || {};
-         // make sure we grab the observer, just in case the observe decorator was called first
-         if (previousProperty && previousProperty.observer) {
-            target.properties[propertyKey].observer = previousProperty.observer;
-         }
-      }
-   }
+    return (target: polymer.Element, propertyKey: string) => {
+        target.properties = target.properties || {};
+        if (typeof (target[propertyKey]) === "function") {
+            // property is function, treat it as a computed property
+            var params = ob["computed"];
+            var getterName = "get_computed_" + propertyKey;
+            ob["computed"] = getterName + "(" + params + ")";
+            target.properties[propertyKey] = ob;
+            target[getterName] = target[propertyKey];
+        }
+        else {
+            // normal property
+            const previousProperty: polymer.Property = target.properties[propertyKey];
+            target.properties[propertyKey] = ob || {};
+            // make sure we grab the observer, just in case the observe decorator was called first
+            if (previousProperty && previousProperty.observer) {
+                target.properties[propertyKey].observer = previousProperty.observer;
+            }
+        }
+    }
 }
 
 // @computed decorator
 function computed(ob?: polymer.Property) {
-   return (target: polymer.Element, computedFuncName: string) => {
-      target.properties = target.properties || {};
-      var propOb = ob || {};
-      var getterName = "get_computed_" + computedFuncName;
-      var funcText: string = target[computedFuncName].toString();
-      var start = funcText.indexOf("(");
-      var end = funcText.indexOf(")");
-      var propertiesList = funcText.substring(start+1,end);
-      propOb["computed"] = getterName + "(" + propertiesList + ")";
-      target.properties[computedFuncName] = propOb;
-      target[getterName] = target[computedFuncName];
-   }
+    return (target: polymer.Element, computedFuncName: string) => {
+        target.properties = target.properties || {};
+        var propOb = ob || {};
+        var getterName = "get_computed_" + computedFuncName;
+        var funcText: string = target[computedFuncName].toString();
+        var start = funcText.indexOf("(");
+        var end = funcText.indexOf(")");
+        var propertiesList = funcText.substring(start + 1, end);
+        propOb["computed"] = getterName + "(" + propertiesList + ")";
+        target.properties[computedFuncName] = propOb;
+        target[getterName] = target[computedFuncName];
+    }
 }
 
 // @listen decorator
 function listen(eventName: string) {
-	return (target: polymer.Element, propertyKey: string) => {
-		target.listeners = target.listeners || {};
-		target.listeners[eventName] = propertyKey;
-	}
+    return (target: polymer.Element, propertyKey: string) => {
+        target.listeners = target.listeners || {};
+        target.listeners[eventName] = propertyKey;
+    }
 }
 
 // @behavior decorator
 function behavior(behaviorObject: any): any {
-   return (target: any) => {
-      if (typeof (target) === "function") {
-         // decorator applied externally, target is the class object
-         target.prototype["behaviors"] = target.prototype["behaviors"] || [];
-         let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-         target.prototype["behaviors"].push(beObject);
-      }
-      else {
-         // decorator applied internally, target is class.prototype
-         target.behaviors = target.behaviors || [];
-         let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-         target.behaviors.push(beObject);
-      }
-   }
+    return (target: any) => {
+        if (typeof (target) === "function") {
+            // decorator applied externally, target is the class object
+            target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+            let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+            target.prototype["behaviors"].push(beObject);
+        }
+        else {
+            // decorator applied internally, target is class.prototype
+            target.behaviors = target.behaviors || [];
+            let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+            target.behaviors.push(beObject);
+        }
+    }
 }
 
 // @observe decorator
 function observe(observedProps: string) {
-   if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
-      // observing multiple properties or path
-    return (target: polymer.Element, observerFuncName: string) => {
-        target.observers = target.observers || [];
-        target.observers.push(observerFuncName + "(" + observedProps + ")");
+    if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
+        // observing multiple properties or path
+        return (target: polymer.Element, observerFuncName: string) => {
+            target.observers = target.observers || [];
+            target.observers.push(observerFuncName + "(" + observedProps + ")");
+        }
     }
-   }
-   else {
-      // observing single property
-      return (target: polymer.Element, observerName: string) => {
-         target.properties = target.properties || {};
-         const propertyDef = target.properties[observedProps];
-         if (propertyDef && propertyDef.observer) {
-            console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
-         }
-         target.properties[observedProps] = target.properties[observedProps] || {};
-         target.properties[observedProps].observer = observerName;
-      }
-   }
+    else {
+        // observing single property
+        return (target: polymer.Element, observerName: string) => {
+            target.properties = target.properties || {};
+            const propertyDef = target.properties[observedProps];
+            if (propertyDef && propertyDef.observer) {
+                console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+            }
+            target.properties[observedProps] = target.properties[observedProps] || {};
+            target.properties[observedProps].observer = observerName;
+        }
+    }
 }
 
 

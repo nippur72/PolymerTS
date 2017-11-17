@@ -25,7 +25,7 @@
   "homepage": "https://github.com/nippur72/PolymerTS",
   "devDependencies": {
     "@types/jasmine": "^2.6.2",
-    "typescript": "~2.3.2",
+    "typescript": "^2.6.1",
     "uglify-js": "^2.6.2"
   },
   "dependencies": {},

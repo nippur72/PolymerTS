@@ -8,7 +8,8 @@ var polymer;
     // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"
     function createEs6PolymerBase() {
         // create a placeholder class
-        var pb = function () { };
+        var pb = function () {
+        };
         // make it available as polymer.Base
         window["polymer"]["Base"] = pb;
         // add a default create method()
@@ -108,25 +109,25 @@ var polymer;
     // see https://github.com/Polymer/polymer/issues/2114
     export function createDomModule(definition: polymer.Element) {
        var domModule: any = document.createElement('dom-module');
- 
+
        var proto = <any> definition.prototype;
- 
+
        domModule.id = proto.is;
- 
+
        // attaches style
        if (proto.style !== undefined) {
           var elemStyle = (<any> document).createElement('style', 'custom-style');
           domModule.appendChild(elemStyle);
           elemStyle.textContent = proto.style;
        }
- 
+
        // attaches template
        if (proto.template !== undefined) {
           var elemTemplate = document.createElement('template');
           domModule.appendChild(elemTemplate);
           elemTemplate.innerHTML = proto.template;
        }
- 
+
        // tells polymer the element has been created
        domModule.createdCallback();
     }
@@ -150,20 +151,20 @@ var polymer;
     // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed
     export function createDomModule(definition: polymer.Element) {
        var contentDoc = document.implementation.createHTMLDocument('template');
- 
+
        var domModule: any = document.createElement('dom-module');
- 
+
        var proto = <any> definition.prototype;
- 
+
        domModule.id = proto.is;
- 
+
        // attaches style
        if (proto.style !== undefined) {
           var elemStyle = (<any> document).createElement('style', 'custom-style');
           domModule.appendChild(elemStyle);
           elemStyle.textContent = proto.style;
        }
- 
+
        // attaches template
        if (proto.template !== undefined) {
           var elemTemplate = document.createElement('template');
@@ -173,11 +174,14 @@ var polymer;
             (<any>elemTemplate).content.appendChild(contentDoc.body.firstChild);
           }
        }
- 
+
        // tells polymer the element has been created
        domModule.createdCallback();
     }
     */
+    /**
+     * @deprecated
+     */
     function createElement(element) {
         if (polymer.isRegistered(element)) {
             throw "element already registered in Polymer";
@@ -194,6 +198,9 @@ var polymer;
         return maker;
     }
     polymer.createElement = createElement;
+    /**
+     * @deprecated
+     */
     function createClass(element) {
         if (polymer.isRegistered(element)) {
             throw "element already registered in Polymer";

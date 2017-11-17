@@ -92,6 +92,7 @@ declare module polymer {
         style?: string;
     }
     interface Property {
+        /** @deprecated This is not used by either PolymerTS or Polymer */
         name?: string;
         type?: any;
         value?: any;
@@ -105,12 +106,23 @@ declare module polymer {
         static create<T extends polymer.Base>(...args: any[]): T;
         static register(): void;
         is: string;
+        properties?: Object;
+        listeners?: Object;
+        behaviors?: Object[];
+        observers?: String[];
+        prototype?: Object;
     }
     function createEs6PolymerBase(): void;
     function prepareForRegistration(elementClass: Function): polymer.Element;
     function createDomModule(definition: polymer.Element): void;
-    function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T;
-    function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T;
+    /**
+     * @deprecated
+     */
+    function createElement(element: polymer.Base): any;
+    /**
+     * @deprecated
+     */
+    function createClass(element: polymer.Base): any;
     function isRegistered(element: polymer.Element): boolean;
 }
 declare var Polymer: {
