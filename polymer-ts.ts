@@ -110,6 +110,7 @@ module polymer {
 
    // property definition interface
    export interface Property {
+      /** @deprecated This is not used by either PolymerTS or Polymer */
       name?: string;
       type?: any;
       value?: any;

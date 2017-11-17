@@ -13,6 +13,10 @@ declare class PropertyInitializationTest extends polymer.Base {
     bar: string;
     foo: string;
     war: any;
+    constructorProp: any;
+    allValuesSet: boolean;
+    readOnlyUndefined: boolean;
+    readOnlyInitialized: boolean;
     constructor();
 }
 declare class DoubleInitializationTest extends polymer.Base {

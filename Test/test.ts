@@ -1,4 +1,5 @@
-﻿var polymerReady=false;
+﻿import PolymerTSElement = polymer.PolymerTSElement;
+var polymerReady=false;
 
 // jasmine boot.js links to window.onload
 var startJasmine = window.onload;
@@ -134,11 +135,11 @@ function RunSpecs()
    });
 
    describe("constructor()", () => {
-      var el: PropertyInitializationTest;
+      let el: PropertyInitializationTest;
 
       beforeEach(() => {
          // create the element
-         el = <any> PropertyInitializationTest.create();
+         el = <PropertyInitializationTest> PropertyInitializationTest.create();
 
          // connect it to DOM
          querySelector("#put_custom_constructor_here").appendChild(el);
@@ -147,11 +148,27 @@ function RunSpecs()
       // wait for the 'attached' event
       waitFor(() => (el.bar == "mybar"));
 
-      it("initializes properties correctly", () => {
+      it("initializes simple properties that use @property annotation correctly", () => {
          expect(el.bar).toBe("mybar");
          expect(el.foo).toBe("myfoo");
          expect(el.war).toBe("mywar");
+         expect(el.constructorProp).toBe("constructorProp");
       });
+
+      it("initializes readOnly properties annotated with the @property annotation correctly", () => {
+         expect(el.readOnlyUndefined).toBe(undefined);
+         expect(el.readOnlyInitialized).toBe(true);
+      });
+
+      it("initializes @property annotations with multiple attributes correctly", () => {
+         const propDef =  (<polymer.Element>el).properties['allValuesSet'];
+         expect(propDef).not.toBe(undefined);
+         expect(propDef.type).toBe(Boolean);
+         expect(propDef.notify).toBe(true);
+         expect(propDef.reflectToAttribute).toBe(true);
+         expect(propDef.value).toBe(true);
+      });
+
    });
 
    describe("polymer.Base", () => {

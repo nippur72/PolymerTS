@@ -33,15 +33,28 @@ CustomConstructorTest.register();
 @component("property-initialization-test")
 @template("")
 class PropertyInitializationTest extends polymer.Base {
-    @property() bar = "mybar"
+    @property() bar = "mybar";
 
     @property() foo: string;
 
     @property({value: "mywar"}) war;
 
+    @property({value: "mywar"}) constructorProp;
+
+    @property({type: Boolean, notify: true, reflectToAttribute: true, value: true})
+    allValuesSet: boolean;
+
+    @property({type: Boolean, readOnly: true})
+    readOnlyUndefined = true;
+
+    @property({type: Boolean, readOnly: true, value: true})
+    readOnlyInitialized = false;
+
     constructor() {
         super();
         this.foo = "myfoo";
+        this.constructorProp = "constructorProp";
+        this.readOnlyUndefined = false;
     }
 }
 

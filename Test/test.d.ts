@@ -1,3 +1,4 @@
+import PolymerTSElement = polymer.PolymerTSElement;
 declare var polymerReady: boolean;
 declare var startJasmine: (this: Window, ev: Event) => any;
 declare function waitFor(F: any): void;

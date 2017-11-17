@@ -221,7 +221,7 @@ The parameter `def` is a map object that sets the options for the property:
 
 Examples:
 ```TypeScript
-@property({ type: number, value: 42 })
+@property({ type: number, value: 42 }) // Polymer initialization (preferred)
 initialValue: number;
 ```
 
@@ -231,16 +231,19 @@ The default value for a property is optional as long as the property is initiali
 myprop = 42;  // direct initialization
 ```
 or
+
 ```TypeScript
 @property({ type: number })
 myprop: number;
 
 constructor() {
-   this.myprop = 42; // initialized within constructor
+   this.myprop = 42; // initialized within constructor; called after Polymer initialization
 }
 ```
 
-NOTE: If you use direct initialization, the property will be set _after_ the `ready()` method is called. If you use the `value` attribute of the `@property` decorator, it will be called before `ready()`:
+> NOTE: If you use direct initialization, the property will be set _after_ the `ready()` method is called. If you use the `value` attribute of the `@property` decorator, it will be called before `ready()`.
+
+> NOTE: If you're creating a `readOnly` property, use Polymer initialization. If you use direct initialization, Polymer will overwrite your value with `undefined`.
 
 ```TypeScript
 @property({type: number, value: 42})
