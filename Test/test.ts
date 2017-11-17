@@ -243,17 +243,24 @@ function RunSpecs()
 
       it("does not support multiple simple observers for a single property", () => {
          const originalBar = el.bar;
+         let warned = false;
+         console.warn = function() {
+            warned = true;
+         };
          expect((el).nbar_changed).toBe(0);
 
          el.set("bar", "42");
          expect((el).nbar_changed).toBe(1);
          expect((el).bar_old).toBe(undefined);
          expect((el).bar2_old).toBe(originalBar);
+         expect(warned).toBe(true);
 
+         warned = false;
          el.set("bar", "blue");
          expect((el).nbar_changed).toBe(2);
          expect((el).bar_old).toBe(undefined);
          expect((el).bar2_old).toBe("42");
+         expect(warned).toBe(true);
       });
 
       it("work properly when called before @property decorators", () => {
