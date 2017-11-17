@@ -578,7 +578,6 @@ Contributions are welcome.
 
 If you find bugs or want to improve it, just send a pull request.
 
-
 ## Getting Started
 
 1. Clone this repo
