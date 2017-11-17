@@ -492,6 +492,10 @@ function observe(observedProps: string) {
       // observing single property
       return (target: polymer.Element, observerName: string) => {
          target.properties = target.properties || {};
+         const propertyDef = target.properties[observedProps];
+         if (propertyDef && propertyDef.observer) {
+            console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+         }
          target.properties[observedProps] = target.properties[observedProps] || {};
          target.properties[observedProps].observer = observerName;
       }

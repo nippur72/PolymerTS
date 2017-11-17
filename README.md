@@ -268,6 +268,8 @@ nameChanged(newName,oldName)
 }
 ```
 
+> NOTE: Only one single-property observer is supported for the same property name. If you have multiple single-property observers registered with the same property, only the last one one will be used (you will not get an error).
+
 ```TypeScript
 // multiple property observer
 @observe("firstname,lastname")

@@ -242,16 +242,17 @@ function RunSpecs()
       });
 
       it("does not support multiple simple observers for a single property", () => {
+         const originalBar = el.bar;
          expect((el).nbar_changed).toBe(0);
 
          el.set("bar", "42");
-         expect((el).nbar_changed).toBe(2);
+         expect((el).nbar_changed).toBe(1);
          expect((el).bar_old).toBe(undefined);
-         expect((el).bar2_old).toBe(undefined);
+         expect((el).bar2_old).toBe(originalBar);
 
          el.set("bar", "blue");
-         expect((el).nbar_changed).toBe(4);
-         expect((el).bar_old).toBe("42");
+         expect((el).nbar_changed).toBe(2);
+         expect((el).bar_old).toBe(undefined);
          expect((el).bar2_old).toBe("42");
       });
 

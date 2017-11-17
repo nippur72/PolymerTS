@@ -325,6 +325,10 @@ function observe(observedProps) {
         // observing single property
         return function (target, observerName) {
             target.properties = target.properties || {};
+            var propertyDef = target.properties[observedProps];
+            if (propertyDef && propertyDef.observer) {
+                console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+            }
             target.properties[observedProps] = target.properties[observedProps] || {};
             target.properties[observedProps].observer = observerName;
         };
