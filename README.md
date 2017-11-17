@@ -594,7 +594,7 @@ In order to run the tests, you need a local HTTP server. If you don't have one i
  
 Next, just point your browser to `http://localhost:<port>/Test/`). `http-server` defaults to port 8080. 
 
-# Samples
+## Samples
 
 There is a `Samples` folder with some examples, but these are not currently built or maintained.
 
