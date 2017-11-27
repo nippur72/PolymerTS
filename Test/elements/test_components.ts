@@ -189,6 +189,22 @@ function lateProperty(propertyName: string) {
 
 ObserverTest.register();
 
+
+// Uncomment this to test for the proper exception when a observed property can't be found. It will hose the other tests.
+/*
+@component("observer-undefined-property-test")
+@template("")
+class ObserverNullPropertyTest extends polymer.Base {
+
+    @observe(null)
+    foo() {
+
+    }
+}
+
+ObserverNullPropertyTest.register();
+*/
+
 class BehaviorBaseTest extends polymer.Base {
     hasfired: boolean;
 
@@ -264,18 +280,28 @@ class BehaviorTest2 extends polymer.Base {
 
 BehaviorTest2.register();
 
+// Uncomment this to test for the proper exception when a behavior can't be found. It will hose the other tests.
+/*
+@template("")
+@component("missing-behavior-test")
+@behavior(Polymer['PaperRippleBehavior'])
+class MissingBehaviorTest extends polymer.Base {
+    @property() bar = "mybar";
+
+
+}
+
+MissingBehaviorTest.register();
+*/
 
 @component("template-test")
-
 @template("<div>this element is made from a template<div id='inner'>inner text</div></div>")
-
 @style
 (`
    :host { display: block; }
    div { color: red; }
    #inner { width: 50px; }
 `)
-
 class TemplateTest extends polymer.Base {
     @property() bar = "mybar";
 }

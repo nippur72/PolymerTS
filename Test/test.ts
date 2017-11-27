@@ -292,7 +292,7 @@ function RunSpecs()
    });
 
    describe("@behavior decorator", () => {
-      var el1: BehaviorTest1,
+      let el1: BehaviorTest1,
           el2: BehaviorTest2;
 
       beforeEach(() => {

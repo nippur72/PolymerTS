@@ -523,43 +523,55 @@ function listen(eventName: string) {
 
 // @behavior decorator
 function behavior(behaviorObject: any): any {
-    return (target: any) => {
-        if (typeof (target) === "function") {
-            // decorator applied externally, target is the class object
-            target.prototype["behaviors"] = target.prototype["behaviors"] || [];
-            let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-            target.prototype["behaviors"].push(beObject);
-        }
-        else {
-            // decorator applied internally, target is class.prototype
-            target.behaviors = target.behaviors || [];
-            let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-            target.behaviors.push(beObject);
+    if (!behaviorObject) {
+        throw new Error('@behavior not found; value is ' + behaviorObject);
+    }
+    else {
+        return (target: any) => {
+            if (typeof (target) === "function") {
+
+                // decorator applied externally, target is the class object
+                target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+                let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+                target.prototype["behaviors"].push(beObject);
+            }
+            else {
+                // decorator applied internally, target is class.prototype
+                target.behaviors = target.behaviors || [];
+                let beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+                target.behaviors.push(beObject);
+            }
         }
     }
 }
 
 // @observe decorator
 function observe(observedProps: string) {
-    if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
-        // observing multiple properties or path
-        return (target: polymer.Element, observerFuncName: string) => {
-            target.observers = target.observers || [];
-            target.observers.push(observerFuncName + "(" + observedProps + ")");
-        }
+    if (!observedProps) {
+        throw new Error('@observe properties not found; value is ' + observedProps);
     }
     else {
-        // observing single property
-        return (target: polymer.Element, observerName: string) => {
-            target.properties = target.properties || {};
-            const propertyDef = target.properties[observedProps];
-            if (propertyDef && propertyDef.observer) {
-                console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+        if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
+            // observing multiple properties or path
+            return (target: polymer.Element, observerFuncName: string) => {
+                target.observers = target.observers || [];
+                target.observers.push(observerFuncName + "(" + observedProps + ")");
             }
-            target.properties[observedProps] = target.properties[observedProps] || {};
-            target.properties[observedProps].observer = observerName;
+        }
+        else {
+            // observing single property
+            return (target: polymer.Element, observerName: string) => {
+                target.properties = target.properties || {};
+                const propertyDef = target.properties[observedProps];
+                if (propertyDef && propertyDef.observer) {
+                    console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+                }
+                target.properties[observedProps] = target.properties[observedProps] || {};
+                target.properties[observedProps].observer = observerName;
+            }
         }
     }
 }
+
 
 

@@ -304,41 +304,51 @@ function listen(eventName) {
 }
 // @behavior decorator
 function behavior(behaviorObject) {
-    return function (target) {
-        if (typeof (target) === "function") {
-            // decorator applied externally, target is the class object
-            target.prototype["behaviors"] = target.prototype["behaviors"] || [];
-            var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-            target.prototype["behaviors"].push(beObject);
-        }
-        else {
-            // decorator applied internally, target is class.prototype
-            target.behaviors = target.behaviors || [];
-            var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-            target.behaviors.push(beObject);
-        }
-    };
+    if (!behaviorObject) {
+        throw new Error('@behavior not found; value is ' + behaviorObject);
+    }
+    else {
+        return function (target) {
+            if (typeof (target) === "function") {
+                // decorator applied externally, target is the class object
+                target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+                var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+                target.prototype["behaviors"].push(beObject);
+            }
+            else {
+                // decorator applied internally, target is class.prototype
+                target.behaviors = target.behaviors || [];
+                var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+                target.behaviors.push(beObject);
+            }
+        };
+    }
 }
 // @observe decorator
 function observe(observedProps) {
-    if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
-        // observing multiple properties or path
-        return function (target, observerFuncName) {
-            target.observers = target.observers || [];
-            target.observers.push(observerFuncName + "(" + observedProps + ")");
-        };
+    if (!observedProps) {
+        throw new Error('@observe properties not found; value is ' + observedProps);
     }
     else {
-        // observing single property
-        return function (target, observerName) {
-            target.properties = target.properties || {};
-            var propertyDef = target.properties[observedProps];
-            if (propertyDef && propertyDef.observer) {
-                console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
-            }
-            target.properties[observedProps] = target.properties[observedProps] || {};
-            target.properties[observedProps].observer = observerName;
-        };
+        if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
+            // observing multiple properties or path
+            return function (target, observerFuncName) {
+                target.observers = target.observers || [];
+                target.observers.push(observerFuncName + "(" + observedProps + ")");
+            };
+        }
+        else {
+            // observing single property
+            return function (target, observerName) {
+                target.properties = target.properties || {};
+                var propertyDef = target.properties[observedProps];
+                if (propertyDef && propertyDef.observer) {
+                    console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+                }
+                target.properties[observedProps] = target.properties[observedProps] || {};
+                target.properties[observedProps].observer = observerName;
+            };
+        }
     }
 }
 //# sourceMappingURL=polymer-ts.js.map
