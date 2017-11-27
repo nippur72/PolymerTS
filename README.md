@@ -1,6 +1,10 @@
 # PolymerTS
 
-Write Polymer 1.0 elements as TypeScript @decorated classes.
+Write Polymer 1.x elements as TypeScript @decorated classes.
+
+> NOTE: If you need to support Polymer 2.x or higher, see the official [PolymerDecorators project](https://github.com/Polymer/polymer-decorators). We will be working on 
+providing a migration path for users that are currently using Polymer 1.0 and PolymerTS. To find out more 
+(or help!), see issue [#110](https://github.com/nippur72/PolymerTS/issues/110).
 
 # Table of contents
 
@@ -603,6 +607,7 @@ Next, just point your browser to `http://localhost:<port>/Test/`). `http-server`
 There is a `Samples` folder with some examples, but these are not currently built or maintained.
 
 # Change log <a name="changelog"></a>
+
 - For recent versions, see the Github release logs: https://github.com/nippur72/PolymerTS/releases
 
 Older versions:
