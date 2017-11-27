@@ -60,7 +60,7 @@ declare module polymer {
         unlinkPaths(path: string): void;
         unlisten(node: Element, eventName: string, methodName: string): void;
         unshift(path: string, value: any): any;
-        updateStyles(): void;
+        updateStyles(properties: Object): void;
     }
     interface dom {
         (node: HTMLElement): HTMLElement;
