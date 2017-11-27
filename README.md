@@ -603,6 +603,10 @@ Next, just point your browser to `http://localhost:<port>/Test/`). `http-server`
 There is a `Samples` folder with some examples, but these are not currently built or maintained.
 
 # Change log <a name="changelog"></a>
+- For recent versions, see the Github release logs: https://github.com/nippur72/PolymerTS/releases
+
+Older versions:
+
 - v0.2.0 (Apr 18, 2017)
   - Fix: allow access/modify styles (override prototype.style)
 - v0.1.28 (Aug 8, 2016)
