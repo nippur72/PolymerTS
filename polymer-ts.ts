@@ -108,7 +108,7 @@ module polymer {
 
         unshift(path: string, value: any): any;
 
-        updateStyles(properties: Object): void;
+        updateStyles(properties?: any): void;
     }
 
     export interface dom {
