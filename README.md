@@ -32,6 +32,7 @@ providing a migration path for users that are currently using Polymer 1.0 and Po
    - [Using behaviors defined externally](#paperexample)
 - [Running the repo example](#repoexample)
 - [What it does, in short](#details)
+- [Documentation](#docs)
 - [Known issues](#knownissues)
 - [Contributing](#contributing)
 - [Changelog](#changelog)
@@ -573,6 +574,13 @@ in turn, the `register()` method:
 - connects the `constructor()` before of the `attached` event so that properties are correctly initialized
 - connects the `constructor(args)` to the `factoryImpl()` callback so that custom constructor is processed correctly
 - registers the element in Polymer, saving the constructor function and making it available as the `create()` method
+
+# Documentation <a name="docs"></a>
+
+Typically with Polymer projects you can generate documentation easily with the `<iron-component-page>` component. 
+However, this component doesn't work well with PolymerTS projects because the source code is not in the same file as the HTML. You 
+can get around this by using the [polymerts-doc-generator](https://github.com/RedPillNow/polymerts-doc-generator), which outputs a version of 
+your code that combines HTML and pure JS in one file, which can be easily consumed by `<iron-component-page>`
 
 # Known issues <a name="knownissues"></a>
 
