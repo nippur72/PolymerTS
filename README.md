@@ -580,7 +580,7 @@ in turn, the `register()` method:
 Typically with Polymer projects you can generate documentation easily with the `<iron-component-page>` component. 
 However, this component doesn't work well with PolymerTS projects because the source code is not in the same file as the HTML. You 
 can get around this by using the [polymerts-doc-generator](https://github.com/RedPillNow/polymerts-doc-generator), which outputs a version of 
-your code that combines HTML and pure JS in one file, which can be easily consumed by `<iron-component-page>`
+your code that combines HTML and pure JS in one file, which can be easily consumed by `<iron-component-page>`.
 
 # Known issues <a name="knownissues"></a>
 
